@@ -3,17 +3,21 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "team.one.lwe"
-        minSdkVersion 28
-        targetSdkVersion 30
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86","arm64-v8a","x86_64"
+        }
     }
 
     buildTypes {
@@ -36,4 +40,19 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation fileTree(dir: 'libs', include: '*.jar')
+    // 添加依赖，版本号必须一致。
+
+    // 基础功能 (必需)
+    implementation rootProject.ext.imSdk
+
+    // 聊天室需要
+    implementation rootProject.ext.chatroomSdk
+
+    // 超大群需要
+    implementation rootProject.ext.superteamSdk
+
+    // 全文检索插件
+    implementation rootProject.ext.luceneSdk
 }
