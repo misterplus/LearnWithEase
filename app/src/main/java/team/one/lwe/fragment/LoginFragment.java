@@ -1,17 +1,28 @@
-package team.one.lwe.activity;
+package team.one.lwe.fragment;
 
-import android.app.Activity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 
+import team.one.lwe.R;
 import team.one.lwe.config.Preferences;
 
-public class LoginActivity extends Activity {
+public class LoginFragment extends Fragment {
 
-
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        return view;
+    }
 
     public void doLogin(String account, String token) {
         LoginInfo info = new LoginInfo(account, token);

@@ -12,6 +12,11 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'http://developer.huawei.com/repo/' }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -20,10 +25,10 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdkVersion = 30
-    buildToolsVersion = "30.0.3"
-    minSdkVersion = 28
-    targetSdkVersion = 30
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.3'
+    minSdkVersion = 21
+    targetSdkVersion = 28
     versionCode = 150
     versionName = '8.3.1'
     sdkSourceCompatibility = 1.8

@@ -56,6 +56,6 @@
     <include
         android:id="@+id/contact_loading_frame"
         layout="@layout/nim_contact_loading_frame"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

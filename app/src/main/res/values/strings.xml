@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">LearnWithEase</string>
+    <string name="app_name">易自习</string>
+    <string name="hint_username">输入用户名</string>
+    <string name="hint_password">输入密码</string>
 </resources>

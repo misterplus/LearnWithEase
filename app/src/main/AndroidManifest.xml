@@ -29,10 +29,10 @@
 
     <!-- 下面的 uses-permission 一起加入到你的 AndroidManifest 文件中。 -->
     <permission
-        android:name="com.netease.nim.demo.permission.RECEIVE_MSG"
+        android:name="team.one.lwe.permission.RECEIVE_MSG"
         android:protectionLevel="signature"/>
 
-    <uses-permission android:name="com.netease.nim.demo.permission.RECEIVE_MSG"/>
+    <uses-permission android:name="team.one.lwe.permission.RECEIVE_MSG"/>
 
     <application
         android:allowBackup="true"
@@ -40,11 +40,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LearnWithEase">
+        android:name=".LWEApplication"
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -91,7 +91,7 @@
     <!-- 云信进程间通信provider -->
     <provider
         android:name="com.netease.nimlib.ipc.NIMContentProvider"
-        android:authorities="com.netease.nim.demo.ipc.provider"
+        android:authorities="team.one.lwe.ipc.provider"
         android:exported="false"
         android:process=":core" />
 
@@ -99,7 +99,7 @@
     <!-- SDK启动时会强制检测该组件的声明是否配置正确，如果检测到该声明不正确，SDK会主动抛出异常引发崩溃 -->
     <provider
         android:name="com.netease.nimlib.ipc.cp.provider.PreferenceContentProvider"
-        android:authorities="com.netease.nim.demo.ipc.provider.preference"
+        android:authorities="team.one.lwe.ipc.provider.preference"
         android:exported="false" />
     </application>
 
