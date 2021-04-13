@@ -1,78 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/empty"
+        app:srcCompat="@drawable/nim_actionbar_dark_logo_icon" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:text="@string/app_name"
+        android:textAllCaps="true"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="@dimen/login_edittext_width"
+        android:layout_height="@dimen/login_edittext_height"
+        android:layout_marginBottom="@dimen/bottom_component_margin_vertical"
+        android:autofillHints="@string/hint_username"
+        android:background="@drawable/nim_message_input_edittext_box"
+        android:gravity="center"
+        android:hint="@string/hint_username"
+        android:inputType="text"
+        android:maxHeight="72dip"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/login_edittext_fontsize" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="@dimen/login_edittext_width"
+        android:layout_height="@dimen/login_edittext_height"
+        android:autofillHints="@string/hint_password"
+        android:background="@drawable/nim_message_input_edittext_box"
+        android:gravity="center"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:maxHeight="72dip"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/login_edittext_fontsize" />
+
+    <ImageButton
+        android:id="@+id/buttonLogin"
+        android:layout_width="@dimen/login_button_size"
+        android:layout_height="@dimen/login_button_size"
+        android:layout_marginTop="60dip"
+        android:layout_marginBottom="36dip"
+        android:background="@drawable/nim_message_button_bottom_emoji_selector"
+        android:contentDescription="@string/empty"
+        android:scaleType="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editTextUsername"
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:background="@drawable/nim_message_input_edittext_box"
-            android:maxHeight="72dip"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textCursorDrawable="@null"
-            android:textSize="18sp"
-            android:layout_marginLeft="60dip"
-            android:layout_marginRight="60dip"
-            android:layout_marginBottom="@dimen/bottom_component_margin_vertical"
-            android:gravity="center"
-            android:hint="@string/hint_username"
-            android:inputType="text"
-            android:autofillHints="@string/hint_username" />
-
-        <EditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:background="@drawable/nim_message_input_edittext_box"
-            android:maxHeight="72dip"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textCursorDrawable="@null"
-            android:textSize="18sp"
-            android:layout_marginLeft="60dip"
-            android:layout_marginRight="60dip"
-            android:gravity="center"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:autofillHints="@string/hint_password" />
-
-        <!--<com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonPhoneLogin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:hint="@string/hint_username"
-            app:boxStrokeColor="#0887FD">
+            android:layout_weight="1"
+            android:text="@string/button_phone_login"
+            android:background="@color/transparent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_text_input"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonLostPassword"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:hint="@string/hint_password"
-            app:boxStrokeColor="#0887FD"
-            app:errorEnabled="true">
+            android:layout_weight="1"
+            android:text="@string/button_lost_password"
+            android:background="@color/transparent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>-->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider" />
 
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_register"
+            android:background="@color/transparent" />
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

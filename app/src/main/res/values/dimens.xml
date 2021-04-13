@@ -1,5 +1,7 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Login Fragment -->
+    <dimen name="login_edittext_width">290dip</dimen>
+    <dimen name="login_edittext_height">40dip</dimen>
+    <dimen name="login_edittext_fontsize">18sp</dimen>
+    <dimen name="login_button_size">80dip</dimen>
 </resources>

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">易自习</string>
-    <string name="hint_username">输入用户名</string>
-    <string name="hint_password">输入密码</string>
+    <string name="hint_username">请输入用户名</string>
+    <string name="hint_password">请输入密码</string>
+    <string name="button_phone_login">手机号登录</string>
+    <string name="button_lost_password">找回密码</string>
+    <string name="button_register">新用户注册</string>
 </resources>
