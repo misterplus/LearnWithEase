@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center"
-    android:orientation="vertical">
-
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/imageLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:contentDescription="@string/empty"
-        app:srcCompat="@drawable/nim_actionbar_dark_logo_icon" />
+        app:srcCompat="@drawable/lwe_logo_icon"
+        android:layout_marginTop="64dp"
+        android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/textAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
         android:text="@string/app_name"
-        android:textAllCaps="true"
-        android:textSize="16sp" />
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imageLogo"
+        android:layout_marginTop="24dp"/>
 
     <EditText
         android:id="@+id/editTextUsername"
-        android:layout_width="@dimen/login_edittext_width"
-        android:layout_height="@dimen/login_edittext_height"
-        android:layout_marginBottom="@dimen/bottom_component_margin_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:autofillHints="@string/hint_username"
         android:background="@drawable/nim_message_input_edittext_box"
         android:gravity="center"
@@ -38,12 +36,16 @@
         android:maxLines="1"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
-        android:textSize="@dimen/login_edittext_fontsize" />
+        android:textSize="@dimen/login_edittext_fontsize"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textAppName"
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="128dp"/>
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="@dimen/login_edittext_width"
-        android:layout_height="@dimen/login_edittext_height"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:autofillHints="@string/hint_password"
         android:background="@drawable/nim_message_input_edittext_box"
         android:gravity="center"
@@ -53,55 +55,66 @@
         android:maxLines="1"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
-        android:textSize="@dimen/login_edittext_fontsize" />
+        android:textSize="@dimen/login_edittext_fontsize"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editTextUsername"
+        android:layout_marginTop="@dimen/dp_size_8"
+        android:layout_marginStart="128dp"/>
 
     <ImageButton
         android:id="@+id/buttonLogin"
-        android:layout_width="@dimen/login_button_size"
-        android:layout_height="@dimen/login_button_size"
-        android:layout_marginTop="60dip"
-        android:layout_marginBottom="36dip"
-        android:background="@drawable/nim_message_button_bottom_emoji_selector"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:background="@drawable/lwe_button_login_128"
         android:contentDescription="@string/empty"
-        android:scaleType="center" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editTextPassword"
+        android:layout_marginTop="48dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/buttonPhoneLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_phone_login"
-            android:background="@color/transparent" />
+            android:background="@color/transparent"
+            android:text="@string/button_phone_login" />
 
         <View
+            android:id="@+id/div"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="?android:attr/listDivider" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider"/>
 
         <Button
             android:id="@+id/buttonLostPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_lost_password"
-            android:background="@color/transparent" />
+            android:background="@color/transparent"
+            android:text="@string/button_lost_password" />
 
         <View
+            android:id="@+id/div2"
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="?android:attr/listDivider" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/listDivider"/>
 
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_register"
-            android:background="@color/transparent" />
+            android:background="@color/transparent"
+            android:text="@string/button_register" />
     </LinearLayout>
-</LinearLayout>
+
+
+</RelativeLayout>
