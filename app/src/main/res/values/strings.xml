@@ -5,6 +5,6 @@
     <string name="lwe_button_phone_login">手机号登录</string>
     <string name="lwe_button_lost_password">找回密码</string>
     <string name="lwe_button_register">新用户注册</string>
-    <string name="lwe_error_username">用户名长度须大于6个且小于16个字符</string>
-    <string name="lwe_error_password">密码长度须大于8个且小于16个字符</string>
+<!--    <string name="lwe_error_username">用户名长度须大于6个且小于16个字符</string>-->
+<!--    <string name="lwe_error_password">密码长度须大于8个且小于16个字符</string>-->
 </resources>
