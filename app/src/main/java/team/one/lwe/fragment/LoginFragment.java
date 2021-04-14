@@ -1,9 +1,12 @@
 package team.one.lwe.fragment;
 
 import android.os.Bundle;
+import team.one.lwe.util.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +16,8 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 
+import org.jetbrains.annotations.NotNull;
+
 import team.one.lwe.R;
 import team.one.lwe.config.Preferences;
 
@@ -21,7 +26,42 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        EditText editTextUsername = view.findViewById(R.id.editTextUsername);
+        EditText editTextPassword = view.findViewById(R.id.editTextPassword);
+        ImageButton buttonLogin = view.findViewById(R.id.buttonLogin);
+        buttonLogin.setOnClickListener(view1 -> {
+            if (isUsernameValid(editTextUsername.getText().toString())) {
+                editTextUsername.setError(getString(R.string.lwe_error_username));
+            } else {
+                editTextUsername.setError(null);
+            }
+            if (isPasswordValid(editTextPassword.getText().toString())) {
+                editTextPassword.setError(getString(R.string.lwe_error_password));
+            } else {
+                editTextPassword.setError(null);
+            }
+        });
+        editTextUsername.setOnKeyListener((view1, i, keyEvent) -> {
+            if (isUsernameValid(editTextUsername.getText().toString())) {
+                editTextUsername.setError(null);
+            }
+            return false;
+        });
+        editTextPassword.setOnKeyListener((view1, i, keyEvent) -> {
+            if (isPasswordValid(editTextPassword.getText().toString())) {
+                editTextPassword.setError(null);
+            }
+            return false;
+        });
         return view;
+    }
+
+    private static boolean isUsernameValid(@NotNull String username) {
+        return TextUtils.isCharDigitOnly(username) && username.length() >= 6 && username.length() <= 16;
+    }
+
+    private static boolean isPasswordValid(@NotNull String password) {
+        return TextUtils.isCharDigitOnly(password) && password.length() >= 8 && password.length() <= 16;
     }
 
     public void doLogin(String account, String token) {
