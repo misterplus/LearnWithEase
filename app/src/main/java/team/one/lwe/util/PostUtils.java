@@ -5,7 +5,7 @@ import lombok.NonNull;
 
 public class PostUtils {
 
-    private static final String API_DOMAIN_NAME = "http://localhost:8080";
+    private static final String API_DOMAIN_NAME = "http://10.0.2.2:8080"; // 10.0.2.2 is for localhost in emulator
 
     public static HttpRequest getBasicPost(@NonNull String url) {
         return HttpRequest.post(API_DOMAIN_NAME + url)

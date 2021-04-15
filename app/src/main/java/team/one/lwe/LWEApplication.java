@@ -1,10 +1,7 @@
 package team.one.lwe;
 
 import android.app.Application;
-import android.content.pm.PackageManager;
 import android.text.TextUtils;
-
-import androidx.core.app.ActivityCompat;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;

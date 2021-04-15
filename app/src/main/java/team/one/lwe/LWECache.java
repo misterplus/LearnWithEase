@@ -8,6 +8,10 @@ public class LWECache {
     private static Context context;
     private static String account;
 
+    public static boolean noCache() {
+        return account == null;
+    }
+
     public static void clear() {
         account = null;
     }

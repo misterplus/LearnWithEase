@@ -7,7 +7,7 @@ public class TextUtils {
         return (text == null || text.length() == 0);
     }
 
-    public static boolean isCharDigitOnly(@NotNull String text) {
-        return text.matches("[a-zA-Z0-9]+");
+    public static boolean isLegalInfo(@NotNull String text) {
+        return text.matches("[a-zA-Z0-9_]+");
     }
 }

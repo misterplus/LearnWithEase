@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
@@ -26,30 +25,35 @@ import team.one.lwe.config.Preferences;
 
 public class LoginFragment extends Fragment {
 
+    private View view;
+    private EditText editTextUsername, editTextPassword;
+    private ImageButton buttonLogin;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        EditText editTextUsername = view.findViewById(R.id.editTextUsername);
-        EditText editTextPassword = view.findViewById(R.id.editTextPassword);
-        ImageButton buttonLogin = view.findViewById(R.id.buttonLogin);
+        view = inflater.inflate(R.layout.fragment_login, container, false);
+        editTextUsername = view.findViewById(R.id.editTextUsername);
+        editTextPassword = view.findViewById(R.id.editTextPassword);
+        buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             if (!isUsernameValid(editTextUsername.getText().toString()) || !isPasswordValid(editTextPassword.getText().toString())) {
                 // username or password invalid
             } else {
-                // username and password valid, send to api
-                LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
-                doLogin(info);
+                new Thread(() -> {
+                    LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
+                    doLogin(info);
+                }).start();
             }
         });
         return view;
     }
 
     private static boolean isUsernameValid(@NotNull String username) {
-        return TextUtils.isCharDigitOnly(username) && username.length() >= 6 && username.length() <= 16;
+        return TextUtils.isLegalInfo(username) && username.length() >= 6 && username.length() <= 16;
     }
 
     private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isCharDigitOnly(password) && password.length() >= 8 && password.length() <= 16;
+        return TextUtils.isLegalInfo(password) && password.length() >= 8 && password.length() <= 16;
     }
 
     public void doLogin(LoginInfo info) {
@@ -59,7 +63,6 @@ public class LoginFragment extends Fragment {
                     public void onSuccess(LoginInfo info) {
                         Preferences.saveUserAccount(info.getAccount());
                         Preferences.saveUserToken(info.getToken());
-                        System.out.println("success!!!!!!!!!!!!!!!!!!!!!!!!");
                     }
 
                     @Override
