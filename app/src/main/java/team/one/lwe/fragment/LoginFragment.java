@@ -15,7 +15,6 @@ import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
-
 import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
@@ -58,9 +57,9 @@ public class LoginFragment extends Fragment {
     }
 
     public void doLogin(LoginInfo info) {
-        //NIMClient.getService(AuthService.class).login(info).setCallback(callback);
         // this method will also init UIKit
         NimUIKit.login(info, new RequestCallback<LoginInfo>() {
+            // callback already runs on main thread
             @Override
             public void onSuccess(LoginInfo info) {
                 Log.i(this.getClass().getSimpleName(), "login success");
@@ -70,8 +69,8 @@ public class LoginFragment extends Fragment {
                 // ^ this is only a placeholder for now
                 // TODO: enable caching for release
                 // caching is disabled for debugging purposes
-                //Preferences.saveUserAccount(info.getAccount());
-                //Preferences.saveUserToken(info.getToken());
+                //Preferences.saveUserAccount(getContext(), info.getAccount());
+                //Preferences.saveUserToken(getContext(), info.getToken());
             }
 
             @Override
@@ -103,8 +102,10 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onException(Throwable exception) {
-                // TODO: exception
+                exception.printStackTrace();
             }
         });
     }
+
+
 }

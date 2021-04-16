@@ -1,6 +1,7 @@
 package team.one.lwe;
 
 import android.app.Application;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.netease.nim.uikit.api.NimUIKit;
@@ -16,8 +17,7 @@ public class LWEApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LWECache.setContext(getApplicationContext());
-        NIMClient.init(this, loginInfo(), options());
+        NIMClient.init(this, loginInfo(getApplicationContext()), options());
         if (NIMUtil.isMainProcess(this)) {
             initUiKit();
         }
@@ -30,9 +30,9 @@ public class LWEApplication extends Application {
         //NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
     }
 
-    private LoginInfo loginInfo() {
-        String account = Preferences.getUserAccount();
-        String token = Preferences.getUserToken();
+    private LoginInfo loginInfo(Context context) {
+        String account = Preferences.getUserAccount(context);
+        String token = Preferences.getUserToken(context);
 
         if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
             LWECache.setAccount(account.toLowerCase());
@@ -46,7 +46,7 @@ public class LWEApplication extends Application {
         SDKOptions options = new SDKOptions();
         options.appKey = "57b4c463e5a9cca9ca364a8d0d8c9f39";
         options.checkManifestConfig = true;
-        options.sdkStorageRootPath = LWECache.getContext().getExternalCacheDir().getAbsolutePath();
+        options.sdkStorageRootPath = getApplicationContext().getExternalCacheDir().getAbsolutePath();
         return options;
     }
 }

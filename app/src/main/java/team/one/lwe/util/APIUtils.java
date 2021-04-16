@@ -25,11 +25,13 @@ public class APIUtils {
                     return new LoginInfo(asp.getInfo().getStr("accid"), asp.getInfo().getStr("token"));
                 }
                 else {
+                    switch (asp.getCode()) {
 
+                    }
                 }
             }
             default: {
-                return null;
+                return new LoginInfo("", "");
             }
         }
     }
