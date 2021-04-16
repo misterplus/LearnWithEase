@@ -50,10 +50,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegisterActivity" />
 
-    <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
-        如果 SDKOptions 中提供了，则取 SDKOptions 中的值。 -->
+        <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
+            如果 SDKOptions 中提供了，则取 SDKOptions 中的值。 -->
     <meta-data
         android:name="com.netease.nim.appKey"
         android:value="key_of_your_app" />

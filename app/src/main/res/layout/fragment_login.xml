@@ -52,7 +52,7 @@
         android:gravity="center"
         android:hint="@string/lwe_hint_password"
         android:inputType="textPassword"
-        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
         android:maxHeight="72dip"
         android:maxLines="1"
         android:textColor="@color/black"

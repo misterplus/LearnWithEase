@@ -37,7 +37,7 @@ public class LoginFragment extends Fragment {
             if (!isUsernameValid(editTextUsername.getText().toString()) || !isPasswordValid(editTextPassword.getText().toString())) {
                 // TODO: username or password invalid
             } else {
-                DialogMaker.showProgressDialog(inflater.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
+                DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
                 new Thread(() -> {
                     // TODO: request fails (endpoint not available)
                     LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
