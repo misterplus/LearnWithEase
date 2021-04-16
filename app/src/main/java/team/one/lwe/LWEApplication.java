@@ -20,7 +20,6 @@ public class LWEApplication extends Application {
         NIMClient.init(this, loginInfo(), options());
         if (NIMUtil.isMainProcess(this)) {
             initUiKit();
-            // service
         }
     }
 

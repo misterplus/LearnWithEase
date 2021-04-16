@@ -1,9 +1,7 @@
 package team.one.lwe.fragment;
 
 import android.os.Bundle;
-
-import team.one.lwe.util.APIUtils;
-import team.one.lwe.util.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +11,16 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
-import team.one.lwe.config.Preferences;
+import team.one.lwe.util.APIUtils;
+import team.one.lwe.util.TextUtils;
 
 public class LoginFragment extends Fragment {
 
@@ -37,9 +36,11 @@ public class LoginFragment extends Fragment {
         buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             if (!isUsernameValid(editTextUsername.getText().toString()) || !isPasswordValid(editTextPassword.getText().toString())) {
-                // username or password invalid
+                // TODO: username or password invalid
             } else {
+                DialogMaker.showProgressDialog(inflater.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
                 new Thread(() -> {
+                    // TODO: request fails (endpoint not available)
                     LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
                     doLogin(info);
                 }).start();
@@ -49,38 +50,61 @@ public class LoginFragment extends Fragment {
     }
 
     private static boolean isUsernameValid(@NotNull String username) {
-        return TextUtils.isLegalInfo(username) && username.length() >= 6 && username.length() <= 16;
+        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
     }
 
     private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isLegalInfo(password) && password.length() >= 8 && password.length() <= 16;
+        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
     }
 
     public void doLogin(LoginInfo info) {
-        RequestCallback<LoginInfo> callback =
-                new RequestCallback<LoginInfo>() {
-                    @Override
-                    public void onSuccess(LoginInfo info) {
-                        Preferences.saveUserAccount(info.getAccount());
-                        Preferences.saveUserToken(info.getToken());
-                    }
+        //NIMClient.getService(AuthService.class).login(info).setCallback(callback);
+        // this method will also init UIKit
+        NimUIKit.login(info, new RequestCallback<LoginInfo>() {
+            @Override
+            public void onSuccess(LoginInfo info) {
+                Log.i(this.getClass().getSimpleName(), "login success");
+                DialogMaker.dismissProgressDialog();
+                // TODO: go to main page
+                NimUIKit.startP2PSession(view.getContext(), "plus_dev");
+                // ^ this is only a placeholder for now
+                // TODO: enable caching for release
+                // caching is disabled for debugging purposes
+                //Preferences.saveUserAccount(info.getAccount());
+                //Preferences.saveUserToken(info.getToken());
+            }
 
-                    @Override
-                    public void onFailed(int code) {
-                        if (code == 302) {
-                            // fails
-                        } else {
-                            //
-                        }
-                    }
+            @Override
+            public void onFailed(int code) {
+                DialogMaker.dismissProgressDialog(); // dismiss dialog first cause login failed
+                switch (code) {
+                    case 302: {
+                        // TODO: info incorrect
 
-                    @Override
-                    public void onException(Throwable exception) {
-                        // your code
+                        break;
                     }
-                };
+                    case 408: {
+                        // TODO: timeout
+                        break;
+                    }
+                    case 415: {
+                        // TODO: connection failed
+                        break;
+                    }
+                    case 416: {
+                        // TODO: too many retries
+                        break;
+                    }
+                    default: {
 
-        //执行手动登录
-        NIMClient.getService(AuthService.class).login(info).setCallback(callback);
+                    }
+                }
+            }
+
+            @Override
+            public void onException(Throwable exception) {
+                // TODO: exception
+            }
+        });
     }
 }

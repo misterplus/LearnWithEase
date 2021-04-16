@@ -7,7 +7,19 @@ public class TextUtils {
         return (text == null || text.length() == 0);
     }
 
-    public static boolean isLegalInfo(@NotNull String text) {
-        return text.matches("[a-zA-Z0-9_]+");
+    public static boolean isLegalUsername(@NotNull String text) {
+        return text.matches("[_a-zA-Z0-9]+");
+    }
+
+    public static boolean isLegalPassword(@NotNull String text) {
+        return text.matches("[-+=_,.a-zA-Z0-9]+");
+    }
+
+    public static int getPasswordComplexity(@NotNull String text) {
+        int comp = 0;
+        if (text.matches(".*[-+=_,.].*")) comp++;
+        if (text.matches(".*[a-zA-Z].*")) comp++;
+        if (text.matches(".*[0-9].*")) comp++;
+        return comp;
     }
 }
