@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -12,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import org.jetbrains.annotations.NotNull;
 
+import cn.hutool.core.io.IORuntimeException;
 import team.one.lwe.R;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
@@ -26,6 +29,7 @@ public class LoginFragment extends Fragment {
     private View view;
     private EditText editTextUsername, editTextPassword;
     private ImageButton buttonLogin;
+    private Button buttonRegister;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,15 +39,23 @@ public class LoginFragment extends Fragment {
         buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             if (!isUsernameValid(editTextUsername.getText().toString()) || !isPasswordValid(editTextPassword.getText().toString())) {
-                // TODO: username or password invalid
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_login);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
                 new Thread(() -> {
-                    // TODO: request fails (endpoint not available)
-                    LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
-                    doLogin(info);
+                    try {
+                        LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
+                        doLogin(info);
+                    } catch (IORuntimeException e) {
+                        // TODO: failed to connect (endpoint not available)
+                        // TODO: timeout ?
+                    }
                 }).start();
             }
+        });
+        buttonRegister = view.findViewById(R.id.buttonRegister);
+        buttonRegister.setOnClickListener(view1 -> {
+            // TODO: go to register
         });
         return view;
     }
