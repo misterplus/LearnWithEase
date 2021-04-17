@@ -1,7 +1,5 @@
 package team.one.lwe.util;
 
-import com.netease.nimlib.sdk.auth.LoginInfo;
-
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;

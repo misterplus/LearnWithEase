@@ -19,13 +19,12 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
+import cn.hutool.core.io.IORuntimeException;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.util.APIUtils;
+import team.one.lwe.util.NavigationUtils;
 import team.one.lwe.util.TextUtils;
 
 public class LoginFragment extends Fragment {
@@ -42,41 +41,18 @@ public class LoginFragment extends Fragment {
         editTextPassword = view.findViewById(R.id.editTextPassword);
         buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
-            if (!isUsernameValid(editTextUsername.getText().toString()) || !isPasswordValid(editTextPassword.getText().toString())) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_login);
+            String username = editTextUsername.getText().toString();
+            String password = editTextPassword.getText().toString();
+            if (!isUsernameValid(username) || !isPasswordValid(password)) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
-                new NetworkThread(){
-                    @Override
-                    public ASResponse doRequest() {
-                        return APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
-                    }
-
-                    @Override
-                    public void onSuccess(ASResponse asp) {
-                        doLogin(new LoginInfo(asp.getInfo().getStr("accid"), asp.getInfo().getStr("token")));
-                    }
-
-                    @Override
-                    public void onFailed(int code, String desc) {
-
-                    }
-
-                    @Override
-                    public void onConnectionFailed(ConnectException e) {
-
-                    }
-
-                    @Override
-                    public void onTimeout(SocketTimeoutException e) {
-
-                    }
-                }.start();
+                doConvert(username, password);
             }
         });
         buttonRegister = view.findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(view1 -> {
-            // TODO: go to register
+            NavigationUtils.navigateTo(this, new RegisterFragment(), true);
         });
         return view;
     }
@@ -89,18 +65,53 @@ public class LoginFragment extends Fragment {
         return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
     }
 
-    public void doLogin(LoginInfo info) {
-        // this method will also init UIKit
+    private void doConvert(String username, String password) {
+        new NetworkThread(view){
+            @Override
+            public ASResponse doRequest() {
+                return APIUtils.convert(username, password);
+            }
+
+            @Override
+            public void onSuccess(ASResponse asp) {
+                doLogin(new LoginInfo(asp.getInfo().getStr("accid"), asp.getInfo().getStr("token")));
+            }
+
+            @Override
+            public void onFailed(int code, String desc) {
+                DialogMaker.dismissProgressDialog();
+                switch (code) {
+                    case 408: {
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                        break;
+                    }
+                    case 415: {
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                        break;
+                    }
+                    default: {
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                    }
+                }
+            }
+
+            @Override
+            public void onException(IORuntimeException e) {
+                e.printStackTrace();
+            }
+        }.start();
+    }
+
+    private void doLogin(LoginInfo info) {
         NimUIKit.login(info, new RequestCallback<LoginInfo>() {
-            // callback already runs on main thread
             @Override
             public void onSuccess(LoginInfo info) {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
-                // TODO: go to main page
+                //TODO: go to main page
                 NimUIKit.startP2PSession(view.getContext(), "plus_dev");
                 // ^ this is only a placeholder for now
-                // TODO: enable caching for release
+                //RELEASE: enable caching
                 // caching is disabled for debugging purposes
                 //Preferences.saveUserAccount(getContext(), info.getAccount());
                 //Preferences.saveUserToken(getContext(), info.getToken());
@@ -108,37 +119,34 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailed(int code) {
-                DialogMaker.dismissProgressDialog(); // dismiss dialog first cause login failed
+                DialogMaker.dismissProgressDialog();
                 switch (code) {
                     case 302: {
-                        // TODO: info incorrect
-
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_info);
                         break;
                     }
                     case 408: {
-                        // TODO: timeout
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
                         break;
                     }
                     case 415: {
-                        // TODO: connection failed
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
                         break;
                     }
                     case 416: {
-                        // TODO: too many retries
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_retry);
                         break;
                     }
                     default: {
-
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
                     }
                 }
             }
 
             @Override
-            public void onException(Throwable exception) {
-                exception.printStackTrace();
+            public void onException(Throwable e) {
+
             }
         });
     }
-
-
 }
