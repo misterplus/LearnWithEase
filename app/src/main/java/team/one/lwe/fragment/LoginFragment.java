@@ -19,8 +19,12 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import org.jetbrains.annotations.NotNull;
 
-import cn.hutool.core.io.IORuntimeException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+
 import team.one.lwe.R;
+import team.one.lwe.bean.ASResponse;
+import team.one.lwe.network.NetworkThread;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 
@@ -42,15 +46,32 @@ public class LoginFragment extends Fragment {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
-                new Thread(() -> {
-                    try {
-                        LoginInfo info = APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
-                        doLogin(info);
-                    } catch (IORuntimeException e) {
-                        // TODO: failed to connect (endpoint not available)
-                        // TODO: timeout ?
+                new NetworkThread(){
+                    @Override
+                    public ASResponse doRequest() {
+                        return APIUtils.convert(editTextUsername.getText().toString(), editTextPassword.getText().toString());
                     }
-                }).start();
+
+                    @Override
+                    public void onSuccess(ASResponse asp) {
+                        doLogin(new LoginInfo(asp.getInfo().getStr("accid"), asp.getInfo().getStr("token")));
+                    }
+
+                    @Override
+                    public void onFailed(int code, String desc) {
+
+                    }
+
+                    @Override
+                    public void onConnectionFailed(ConnectException e) {
+
+                    }
+
+                    @Override
+                    public void onTimeout(SocketTimeoutException e) {
+
+                    }
+                }.start();
             }
         });
         buttonRegister = view.findViewById(R.id.buttonRegister);

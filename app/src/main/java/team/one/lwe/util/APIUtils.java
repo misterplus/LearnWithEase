@@ -10,7 +10,7 @@ import team.one.lwe.bean.ASResponse;
 
 public class APIUtils {
 
-    public static LoginInfo convert(@NonNull String username, @NonNull String password) throws IORuntimeException {
+    public static ASResponse convert(@NonNull String username, @NonNull String password) throws IORuntimeException {
         HttpResponse resp = PostUtils.getBasicPost("/user/convert")
                 .form(
                         "username", username,
@@ -18,7 +18,6 @@ public class APIUtils {
                 )
                 .timeout(5000)
                 .execute();
-        ASResponse asp = new ASResponse(new JSONObject(resp.body()));
-        return new LoginInfo(asp.getInfo().getStr("accid"), asp.getInfo().getStr("token"));
+        return new ASResponse(new JSONObject(resp.body()));
     }
 }
