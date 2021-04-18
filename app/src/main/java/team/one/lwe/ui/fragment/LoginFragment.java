@@ -1,4 +1,4 @@
-package team.one.lwe.fragment;
+package team.one.lwe.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -31,15 +31,13 @@ public class LoginFragment extends Fragment {
 
     private View view;
     private EditText editTextUsername, editTextPassword;
-    private ImageButton buttonLogin;
-    private Button buttonRegister;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         editTextUsername = view.findViewById(R.id.editTextUsername);
         editTextPassword = view.findViewById(R.id.editTextPassword);
-        buttonLogin = view.findViewById(R.id.buttonLogin);
+        ImageButton buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
@@ -50,7 +48,7 @@ public class LoginFragment extends Fragment {
                 doConvert(username, password);
             }
         });
-        buttonRegister = view.findViewById(R.id.buttonRegister);
+        Button buttonRegister = view.findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(view1 -> {
             NavigationUtils.navigateTo(this, new RegisterFragment(), true);
         });
@@ -145,7 +143,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onException(Throwable e) {
-
+                e.printStackTrace();
             }
         });
     }

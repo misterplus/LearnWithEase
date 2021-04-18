@@ -1,4 +1,4 @@
-package team.one.lwe.activity;
+package team.one.lwe.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ public class WelcomeActivity extends UI {
                 startActivity(new Intent(this, LoginActivity.class));
             }
             else {
-                // TODO: go to main page
+                //TODO: go to main page
                 NimUIKit.startP2PSession(this, "plus_dev");
             }
             return false;

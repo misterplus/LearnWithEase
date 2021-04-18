@@ -1,11 +1,11 @@
-package team.one.lwe.activity;
+package team.one.lwe.ui.activity;
 
 import android.os.Bundle;
 
 import com.netease.nim.uikit.common.activity.UI;
 
 import team.one.lwe.R;
-import team.one.lwe.fragment.LoginFragment;
+import team.one.lwe.ui.fragment.LoginFragment;
 
 public class LoginActivity extends UI {
 
