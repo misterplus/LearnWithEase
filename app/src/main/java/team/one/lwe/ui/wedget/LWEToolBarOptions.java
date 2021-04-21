@@ -2,10 +2,13 @@ package team.one.lwe.ui.wedget;
 
 import com.netease.nim.uikit.common.activity.ToolBarOptions;
 
+import team.one.lwe.R;
+
 public class LWEToolBarOptions extends ToolBarOptions {
-    public LWEToolBarOptions() {
-        logoId = com.netease.nim.uikit.R.drawable.nim_actionbar_nest_dark_logo;
+    public LWEToolBarOptions(int id) {
+        logoId = R.drawable.lwe_logo_icon_toolbar;
         navigateId = com.netease.nim.uikit.R.drawable.nim_actionbar_dark_back_icon;
         isNeedNavigate = true;
+        titleId = id;
     }
 }

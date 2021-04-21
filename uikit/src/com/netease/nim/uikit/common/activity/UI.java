@@ -75,6 +75,32 @@ public abstract class UI extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //LWE: Modified method
+    public void setToolBar(View view, int toolBarId, ToolBarOptions options) {
+        toolbar = view.findViewById(toolBarId);
+        if (options.titleId != 0) {
+            toolbar.setTitle(options.titleId);
+        }
+        if (!TextUtils.isEmpty(options.titleString)) {
+            toolbar.setTitle(options.titleString);
+        }
+        if (options.logoId != 0) {
+            toolbar.setLogo(options.logoId);
+        }
+        setSupportActionBar(toolbar);
+
+        if (options.isNeedNavigate) {
+            toolbar.setNavigationIcon(options.navigateId);
+            toolbar.setContentInsetStartWithNavigation(0);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onNavigateUpClicked();
+                }
+            });
+        }
+    }
+
     public void setToolBar(int toolBarId, ToolBarOptions options) {
         toolbar = findViewById(toolBarId);
         if (options.titleId != 0) {
@@ -98,6 +124,14 @@ public abstract class UI extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    //LWE: Modified method
+    public void setToolBar(View view, int toolbarId, int titleId, int logoId) {
+        toolbar = view.findViewById(toolbarId);
+        toolbar.setTitle(titleId);
+        toolbar.setLogo(logoId);
+        setSupportActionBar(toolbar);
     }
 
     public void setToolBar(int toolbarId, int titleId, int logoId) {

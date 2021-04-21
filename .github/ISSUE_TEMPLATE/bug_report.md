@@ -1,17 +1,17 @@
 ---
 name: Bug反馈
 about: 描述一个现有的Bug及可能的问题源头与解决方案
-title: "[BUG]Bug内容简述"
-labels: bug
+title: "[BUG][此处填入Bug简述]"
+labels: Bug
 assignees: misterplus
 
 ---
 
-**Bug简述**
+**简述**
 对Bug的内容进行准确且清晰的描述。
 
 **重现步骤**
-重现Bug所需的步骤：
+重现该Bug所需的步骤：
 1. ...
 2. ...
 3. ...
