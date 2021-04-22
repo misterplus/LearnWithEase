@@ -6,6 +6,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import cn.hutool.core.io.IORuntimeException;
+import cn.hutool.http.HttpException;
 import team.one.lwe.bean.ASResponse;
 
 public abstract class NetworkThread extends Thread {
@@ -47,6 +48,12 @@ public abstract class NetworkThread extends Thread {
                 }
                 else {
                     onException(e);
+                }
+            });
+        } catch (HttpException e) {
+            view.post(() -> {
+                if ("Connection reset".equals(e.getMessage())) {
+                    onFailed(415, "connection failed");
                 }
             });
         }
