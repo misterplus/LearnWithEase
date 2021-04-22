@@ -43,7 +43,7 @@ public abstract class NetworkThread extends Thread {
             });
         } catch (IORuntimeException e) {
             view.post(() -> {
-                if (e.causeInstanceOf(ConnectException.class)) {
+                if (e.causeInstanceOf(ConnectException.class) && e.getMessage().contains("Failed to connect to")) { //connection refused
                     onFailed(415, "connection failed");
                 }
                 else if (e.causeInstanceOf(SocketTimeoutException.class)) {
@@ -55,7 +55,7 @@ public abstract class NetworkThread extends Thread {
             });
         } catch (HttpException e) {
             view.post(() -> {
-                if ("Connection reset".equals(e.getMessage())) {
+                if ("Connection reset".equals(e.getMessage())) { //connection reset
                     onFailed(415, "connection failed");
                 }
                 else {
