@@ -1,5 +1,8 @@
 package team.one.lwe.ui.fragment;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +46,9 @@ public class LoginFragment extends Fragment {
             String password = editTextPassword.getText().toString();
             if (!isUsernameValid(username) || !isPasswordValid(password)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
-            } else {
+            }else if(!isNetworkConnected()){
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_netfail);
+            }else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
                 doConvert(username, password);
             }
@@ -53,6 +58,17 @@ public class LoginFragment extends Fragment {
             NavigationUtils.navigateTo(this, new RegisterFragment(), true);
         });
         return view;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager manager = (ConnectivityManager) getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        if (info != null) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private static boolean isUsernameValid(@NotNull String username) {
