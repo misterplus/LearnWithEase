@@ -14,13 +14,21 @@ import team.one.lwe.config.Preferences;
 
 public class LWEApplication extends Application {
 
+    private static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         NIMClient.init(this, loginInfo(getApplicationContext()), options());
         if (NIMUtil.isMainProcess(this)) {
             initUiKit();
         }
+    }
+
+    public static Context getContext()
+    {
+        return context;
     }
 
     private void initUiKit() {

@@ -7,7 +7,7 @@
     <string name="lwe_button_register">新用户注册</string>
     <string name="lwe_error_login_format">用户名或密码格式有误</string>
     <string name="lwe_progress_login">登录中…</string>
-    <string name="lwe_error_netfail">网络连接异常，请稍后再试</string>
+    <string name="lwe_error_nonetwork">网络连接异常，请稍后再试</string>
     <string name="lwe_error_confail">服务器异常，请稍后再试</string>
     <string name="lwe_error_timeout">连接超时，请稍后再试</string>
     <string name="lwe_error_unknown">出现未知错误，请稍后再试</string>
