@@ -1,5 +1,6 @@
 package team.one.lwe.network;
 
+import android.util.Log;
 import android.view.View;
 
 import java.net.ConnectException;
@@ -23,7 +24,9 @@ public abstract class NetworkThread extends Thread {
 
     public abstract void onFailed(int code, String desc);
 
-    public abstract void onException(IORuntimeException e);
+    public void onException(Exception e) {
+        Log.e(view.getTransitionName(), Log.getStackTraceString(e));
+    }
 
     @Override
     public void run() {
@@ -55,7 +58,12 @@ public abstract class NetworkThread extends Thread {
                 if ("Connection reset".equals(e.getMessage())) {
                     onFailed(415, "connection failed");
                 }
+                else {
+                    onException(e);
+                }
             });
+        } catch (Exception e) {
+            view.post(() -> onException(e));
         }
     }
 }
