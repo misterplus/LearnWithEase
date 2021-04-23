@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment {
             String password = editTextPassword.getText().toString();
             if (!isUsernameValid(username) || !isPasswordValid(password)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
-            } else if (!StatusUtils.isNetworkConnected()){
+            } else if (!StatusUtils.isNetworkConnected(view.getContext())){
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
