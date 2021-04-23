@@ -19,7 +19,6 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import org.jetbrains.annotations.NotNull;
 
-import cn.hutool.core.io.IORuntimeException;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
@@ -91,6 +90,12 @@ public class LoginFragment extends Fragment {
                         ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
                     }
                 }
+            }
+
+            @Override
+            public void onException(Exception e) {
+                DialogMaker.dismissProgressDialog();
+                super.onException(e);
             }
         }.start();
     }
