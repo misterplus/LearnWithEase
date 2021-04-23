@@ -14,7 +14,6 @@ import team.one.lwe.config.Preferences;
 
 public class LWEApplication extends Application {
 
-
     @Override
     public void onCreate() {
         super.onCreate();

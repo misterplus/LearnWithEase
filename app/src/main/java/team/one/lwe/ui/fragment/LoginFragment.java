@@ -25,7 +25,6 @@ import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.NavigationUtils;
-import team.one.lwe.util.StatusUtils;
 import team.one.lwe.util.TextUtils;
 
 public class LoginFragment extends Fragment {
@@ -44,8 +43,6 @@ public class LoginFragment extends Fragment {
             String password = editTextPassword.getText().toString();
             if (!isUsernameValid(username) || !isPasswordValid(password)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
-            } else if (!StatusUtils.isNetworkConnected(view.getContext())){
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
                 doConvert(username, password);
