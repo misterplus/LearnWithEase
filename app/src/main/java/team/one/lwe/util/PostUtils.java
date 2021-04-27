@@ -13,7 +13,7 @@ public class PostUtils {
     // real server not deployed yet
     public static ASResponse doPost(@NonNull String url, int timeout, @NonNull String name, @NonNull Object value, @NonNull Object... parameters) {
         HttpResponse resp = HttpRequest.post(API_DOMAIN_NAME + url)
-                .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+                .header("Content-Type", "application/json;charset=utf-8")
                 .form(name, value, parameters)
                 .timeout(timeout)
                 .execute();
