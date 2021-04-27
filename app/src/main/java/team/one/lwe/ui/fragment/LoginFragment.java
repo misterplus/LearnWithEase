@@ -145,6 +145,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onException(Throwable e) {
+                DialogMaker.dismissProgressDialog();
                 e.printStackTrace();
             }
         });
