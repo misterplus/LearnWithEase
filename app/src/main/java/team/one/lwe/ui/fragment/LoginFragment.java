@@ -38,6 +38,7 @@ public class LoginFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         editTextUsername = view.findViewById(R.id.editTextUsername);
         editTextPassword = view.findViewById(R.id.editTextPassword);
+        //TODO: some code here
         ImageButton buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             String username = editTextUsername.getText().toString();
