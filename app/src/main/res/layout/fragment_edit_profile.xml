@@ -2,6 +2,198 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/color_grey_eaeaea">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp">
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/fragment_edit_profile_head_portrait"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="82dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                android:text="头像"
+                android:textColor="@color/black"/>
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="190dp"
+                    android:src="@mipmap/user" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/nim_arrow_right"
+
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_edit_profile_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <LinearLayout
+                android:layout_width="331dp"
+                android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="昵称"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="张三来也"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/nim_arrow_right"
+                android:layout_marginLeft="1dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_edit_profile_personal_signature"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="1dp"
+
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="330dp"
+                android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个性签名"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+              />
+
+            <TextView
+                android:id="@+id/edit_profile_Personal_signature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="每天进步亿小步!"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:gravity="right" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/nim_arrow_right"
+                android:layout_marginLeft="1dp"
+
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
+
+      <LinearLayout
+          android:id="@+id/fragment_edit_profile_personal_information"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:layout_marginTop="1dp"
+
+          android:orientation="horizontal"
+          android:background="@color/white">
+        <LinearLayout
+            android:layout_width="331dp"
+            android:layout_height="50dp"
+
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="个人信息"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+          <ImageView
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:src="@mipmap/nim_arrow_right"
+              android:layout_marginLeft="1dp"
+
+              android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+
+        </LinearLayout>
 
 </RelativeLayout>
