@@ -40,7 +40,6 @@
         android:imeOptions="actionNext"
         android:singleLine="true"
         android:maxHeight="72dip"
-        android:maxLines="1"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
@@ -62,7 +61,6 @@
         android:imeOptions="actionDone"
         android:singleLine="true"
         android:maxHeight="72dip"
-        android:maxLines="1"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
