@@ -5,15 +5,19 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.netease.nim.uikit.common.fragment.TFragment;
 import com.netease.nim.uikit.common.util.log.LogUtil;
@@ -24,10 +28,8 @@ import java.util.List;
 
 public abstract class UI extends AppCompatActivity {
 
-    private boolean destroyed = false;
-
     private static Handler handler;
-
+    private boolean destroyed = false;
     private Toolbar toolbar;
 
     @Override
@@ -176,6 +178,25 @@ public abstract class UI extends AppCompatActivity {
             handler = new Handler(getMainLooper());
         }
         return handler;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            hideKeyboard(ev, getCurrentFocus());
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    protected void hideKeyboard(MotionEvent event, View view) {
+        if (view instanceof EditText) {
+            int[] location = {0, 0};
+            view.getLocationInWindow(location);
+            int left = location[0], top = location[1], right = left + view.getWidth(), bottom = top + view.getHeight();
+            if (event.getRawX() < left || event.getRawX() > right || event.getY() < top || event.getRawY() > bottom) {
+                showKeyboard(false);
+            }
+        }
     }
 
     protected void showKeyboard(boolean isShow) {
