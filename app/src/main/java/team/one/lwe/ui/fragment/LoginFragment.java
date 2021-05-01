@@ -49,9 +49,22 @@ public class LoginFragment extends Fragment {
             }
         });
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(view1 -> {
-            NavigationUtils.navigateTo(this, new RegisterFragment(), true);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                NavigationUtils.navigateTo(LoginFragment.this, new RegisterFragment(), true);
+            }
         });
+
+
+        Button buttonRegister3 = view.findViewById(R.id.buttonPhoneLogin);
+        buttonRegister3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                NavigationUtils.navigateTo(LoginFragment.this,new EditProfileFragment(), true);
+            }
+        });
+
         return view;
     }
 
