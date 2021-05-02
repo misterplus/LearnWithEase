@@ -1,7 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:showDividers="middle"
+    android:divider="@drawable/shape_main_hbf"
+    android:background="@color/color_grey_eaeaea"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mine_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mine_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+    </com.google.android.material.appbar.AppBarLayout>
+    <View
+        android:id="@+id/mine_divider1"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1" />
+    <RelativeLayout
+        android:id="@+id/fragment_mine_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/white">
+        <ImageButton
+            android:id="@+id/mine_edit_profile_button_headimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/lwe_button_mine_headimage_selector"
+            android:src="@drawable/lwe_button_mine_headimage"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/mine_edit_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="125dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:text="@string/lwe_mine_username"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            tools:ignore="RelativeOverlap" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="125dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="55dp"
+            android:text="@string/lwe_mine_id"
+            android:textColor="@color/textgray"
+            android:textSize="20sp"
+            tools:ignore="RelativeOverlap" />
+        <TextView
+            android:id="@+id/mine_edit_profile_idnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="155dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="55dp"
+            android:text="@string/lwe_mine_idnumber"
+            android:textColor="@color/textgray"
+            android:textSize="20sp"
+            tools:ignore="RelativeOverlap" />
+        <ImageButton
+            android:id="@+id/mine_edit_profile_button"
+            android:layout_width="30dp"
+            android:layout_centerVertical="true"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/lwe_button_mine_arrow_right"
+            tools:ignore="ContentDescription" />
+    </RelativeLayout>
+    <View
+        android:id="@+id/mine_divider2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:id="@+id/fragment_mine_edit_preference"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/mine_edit_preference_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/lwe_image_mine_preference"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/mine_edit_preference_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="65dp"
+            android:text="@string/lwe_mine_preference"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageButton
+            android:id="@+id/mine_edit_preference_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_button_mine_arrow_right" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/fragment_mine_edit_history"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/mine_edit_history_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/lwe_image_mine_history"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/mine_edit_history_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="65dp"
+            android:text="@string/lwe_mine_history"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageButton
+            android:id="@+id/mine_edit_history_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_button_mine_arrow_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_mine_edit_setting"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/mine_edit_setting_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/lwe_image_mine_setting"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/mine_edit_setting_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="65dp"
+            android:text="@string/lwe_mine_setting"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageButton
+            android:id="@+id/mine_edit_setting_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_button_mine_arrow_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_mine_edit_about"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/mine_edit_about_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/lwe_image_mine_about"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/mine_edit_about_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="65dp"
+            android:text="@string/lwe_mine_about"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageButton
+            android:id="@+id/mine_edit_about_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_button_mine_arrow_right" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/mine_logout_button"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bggray"
+        android:text="@string/lwe_mine_logout"
+        android:layout_centerVertical="true"
+        android:textColor="@color/mainbule"
+        android:layout_marginBottom="@color/mainbule"/>
+
+
+
+
+
+
+
+
+
+</LinearLayout>
