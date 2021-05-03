@@ -37,7 +37,7 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/textAvatar"
+            android:id="@+id/textHeadportrait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -47,17 +47,17 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/imageAvatar"
+            android:id="@+id/imageHeadportrait"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_toStartOf="@id/avatarArrow"
+            android:layout_toStartOf="@id/headportraitArrow"
             android:layout_centerVertical="true"
-            android:src="@mipmap/user"
+            android:src="@drawable/lwe_headportrait_edit_profile"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/empty" />
 
         <ImageButton
-            android:id="@+id/avatarArrow"
+            android:id="@+id/headportraitArrow"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
