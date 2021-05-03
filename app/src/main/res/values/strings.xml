@@ -20,5 +20,5 @@
     <string name="lwe_mine_setting">软件设置</string>
     <string name="lwe_mine_history">学习历史</string>
     <string name="lwe_mine_about">关于我们</string>
-    <string name="lwe_mine_logout"><u>退出登录</u></string>
+    <string name="lwe_signature">每天进步亿小步!</string>
 </resources>
