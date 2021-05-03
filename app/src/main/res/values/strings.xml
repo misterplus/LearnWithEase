@@ -13,4 +13,12 @@
     <string name="lwe_error_login_info">用户名或密码错误</string>
     <string name="lwe_error_login_retry">登录次数过多，请稍后再试</string>
     <string name="lwe_title_register">注册账号</string>
+    <string name="lwe_mine_username">张三</string>
+    <string name="lwe_mine_id">ID:</string>
+    <string name="lwe_mine_idnumber">4892195</string>
+    <string name="lwe_mine_preference">修改偏好</string>
+    <string name="lwe_mine_setting">软件设置</string>
+    <string name="lwe_mine_history">学习历史</string>
+    <string name="lwe_mine_about">关于我们</string>
+    <string name="lwe_mine_logout"><u>退出登录</u></string>
 </resources>
