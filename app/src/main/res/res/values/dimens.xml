@@ -1,7 +1,0 @@
-<resources>
-    <!-- Login Fragment -->
-    <dimen name="login_edittext_width">290dip</dimen>
-    <dimen name="login_edittext_height">40dip</dimen>
-    <dimen name="login_edittext_fontsize">18sp</dimen>
-    <dimen name="login_button_size">80dip</dimen>
-</resources>
