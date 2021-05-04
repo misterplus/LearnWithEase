@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -51,8 +52,13 @@ public class LoginFragment extends Fragment {
             }
         });
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(view1 -> {
-            NavigationUtils.navigateTo(this, new RegisterFragment(), true);
+        buttonRegister.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new RegisterFragment(), true));
+        editTextPassword.setOnEditorActionListener((textView, i, keyEvent) -> {
+//            Log.i("test", "did something");
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                buttonLogin.callOnClick();
+            }
+            return false;
         });
         return view;
     }
@@ -146,6 +152,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onException(Throwable e) {
+                DialogMaker.dismissProgressDialog();
                 e.printStackTrace();
             }
         });
