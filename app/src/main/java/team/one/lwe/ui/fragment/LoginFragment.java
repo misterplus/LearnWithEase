@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {
-                NavigationUtils.navigateTo(LoginFragment.this, new RegisterFragment(), true);
+                NavigationUtils.navigateTo(LoginFragment.this, new ClearcacheFragment(), true);
             }
         });
 
@@ -61,7 +61,7 @@ public class LoginFragment extends Fragment {
         buttonRegister3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view1) {
-                NavigationUtils.navigateTo(LoginFragment.this,new MineFragment(), true);
+                NavigationUtils.navigateTo(LoginFragment.this,new SettingFragment(), true);
             }
         });
 

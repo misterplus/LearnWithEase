@@ -235,6 +235,9 @@
     <string name="edit">编辑</string>
     <string name="crop">裁剪</string>
     <string name="mine">我的页面</string>
+    <string name="setting">软件设置</string>
+    <string name="permissionsetting">权限设置</string>
+    <string name="clearcache">清理空间</string>
 
     <!-- 消息类型 -->
     <string name="msg_type_image">图片</string>

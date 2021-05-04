@@ -21,4 +21,23 @@
     <string name="lwe_mine_history">学习历史</string>
     <string name="lwe_mine_about">关于我们</string>
     <string name="lwe_signature">每天进步亿小步!</string>
+    <string name="lwe_setting_defaultImageQuality">默认图片质量</string>
+    <string name="lwe_setting_defaultVideoQuality">默认视频质量</string>
+    <string name="lwe_setting_messageRemending">消息提醒</string>
+    <string name="lwe_setting_gravityInduction">重力感应</string>
+    <string name="lwe_setting_permissionSetting">权限设置</string>
+    <string name="lwe_setting_clearCache">清理空间</string>
+    <string name="lwe_setting_userAgreement">用户协议</string>
+    <string name="lwe_setting_highImageQuality">高</string>
+    <string name="lwe_setting_middleImageQuality">中</string>
+    <string name="lwe_setting_lowImageQuality">低</string>
+    <string name="lwe_setting_highVideoQuality">高</string>
+    <string name="lwe_setting_middleVideoQuality">中</string>
+    <string name="lwe_setting_lowVideoQuality">低</string>
+    <string name="lwe_permissionSetting_allowLocation">允许自习室访问位置信息</string>
+    <string name="lwe_permissionSetting_allowCamera">允许自习室使用相机功能</string>
+    <string name="lwe_permissionSetting_allowMicrophone">允许自习室使用麦克风功能</string>
+    <string name="lwe_permissionSetting_allowDocument">允许自习室使文件存储和访问功能</string>
+    <string name="lwe_clearCache_clearImage">清理图片缓存</string>
+    <string name="lwe_clearCache_clearMessage">清理消息记录</string>
 </resources>
