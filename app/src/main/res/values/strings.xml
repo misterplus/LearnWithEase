@@ -3,6 +3,8 @@
 
     <string name="lwe_hint_username">请输入用户名</string>
     <string name="lwe_hint_password">请输入密码</string>
+    <string name="lwe_hint_name">请输入昵称</string>
+    <string name="lwe_hint_age">请输入年龄</string>
 
     <string name="lwe_hint_register_username">在此处填写用户名</string>
 
@@ -22,5 +24,19 @@
 
     <string name="lwe_title_register">注册账号</string>
 
-    <string name="lwe_text_username">用户名</string>
+    <string name="lwe_text_gender">性别</string>
+    <string name="lwe_text_city">所在城市</string>
+    <string name="lwe_text_edu">教育背景</string>
+    <string name="lwe_text_school">所在学校</string>
+    <string name="lwe_text_grade">年级</string>
+
+    <string name="lwe_radio_male">男</string>
+    <string name="lwe_radio_female">女</string>
+
+    <string name="lwe_placeholder_province">省份</string>
+    <string name="lwe_placeholder_area">地区</string>
+    <string name="lwe_placeholder_city">城市</string>
+    <string name="lwe_placeholder_school">选择学校</string>
+    <string name="lwe_placeholder_edu">选择学历</string>
+    <string name="lwe_placeholder_grade">选择年级</string>
 </resources>
