@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.common.activity.UI;
 
 import team.one.lwe.R;
@@ -16,6 +17,7 @@ import team.one.lwe.ui.wedget.LWEToolBarOptions;
 public class RegisterFragment extends Fragment {
 
     private View view;
+    private CityPickerView mPicker = new CityPickerView();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class RegisterFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_register, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_register);
         ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
+        mPicker.init(this.getContext());
         return view;
     }
 }

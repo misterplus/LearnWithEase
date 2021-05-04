@@ -1,29 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:showDividers="middle"
+    android:divider="@drawable/shape_main_hbf"
+    android:background="@color/color_grey_eaeaea"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        tools:ignore="InefficientWeight" />
+
+    <RelativeLayout
+        android:id="@+id/fragment_edit_profile_head_portrait"
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@id/editTextUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:autofillHints="username"
+            android:inputType="text"
+            android:hint="@string/lwe_hint_register_username"/>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
-                app:titleTextAppearance="@style/Toolbar.TitleText" />
-        </com.google.android.material.appbar.AppBarLayout>
-    </LinearLayout>
-</ScrollView>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_edit_profile_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/textNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
+            android:text="@string/lwe_textNickname"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="180dp"
+            android:layout_toStartOf="@id/nicknameArrow"
+            android:layout_marginEnd="10dp"
+            android:gravity="end"
+            android:text="@string/lwe_nickname"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/nicknameArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@mipmap/nim_arrow_right" />
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_edit_profile_personal_signature"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/textSignature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_centerVertical="true"
+            android:text="@string/lwe_textSignature"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/PersonalSignature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/signatureArrow"
+            android:gravity="end"
+            android:layout_marginEnd="10dp"
+            android:text="@string/lwe_signature"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/signatureArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@mipmap/nim_arrow_right" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_edit_profile_personal_information"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/textPersonalInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:text="@string/lwe_textPersonalInformation"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty"
+            android:src="@mipmap/nim_arrow_right" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:id="@+id/app_bar_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:theme="@style/AppTheme.AppBarOverlay"-->
+<!--            app:elevation="0dp">-->
+
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:background="?attr/colorPrimary"-->
+<!--                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"-->
+<!--                app:titleTextAppearance="@style/Toolbar.TitleText" />-->
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center_vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView3"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/lwe_text_username"-->
+<!--                android:layout/>-->
+<!--            <EditText-->
+<!--                android:id="@+id/editTextUsername"-->
+<!--                android:autofillHints="@string/lwe_hint_username"-->
+<!--                android:background="@color/transparent"-->
+<!--                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"-->
+<!--                android:hint="@string/lwe_hint_username"-->
+<!--                android:inputType="text"-->
+<!--                android:maxHeight="72dip"-->
+<!--                android:maxLines="1"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textCursorDrawable="@null"-->
+<!--                android:textSize="@dimen/login_edittext_fontsize"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="wrap_content"/>-->
+<!--        </RelativeLayout>-->
+
+
+<!--    </LinearLayout>-->
+<!--</ScrollView>-->
