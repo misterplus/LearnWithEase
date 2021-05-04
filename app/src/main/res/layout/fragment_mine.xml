@@ -26,19 +26,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <View
-        android:id="@+id/mine_divider1"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_weight="1" />
 
     <RelativeLayout
-        android:id="@+id/fragment_mine_edit_profile"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/white">
 
         <ImageButton
-            android:id="@+id/mine_edit_profile_button_headimage"
+            android:id="@+id/buttonHeadimage"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="10dp"
@@ -50,7 +48,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/mine_edit_profile_username"
+            android:id="@+id/textUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -63,7 +61,7 @@
             tools:ignore="RelativeOverlap" />
 
         <TextView
-            android:id="@+id/mine_edit_profile_idnumber"
+            android:id="@+id/textPersonalSignature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -76,41 +74,39 @@
             tools:ignore="RelativeOverlap" />
 
         <ImageButton
-            android:id="@+id/mine_edit_profile_button"
+            android:id="@+id/buttonEditProfile"
             android:layout_width="30dp"
             android:layout_centerVertical="true"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/lwe_button_mine_arrow_right"
+            android:background="@drawable/nim_arrow_right"
             tools:ignore="ContentDescription" />
 
     </RelativeLayout>
 
     <View
-        android:id="@+id/mine_divider2"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_weight="1" />
 
     <RelativeLayout
-        android:id="@+id/fragment_mine_edit_preference"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/mine_edit_preference_image"
+            android:id="@+id/imagePreference"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/lwe_image_mine_preference"
+            android:src="@drawable/lwe_icon_preference"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/mine_edit_preference_text"
+            android:id="@+id/textPreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -122,7 +118,7 @@
             tools:ignore="RelativeOverlap" />
 
         <ImageButton
-            android:id="@+id/mine_edit_preference_button"
+            android:id="@+id/buttonPreference"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -130,28 +126,27 @@
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_button_mine_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/fragment_mine_edit_history"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/mine_edit_history_image"
+            android:id="@+id/imageHistory"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/lwe_image_mine_history"
+            android:src="@drawable/lwe_icon_history"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/mine_edit_history_text"
+            android:id="@+id/textHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -163,7 +158,7 @@
             tools:ignore="RelativeOverlap" />
 
         <ImageButton
-            android:id="@+id/mine_edit_history_button"
+            android:id="@+id/buttonHistory"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -171,28 +166,27 @@
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_button_mine_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/fragment_mine_edit_setting"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/mine_edit_setting_image"
+            android:id="@+id/imageSetting"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/lwe_image_mine_setting"
+            android:src="@drawable/lwe_icon_setting"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/mine_edit_setting_text"
+            android:id="@+id/textSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -204,7 +198,7 @@
             tools:ignore="RelativeOverlap" />
 
         <ImageButton
-            android:id="@+id/mine_edit_setting_button"
+            android:id="@+id/buttonSetting"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -212,28 +206,27 @@
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_button_mine_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/fragment_mine_edit_about"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/mine_edit_about_image"
+            android:id="@+id/imageAbout"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/lwe_image_mine_about"
+            android:src="@drawable/lwe_icon_about"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/mine_edit_about_text"
+            android:id="@+id/textAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -245,7 +238,7 @@
             tools:ignore="RelativeOverlap" />
 
         <ImageButton
-            android:id="@+id/mine_edit_about_button"
+            android:id="@+id/buttonAbout"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -253,7 +246,7 @@
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_button_mine_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
 
