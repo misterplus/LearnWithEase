@@ -65,14 +65,18 @@
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
 
-    <ImageButton
+    <Button
         android:id="@+id/buttonLogin"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:background="@drawable/lwe_button_login_compact_128"
+        android:gravity="center"
+        android:background="@drawable/lwe_button_circle_blue"
+        android:text="@string/lwe_button_login"
+        android:textColor="@color/white"
+        android:textSize="48sp"
         android:contentDescription="@string/empty" />
 
     <LinearLayout

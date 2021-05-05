@@ -38,7 +38,7 @@ public class LoginFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         editTextUsername = view.findViewById(R.id.editTextUsername);
         editTextPassword = view.findViewById(R.id.editTextPassword);
-        ImageButton buttonLogin = view.findViewById(R.id.buttonLogin);
+        Button buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
@@ -54,7 +54,6 @@ public class LoginFragment extends Fragment {
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new RegisterFragment(), true));
         editTextPassword.setOnEditorActionListener((textView, i, keyEvent) -> {
-//            Log.i("test", "did something");
             if (i == EditorInfo.IME_ACTION_DONE) {
                 buttonLogin.callOnClick();
             }
