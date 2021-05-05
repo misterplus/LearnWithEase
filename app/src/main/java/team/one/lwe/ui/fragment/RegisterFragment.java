@@ -232,6 +232,7 @@ public class RegisterFragment extends Fragment {
 
                     @Override
                     public void onSuccess(ASResponse asp) {
+                        DialogMaker.dismissProgressDialog();
                         ToastHelper.showToast(getContext(), getString(R.string.lwe_success_register));
                         onBackPressed();
                     }
