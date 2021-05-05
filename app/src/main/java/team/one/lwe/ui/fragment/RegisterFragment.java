@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -32,7 +33,6 @@ import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.User;
 import team.one.lwe.bean.UserInfo;
-import team.one.lwe.enums.Background;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
@@ -199,18 +199,31 @@ public class RegisterFragment extends Fragment {
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
 
-        buttonRegister.setOnClickListener(view -> {
+        buttonRegister.setOnClickListener(view1 -> {
             DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_register));
             try {
                 String username = editTextUsername.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String name = editTextName.getText().toString();
-                int gender = groupGender.getCheckedRadioButtonId();
+                int gender;
+                switch (((RadioButton) view.findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
+                    case "女": {
+                        gender = 2;
+                        break;
+                    }
+                    case "男": {
+                        gender = 1;
+                        break;
+                    }
+                    default: {
+                        gender = 0;
+                    }
+                }
                 int age = Integer.parseInt(editTextAge.getText().toString());
                 int bak = spinnerEdu.getSelectedItemPosition();
                 int grade = spinnerGrade.getSelectedItemPosition();
                 String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
-                User user = new User(username, password, name, gender, new UserInfo(age, grade, Background.values()[bak], cPickerNames[0], cPickerNames[1], cPickerNames[2], school));
+                User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school));
                 new NetworkThread(view) {
                     @Override
                     public ASResponse doRequest() {
