@@ -72,9 +72,9 @@
 
         <ImageButton
             android:id="@+id/buttonEditProfile"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@drawable/nim_arrow_right" />
@@ -113,8 +113,8 @@
 
         <ImageButton
             android:id="@+id/buttonPreference"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
@@ -151,8 +151,8 @@
 
         <ImageButton
             android:id="@+id/buttonHistory"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
@@ -189,8 +189,8 @@
 
         <ImageButton
             android:id="@+id/buttonSetting"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
@@ -227,8 +227,8 @@
 
         <ImageButton
             android:id="@+id/buttonAbout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"

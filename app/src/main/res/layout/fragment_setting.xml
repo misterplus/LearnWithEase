@@ -223,8 +223,8 @@
 
         <ImageButton
             android:id="@+id/buttonPermissionSetting"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
@@ -251,8 +251,8 @@
 
         <ImageButton
             android:id="@+id/buttonClearCache"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
@@ -279,8 +279,8 @@
 
         <ImageButton
             android:id="@+id/buttonUserAgreement"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
