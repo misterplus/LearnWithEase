@@ -49,7 +49,7 @@ public class RegisterFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO: finish register fragment
+        //TODO: optimize register fragment
         view = inflater.inflate(R.layout.fragment_register, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_register);
         ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
