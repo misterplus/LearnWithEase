@@ -226,6 +226,19 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onFailed(int code, String desc) {
                         DialogMaker.dismissProgressDialog();
+                        switch (code) {
+                            case 408: {
+                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                                break;
+                            }
+                            case 415: {
+                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                                break;
+                            }
+                            default: {
+                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                            }
+                        }
                     }
 
                     @Override
@@ -233,6 +246,7 @@ public class RegisterFragment extends Fragment {
                         DialogMaker.dismissProgressDialog();
                         super.onException(e);
                     }
+
                 }.start();
             } catch (NumberFormatException e) {
                 DialogMaker.dismissProgressDialog();
