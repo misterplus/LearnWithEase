@@ -1,22 +1,25 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="lwe_app_name">易自习</string>
 
+<!--    提示类-->
     <string name="lwe_hint_username">请输入用户名</string>
     <string name="lwe_hint_password">请输入密码</string>
     <string name="lwe_hint_name">请输入昵称</string>
     <string name="lwe_hint_age">请输入年龄</string>
     <string name="lwe_hint_confirm">确认</string>
-
     <string name="lwe_hint_register_username">在此处填写用户名</string>
 
+<!--    按钮文字-->
     <string name="lwe_button_phone_login">手机号登录</string>
     <string name="lwe_button_lost_password">找回密码</string>
     <string name="lwe_button_register">新用户注册</string>
     <string name="lwe_button_register_real">注册</string>
     <string name="lwe_button_login">→</string>
 
+<!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
 
+<!--    错误提示-->
     <string name="lwe_error_login_format">用户名或密码格式有误</string>
     <string name="lwe_error_age_format">年龄有误，请填写数字</string>
     <string name="lwe_error_confail">服务器异常，请稍后再试</string>
@@ -26,64 +29,60 @@
     <string name="lwe_error_login_retry">登录次数过多，请稍后再试</string>
     <string name="lwe_error_nonetwork">网络连接异常，请检查您的网络设置</string>
 
+<!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
     <string name="lwe_progress_register">注册中…</string>
 
+<!--    工具栏标题-->
     <string name="lwe_title_register">注册账号</string>
+    <string name="lwe_title_mine">我的页面</string>
+    <string name="lwe_title_setting">软件设置</string>
+    <string name="lwe_title_perm">权限设置</string>
+    <string name="lwe_title_clear_cache">清理空间</string>
 
-    <string name="lwe_mine_username">张三</string>
-    <string name="lwe_mine_id">ID:</string>
-    <string name="lwe_mine_idnumber">4892195</string>
-    <string name="lwe_mine_preference">修改偏好</string>
-    <string name="lwe_mine_setting">软件设置</string>
-    <string name="lwe_mine_history">学习历史</string>
-    <string name="lwe_mine_about">关于我们</string>
-  
-    <string name="lwe_signature">每天进步亿小步!</string>
-  
-    <string name="lwe_setting_defaultImageQuality">默认图片质量</string>
-    <string name="lwe_setting_defaultVideoQuality">默认视频质量</string>
-    <string name="lwe_setting_messageRemending">消息提醒</string>
-    <string name="lwe_setting_gravityInduction">重力感应</string>
-    <string name="lwe_setting_permissionSetting">权限设置</string>
-    <string name="lwe_setting_clearCache">清理空间</string>
-    <string name="lwe_setting_userAgreement">用户协议</string>
-    <string name="lwe_setting_highImageQuality">高</string>
-    <string name="lwe_setting_middleImageQuality">中</string>
-    <string name="lwe_setting_lowImageQuality">低</string>
-    <string name="lwe_setting_highVideoQuality">高</string>
-    <string name="lwe_setting_middleVideoQuality">中</string>
-    <string name="lwe_setting_lowVideoQuality">低</string>
-  
-    <string name="lwe_permissionSetting_allowLocation">允许自习室访问位置信息</string>
-    <string name="lwe_permissionSetting_allowCamera">允许自习室使用相机功能</string>
-    <string name="lwe_permissionSetting_allowMicrophone">允许自习室使用麦克风功能</string>
-    <string name="lwe_permissionSetting_allowDocument">允许自习室使文件存储和访问功能</string>
-  
-    <string name="lwe_clearCache_clearImage">清理图片缓存</string>
-    <string name="lwe_clearCache_clearMessage">清理消息记录</string>
-  
-    <string name="mine">我的页面</string>
-    <string name="setting">软件设置</string>
-    <string name="permissionsetting">权限设置</string>
-    <string name="clearcache">清理空间</string>
-
+<!--    文本-->
     <string name="lwe_text_gender">性别</string>
     <string name="lwe_text_city">所在城市</string>
     <string name="lwe_text_edu">教育背景</string>
     <string name="lwe_text_school">所在学校</string>
     <string name="lwe_text_grade">年级</string>
+    <string name="lwe_text_id">ID:</string>
+    <string name="lwe_text_preference">修改偏好</string>
+    <string name="lwe_text_setting">软件设置</string>
+    <string name="lwe_text_history">学习历史</string>
+    <string name="lwe_text_about">关于我们</string>
+    <string name="lwe_text_quality_image">默认图片质量</string>
+    <string name="lwe_text_quality_video">默认视频质量</string>
+    <string name="lwe_text_message_reminder">消息提醒</string>
+    <string name="lwe_text_gravity">重力感应</string>
+    <string name="lwe_text_permission">权限设置</string>
+    <string name="lwe_text_clear_cache">清理空间</string>
+    <string name="lwe_text_user_agreement">用户协议</string>
+    <string name="lwe_text_location">允许自习室访问位置信息</string>
+    <string name="lwe_text_camera">允许自习室使用相机功能</string>
+    <string name="lwe_text_mic">允许自习室使用麦克风功能</string>
+    <string name="lwe_text_document">允许自习室使文件存储和访问功能</string>
+    <string name="lwe_text_clear_cache_image">清理图片缓存</string>
+    <string name="lwe_text_clear_cache_msg">清理消息记录</string>
 
+<!--    单选文本-->
     <string name="lwe_radio_male">男</string>
     <string name="lwe_radio_female">女</string>
     <string name="lwe_radio_unknown">私密</string>
+    <string name="lwe_radio_high">高</string>
+    <string name="lwe_radio_mid">中</string>
+    <string name="lwe_radio_low">低</string>
 
+<!--    占位符-->
     <string name="lwe_placeholder_citypicker">选择城市</string>
     <string name="lwe_placeholder_cityformat2">%1$s %2$s</string>
     <string name="lwe_placeholder_cityformat3">%1$s %2$s %3$s</string>
     <string name="lwe_placeholder_school">选择学校</string>
     <string name="lwe_placeholder_edu">选择学历</string>
     <string name="lwe_placeholder_grade">选择年级</string>
+    <string name="lwe_placeholder_name">昵称</string>
+    <string name="lwe_placeholder_username">ID</string>
+    <string name="lwe_placeholder_signature">签名</string>
 
     <string-array name="lwe_spinner_edu">
         <item>小学</item>

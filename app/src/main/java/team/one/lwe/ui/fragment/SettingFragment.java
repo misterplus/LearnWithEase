@@ -21,7 +21,7 @@ public class SettingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish register fragment
         view = inflater.inflate(R.layout.fragment_setting, container, false);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.setting);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_setting);
         ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
 
         Button buttonRegister = view.findViewById(R.id.buttonPermissionSetting);

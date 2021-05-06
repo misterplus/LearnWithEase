@@ -21,7 +21,7 @@ public class ClearcacheFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish register fragment
         view = inflater.inflate(R.layout.fragment_clearcache, container, false);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.clearcache);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_clear_cache);
         ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
         return view;
     }

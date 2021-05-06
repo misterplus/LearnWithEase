@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_clearCache_clearImage"
+            android:text="@string/lwe_text_clear_cache_image"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_clearCache_clearMessage"
+            android:text="@string/lwe_text_clear_cache_msg"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

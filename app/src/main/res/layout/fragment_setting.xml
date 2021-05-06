@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_defaultImageQuality"
+            android:text="@string/lwe_text_quality_image"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/lwe_setting_highImageQuality"
+                android:text="@string/lwe_radio_high"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:checked="true"/>
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/lwe_setting_middleImageQuality"
+                android:text="@string/lwe_radio_mid"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/lwe_setting_lowImageQuality"
+                android:text="@string/lwe_radio_low"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_defaultVideoQuality"
+            android:text="@string/lwe_text_quality_video"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/lwe_setting_highVideoQuality"
+                android:text="@string/lwe_radio_high"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:checked="true"/>
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/lwe_setting_middleVideoQuality"
+                android:text="@string/lwe_radio_mid"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:text="@string/lwe_setting_lowVideoQuality"
+                android:text="@string/lwe_radio_low"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
@@ -161,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_messageRemending"
+            android:text="@string/lwe_text_message_reminder"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -189,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_gravityInduction"
+            android:text="@string/lwe_text_gravity"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -217,7 +217,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_permissionSetting"
+            android:text="@string/lwe_text_permission"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -245,7 +245,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_clearCache"
+            android:text="@string/lwe_text_clear_cache"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -273,7 +273,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
-            android:text="@string/lwe_setting_userAgreement"
+            android:text="@string/lwe_text_user_agreement"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

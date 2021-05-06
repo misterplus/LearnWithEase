@@ -42,7 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
-            android:text="@string/lwe_permissionSetting_allowLocation"
+            android:text="@string/lwe_text_location"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -71,7 +71,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
-            android:text="@string/lwe_permissionSetting_allowCamera"
+            android:text="@string/lwe_text_camera"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -100,7 +100,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
-            android:text="@string/lwe_permissionSetting_allowMicrophone"
+            android:text="@string/lwe_text_mic"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -129,7 +129,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="20dp"
-            android:text="@string/lwe_permissionSetting_allowDocument"
+            android:text="@string/lwe_text_document"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
