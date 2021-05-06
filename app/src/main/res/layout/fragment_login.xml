@@ -37,8 +37,9 @@
         android:gravity="center"
         android:hint="@string/lwe_hint_username"
         android:inputType="text"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:maxHeight="72dip"
-        android:maxLines="1"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
@@ -57,20 +58,25 @@
         android:gravity="center"
         android:hint="@string/lwe_hint_password"
         android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
         android:maxHeight="72dip"
-        android:maxLines="1"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
 
-    <ImageButton
+    <Button
         android:id="@+id/buttonLogin"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:background="@drawable/lwe_button_login_compact_128"
+        android:gravity="center"
+        android:background="@drawable/lwe_button_circle_blue"
+        android:text="@string/lwe_button_login"
+        android:textColor="@color/white"
+        android:textSize="48sp"
         android:contentDescription="@string/empty" />
 
     <LinearLayout

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="team.one.lwe">
 
     <!-- 权限声明 -->
@@ -37,12 +38,13 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/lwe_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".LWEApplication"
         android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:label, android:theme">
         <activity android:name=".ui.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,12 +53,6 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.MainActivity" />
-
-        <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
-            如果 SDKOptions 中提供了，则取 SDKOptions 中的值。 -->
-    <meta-data
-        android:name="com.netease.nim.appKey"
-        android:value="key_of_your_app" />
 
     <!-- 云信后台服务，请使用独立进程。 -->
     <service
