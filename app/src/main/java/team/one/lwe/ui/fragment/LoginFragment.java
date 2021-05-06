@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,11 +16,11 @@ import androidx.fragment.app.Fragment;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import org.jetbrains.annotations.NotNull;
 
-import cn.hutool.core.io.IORuntimeException;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
@@ -37,12 +38,14 @@ public class LoginFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         editTextUsername = view.findViewById(R.id.editTextUsername);
         editTextPassword = view.findViewById(R.id.editTextPassword);
-        ImageButton buttonLogin = view.findViewById(R.id.buttonLogin);
+        Button buttonLogin = view.findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener(view1 -> {
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
             if (!isUsernameValid(username) || !isPasswordValid(password)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
+            } else if (!NetworkUtil.isNetAvailable(getActivity())){
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
                 doConvert(username, password);
@@ -50,6 +53,12 @@ public class LoginFragment extends Fragment {
         });
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
         buttonRegister.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new RegisterFragment(), true));
+        editTextPassword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                buttonLogin.callOnClick();
+            }
+            return false;
+        });
         return view;
     }
 
@@ -92,8 +101,9 @@ public class LoginFragment extends Fragment {
             }
 
             @Override
-            public void onException(IORuntimeException e) {
-                e.printStackTrace();
+            public void onException(Exception e) {
+                DialogMaker.dismissProgressDialog();
+                super.onException(e);
             }
         }.start();
     }
@@ -141,6 +151,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onException(Throwable e) {
+                DialogMaker.dismissProgressDialog();
                 e.printStackTrace();
             }
         });
