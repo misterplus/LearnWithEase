@@ -58,14 +58,14 @@
 
         <ImageButton
             android:id="@+id/headportraitArrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:layout_centerVertical="true"
             android:background="@color/white"
             android:contentDescription="@string/empty"
-            android:src="@mipmap/nim_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
 
@@ -102,14 +102,14 @@
 
         <ImageButton
             android:id="@+id/nicknameArrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@mipmap/nim_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
             </RelativeLayout>
 
@@ -147,14 +147,14 @@
 
         <ImageButton
             android:id="@+id/signatureArrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@mipmap/nim_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
 
@@ -176,14 +176,14 @@
                 android:textSize="20sp" />
 
         <ImageButton
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
             android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
-            android:src="@mipmap/nim_arrow_right" />
+            android:src="@drawable/nim_arrow_right" />
 
 
     </RelativeLayout>
