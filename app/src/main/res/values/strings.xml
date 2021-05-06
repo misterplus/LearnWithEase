@@ -40,4 +40,8 @@
     <string name="lwe_permissionSetting_allowDocument">允许自习室使文件存储和访问功能</string>
     <string name="lwe_clearCache_clearImage">清理图片缓存</string>
     <string name="lwe_clearCache_clearMessage">清理消息记录</string>
+    <string name="mine">我的页面</string>
+    <string name="setting">软件设置</string>
+    <string name="permissionsetting">权限设置</string>
+    <string name="clearcache">清理空间</string>
 </resources>

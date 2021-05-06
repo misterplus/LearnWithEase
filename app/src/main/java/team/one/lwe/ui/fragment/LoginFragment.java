@@ -49,22 +49,7 @@ public class LoginFragment extends Fragment {
             }
         });
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view1) {
-                NavigationUtils.navigateTo(LoginFragment.this, new ClearcacheFragment(), true);
-            }
-        });
-
-
-        Button buttonRegister3 = view.findViewById(R.id.buttonPhoneLogin);
-        buttonRegister3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view1) {
-                NavigationUtils.navigateTo(LoginFragment.this,new SettingFragment(), true);
-            }
-        });
-
+        buttonRegister.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new RegisterFragment(), true));
         return view;
     }
 
