@@ -36,10 +36,10 @@
         android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
         android:gravity="center"
         android:hint="@string/lwe_hint_username"
-        android:inputType="text"
         android:imeOptions="actionNext"
-        android:singleLine="true"
+        android:inputType="text"
         android:maxHeight="72dip"
+        android:singleLine="true"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
@@ -57,10 +57,10 @@
         android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
         android:gravity="center"
         android:hint="@string/lwe_hint_password"
-        android:inputType="textPassword"
         android:imeOptions="actionDone"
-        android:singleLine="true"
+        android:inputType="textPassword"
         android:maxHeight="72dip"
+        android:singleLine="true"
         android:textColor="@color/black"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/login_edittext_fontsize" />
@@ -72,12 +72,12 @@
         android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:gravity="center"
         android:background="@drawable/lwe_button_circle_blue"
+        android:contentDescription="@string/empty"
+        android:gravity="center"
         android:text="@string/lwe_button_login"
         android:textColor="@color/white"
-        android:textSize="48sp"
-        android:contentDescription="@string/empty" />
+        android:textSize="48sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

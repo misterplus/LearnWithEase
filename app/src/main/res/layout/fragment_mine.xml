@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:showDividers="middle"
-    android:divider="@drawable/shape_main_hbf"
     android:background="@color/color_grey_eaeaea"
-    android:orientation="vertical">
+    android:divider="@drawable/shape_main_hbf"
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -39,9 +39,9 @@
             android:id="@+id/buttonHeadimage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginStart="10dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
             android:background="@drawable/lwe_button_mine_headimage"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,8 +51,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="125dp"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="125dp"
             android:layout_marginTop="15dp"
             android:text="@string/lwe_placeholder_name"
             android:textColor="@color/black"
@@ -63,8 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="125dp"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="125dp"
             android:layout_marginTop="55dp"
             android:text="@string/lwe_placeholder_signature"
             android:textColor="@color/gray"
@@ -73,9 +73,9 @@
         <ImageButton
             android:id="@+id/buttonEditProfile"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@drawable/nim_arrow_right" />
 
@@ -96,16 +96,16 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
             android:src="@drawable/lwe_icon_preference" />
 
         <TextView
             android:id="@+id/textPreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="65dp"
             android:text="@string/lwe_text_preference"
             android:textColor="@color/black"
@@ -116,9 +116,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
@@ -134,16 +134,16 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
             android:src="@drawable/lwe_icon_history" />
 
         <TextView
             android:id="@+id/textHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="65dp"
             android:text="@string/lwe_text_history"
             android:textColor="@color/black"
@@ -154,9 +154,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
@@ -172,16 +172,16 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
             android:src="@drawable/lwe_icon_setting" />
 
         <TextView
             android:id="@+id/textSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="65dp"
             android:text="@string/lwe_text_setting"
             android:textColor="@color/black"
@@ -192,9 +192,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
@@ -210,16 +210,16 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
             android:src="@drawable/lwe_icon_about" />
 
         <TextView
             android:id="@+id/textAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="65dp"
             android:text="@string/lwe_text_about"
             android:textColor="@color/black"
@@ -230,9 +230,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
