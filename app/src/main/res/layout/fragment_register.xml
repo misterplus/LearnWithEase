@@ -62,6 +62,8 @@
                 android:hint="@string/lwe_hint_username"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -94,6 +96,42 @@
                 android:hint="@string/lwe_hint_password"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageconfirmPassword"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/lwe_icon_password" />
+
+            <EditText
+                android:id="@+id/editTextconfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@+id/imageconfirmPassword"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
+                android:hint="@string/lwe_hint_confirmpassword"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -125,6 +163,8 @@
                 android:hint="@string/lwe_hint_name"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -217,6 +257,8 @@
                 android:hint="@string/lwe_hint_age"
                 android:importantForAutofill="no"
                 android:inputType="number"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

@@ -27,7 +27,10 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+
+import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
@@ -36,6 +39,7 @@ import team.one.lwe.bean.UserInfo;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
+import team.one.lwe.util.TextUtils;
 
 public class RegisterFragment extends Fragment {
 
@@ -64,6 +68,7 @@ public class RegisterFragment extends Fragment {
         TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
         EditText editTextUsername = view.findViewById(R.id.editTextUsername);
         EditText editTextPassword = view.findViewById(R.id.editTextPassword);
+        EditText editTextconfirmPassword = view.findViewById(R.id.editTextconfirmPassword);
         EditText editTextName = view.findViewById(R.id.editTextName);
         EditText editTextAge = view.findViewById(R.id.editTextAge);
         RadioGroup groupGender = view.findViewById(R.id.groupGender);
@@ -200,73 +205,93 @@ public class RegisterFragment extends Fragment {
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
 
         buttonRegister.setOnClickListener(view1 -> {
-            DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_register));
-            try {
-                String username = editTextUsername.getText().toString();
-                String password = editTextPassword.getText().toString();
-                String name = editTextName.getText().toString();
-                int gender;
-                switch (((RadioButton) view.findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
-                    case "女": {
-                        gender = 2;
-                        break;
-                    }
-                    case "男": {
-                        gender = 1;
-                        break;
-                    }
-                    default: {
-                        gender = 0;
-                    }
-                }
-                int age = Integer.parseInt(editTextAge.getText().toString());
-                int bak = spinnerEdu.getSelectedItemPosition();
-                int grade = spinnerGrade.getSelectedItemPosition();
-                String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
-                User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school));
-                new NetworkThread(view) {
-                    @Override
-                    public ASResponse doRequest() {
-                        return APIUtils.register(user);
-                    }
-
-                    @Override
-                    public void onSuccess(ASResponse asp) {
-                        DialogMaker.dismissProgressDialog();
-                        ToastHelper.showToast(getContext(), getString(R.string.lwe_success_register));
-                        onBackPressed();
-                    }
-
-                    @Override
-                    public void onFailed(int code, String desc) {
-                        DialogMaker.dismissProgressDialog();
-                        switch (code) {
-                            case 408: {
-                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
-                                break;
-                            }
-                            case 415: {
-                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
-                                break;
-                            }
-                            default: {
-                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                            }
+            String username = editTextUsername.getText().toString();
+            String password = editTextPassword.getText().toString();
+            String confirmpassword = editTextconfirmPassword.getText().toString();
+            String name = editTextName.getText().toString();
+            int gender;
+            int age = Integer.parseInt(editTextAge.getText().toString());
+            int bak = spinnerEdu.getSelectedItemPosition();
+            int grade = spinnerGrade.getSelectedItemPosition();
+            if (!isUsernameValid(username) || !isPasswordValid(password)) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
+            } else if (!password.equals(confirmpassword)){
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirmpassword);
+            } else if (age <= 0 || age >= 120){
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_wrongage);
+            } else if (cPickerNames[0] == null || cPickerNames[1] == null && cPickerNames[2] == null){
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nocity);
+            } else if (!NetworkUtil.isNetAvailable(getActivity())){
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+            } else {
+                DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_register));
+                try {
+                    switch (((RadioButton) view.findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
+                        case "女": {
+                            gender = 2;
+                            break;
+                        }
+                        case "男": {
+                            gender = 1;
+                            break;
+                        }
+                        default: {
+                            gender = 0;
                         }
                     }
+                    String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
+                    User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school));
+                    new NetworkThread(view) {
+                        @Override
+                        public ASResponse doRequest() {
+                            return APIUtils.register(user);
+                        }
 
-                    @Override
-                    public void onException(Exception e) {
-                        DialogMaker.dismissProgressDialog();
-                        super.onException(e);
-                    }
+                        @Override
+                        public void onSuccess(ASResponse asp) {
+                            DialogMaker.dismissProgressDialog();
+                            ToastHelper.showToast(getContext(), getString(R.string.lwe_success_register));
+                            onBackPressed();
+                        }
 
-                }.start();
-            } catch (NumberFormatException e) {
-                DialogMaker.dismissProgressDialog();
-                ToastHelper.showToast(getContext(), getString(R.string.lwe_error_age_format));
+                        @Override
+                        public void onFailed(int code, String desc) {
+                            DialogMaker.dismissProgressDialog();
+                            switch (code) {
+                                case 408: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                                    break;
+                                }
+                                case 415: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                                    break;
+                                }
+                                default: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onException(Exception e) {
+                            DialogMaker.dismissProgressDialog();
+                            super.onException(e);
+                        }
+
+                    }.start();
+                } catch (NumberFormatException e) {
+                    DialogMaker.dismissProgressDialog();
+                    ToastHelper.showToast(getContext(), getString(R.string.lwe_error_age_format));
+                }
             }
         });
         return view;
+    }
+    private static boolean isUsernameValid(@NotNull String username) {
+        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
+    }
+
+    private static boolean isPasswordValid(@NotNull String password) {
+        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
     }
 }
