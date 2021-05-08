@@ -11,6 +11,9 @@ import team.one.lwe.LWECache;
 import team.one.lwe.R;
 
 public class WelcomeActivity extends UI {
+
+    private static final boolean DEV_FRONT = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +21,8 @@ public class WelcomeActivity extends UI {
         // redirect to login in 3 seconds
         new Handler(msg -> {
             if (LWECache.noCache()) {
-                startActivity(new Intent(this, LoginActivity.class));
+                // redirect to main if is developing frontend
+                startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
             }
             else {
                 //TODO: go to main page

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.activity.LoginActivity">
 
     <FrameLayout
@@ -14,5 +15,9 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@drawable/lwe_navibar_selector_color"
+        app:itemTextColor="@drawable/lwe_navibar_selector_color"
+        app:menu="@menu/lwe_menu_navibar"
+        android:background="@color/white"/>
 </RelativeLayout>

@@ -8,14 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.netease.nim.uikit.common.activity.UI;
-
 import team.one.lwe.R;
-import team.one.lwe.ui.wedget.LWEToolBarOptions;
-
-import android.widget.Button;
-
-import team.one.lwe.util.NavigationUtils;
 
 public class MineFragment extends Fragment {
 
@@ -23,18 +16,8 @@ public class MineFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO: finish register fragment
+        //TODO: finish mine fragment
         view = inflater.inflate(R.layout.fragment_mine, container, false);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_mine);
-        ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
-
-        Button buttonRegister = view.findViewById(R.id.buttonSetting);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view1) {
-                NavigationUtils.navigateTo(MineFragment.this,new SettingFragment(), true);
-            }
-        });
         return view;
     }
 }
