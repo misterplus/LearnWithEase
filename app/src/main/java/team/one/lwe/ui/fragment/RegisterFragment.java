@@ -47,6 +47,14 @@ public class RegisterFragment extends Fragment {
     private final String[] cPickerNames = new String[3];
     private View view;
 
+    private static boolean isUsernameValid(@NotNull String username) {
+        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
+    }
+
+    private static boolean isPasswordValid(@NotNull String password) {
+        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
+    }
+
     private void onBackPressed() {
         getActivity().onBackPressed();
     }
@@ -68,7 +76,7 @@ public class RegisterFragment extends Fragment {
         TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
         EditText editTextUsername = view.findViewById(R.id.editTextUsername);
         EditText editTextPassword = view.findViewById(R.id.editTextPassword);
-        EditText editTextconfirmPassword = view.findViewById(R.id.editTextconfirmPassword);
+        EditText editTextConfirmPassword = view.findViewById(R.id.editTextConfirmPassword);
         EditText editTextName = view.findViewById(R.id.editTextName);
         EditText editTextAge = view.findViewById(R.id.editTextAge);
         RadioGroup groupGender = view.findViewById(R.id.groupGender);
@@ -207,7 +215,7 @@ public class RegisterFragment extends Fragment {
         buttonRegister.setOnClickListener(view1 -> {
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
-            String confirmpassword = editTextconfirmPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
             String name = editTextName.getText().toString();
             int gender;
             int age = Integer.parseInt(editTextAge.getText().toString());
@@ -215,13 +223,13 @@ public class RegisterFragment extends Fragment {
             int grade = spinnerGrade.getSelectedItemPosition();
             if (!isUsernameValid(username) || !isPasswordValid(password)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
-            } else if (!password.equals(confirmpassword)){
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirmpassword);
-            } else if (age <= 0 || age >= 120){
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_wrongage);
-            } else if (cPickerNames[0] == null || cPickerNames[1] == null && cPickerNames[2] == null){
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nocity);
-            } else if (!NetworkUtil.isNetAvailable(getActivity())){
+            } else if (!password.equals(confirmPassword)) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
+            } else if (age < 1 || age > 120) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
+            } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_city);
+            } else if (!NetworkUtil.isNetAvailable(getActivity())) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_register));
@@ -262,6 +270,13 @@ public class RegisterFragment extends Fragment {
                                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
                                     break;
                                 }
+                                case 414: {
+                                    if (desc.equals("already register"))
+                                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_register);
+                                    else
+                                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                                    break;
+                                }
                                 case 415: {
                                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
                                     break;
@@ -286,12 +301,5 @@ public class RegisterFragment extends Fragment {
             }
         });
         return view;
-    }
-    private static boolean isUsernameValid(@NotNull String username) {
-        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
-    }
-
-    private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
     }
 }

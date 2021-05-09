@@ -119,7 +119,7 @@
                 android:src="@drawable/lwe_icon_password" />
 
             <EditText
-                android:id="@+id/editTextconfirmPassword"
+                android:id="@+id/editTextConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -127,7 +127,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toEndOf="@+id/imageconfirmPassword"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
-                android:hint="@string/lwe_hint_confirmpassword"
+                android:hint="@string/lwe_hint_confirm_password"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
                 android:imeOptions="actionNext"
