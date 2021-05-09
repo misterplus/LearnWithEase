@@ -1,13 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="lwe_app_name">易自习</string>
-  
-<!--    new-->
-    <string name="lwe_textSignature">个性签名</string>
-    <string name="lwe_textNickname">昵称</string>
-    <string name="lwe_nickname">张三来也</string>
-    <string name="lwe_signature">每天进步亿小步!</string>
-    <string name="lwe_textPersonalInformation">个人信息</string>
-    <string name="textAvatar">头像</string>
 
 <!--    提示类-->
     <string name="lwe_hint_username">请输入用户名</string>
@@ -47,6 +39,7 @@
     <string name="lwe_title_setting">软件设置</string>
     <string name="lwe_title_perm">权限设置</string>
     <string name="lwe_title_clear_cache">清理空间</string>
+    <string name="lwe_title_edit_profile">编辑资料</string>
 
 <!--    文本-->
     <string name="lwe_text_gender">性别</string>
@@ -72,8 +65,12 @@
     <string name="lwe_text_document">允许自习室使文件存储和访问功能</string>
     <string name="lwe_text_clear_cache_image">清理图片缓存</string>
     <string name="lwe_text_clear_cache_msg">清理消息记录</string>
+    <string name="lwe_text_signature">个性签名</string>
+    <string name="lwe_text_nickname">昵称</string>
+    <string name="lwe_text_personal_info">个人信息</string>
+    <string name="lwe_text_avatar">头像</string>
 
-<!--    单选文本-->
+    <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
     <string name="lwe_radio_female">女</string>
     <string name="lwe_radio_unknown">私密</string>

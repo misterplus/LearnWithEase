@@ -59,7 +59,6 @@ public class LoginFragment extends Fragment {
             }
             return false;
         });
-
         return view;
     }
 
