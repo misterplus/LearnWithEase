@@ -65,12 +65,15 @@
     <string name="lwe_text_document">允许自习室使文件存储和访问功能</string>
     <string name="lwe_text_clear_cache_image">清理图片缓存</string>
     <string name="lwe_text_clear_cache_msg">清理消息记录</string>
+    <string name="lwe_text_home">主页</string>
+    <string name="lwe_text_friend">好友</string>
+    <string name="lwe_text_mine">我的</string>
     <string name="lwe_text_signature">个性签名</string>
     <string name="lwe_text_nickname">昵称</string>
     <string name="lwe_text_personal_info">个人信息</string>
     <string name="lwe_text_avatar">头像</string>
 
-    <!--    单选文本-->
+<!--    单选文本-->
     <string name="lwe_radio_male">男</string>
     <string name="lwe_radio_female">女</string>
     <string name="lwe_radio_unknown">私密</string>

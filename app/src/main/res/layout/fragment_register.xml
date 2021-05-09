@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_grey_eaeaea"
+        android:background="@color/background_grey"
         android:divider="@drawable/shape_main_hbf"
         android:orientation="vertical"
         android:showDividers="middle">
@@ -169,9 +169,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:checked="true"
                     android:text="@string/lwe_radio_unknown"
-                    android:textSize="20sp"
-                    android:checked="true"/>
+                    android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/radioMale"
@@ -302,11 +302,11 @@
                 android:id="@+id/spinnerEdu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:paddingEnd="20dp"
-                android:background="@drawable/lwe_background_spinner"/>
+                android:background="@drawable/lwe_background_spinner"
+                android:paddingEnd="20dp" />
 
         </RelativeLayout>
 
@@ -340,11 +340,11 @@
                 android:id="@+id/spinnerGrade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:paddingEnd="20dp"
-                android:background="@drawable/lwe_background_spinner"/>
+                android:background="@drawable/lwe_background_spinner"
+                android:paddingEnd="20dp" />
 
         </RelativeLayout>
 
@@ -380,9 +380,9 @@
                 android:id="@+id/textSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="40dp"
-                android:layout_alignParentEnd="true"
                 android:text="@string/lwe_placeholder_school"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -391,11 +391,11 @@
                 android:id="@+id/spinnerSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:paddingEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/lwe_background_spinner"/>
+                android:background="@drawable/lwe_background_spinner"
+                android:paddingEnd="20dp" />
 
         </RelativeLayout>
 

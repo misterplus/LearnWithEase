@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:showDividers="middle"
+    android:background="@color/background_grey"
     android:divider="@drawable/shape_main_hbf"
-    android:background="@color/color_grey_eaeaea"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -39,8 +39,8 @@
             android:id="@+id/textAllowLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:text="@string/lwe_text_location"
             android:textColor="@color/black"
@@ -50,8 +50,8 @@
             android:id="@+id/switchAllowLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end">
 
@@ -68,8 +68,8 @@
             android:id="@+id/textAllowCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:text="@string/lwe_text_camera"
             android:textColor="@color/black"
@@ -79,8 +79,8 @@
             android:id="@+id/switchAllowCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end">
 
@@ -97,8 +97,8 @@
             android:id="@+id/textAllowMicrophone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:text="@string/lwe_text_mic"
             android:textColor="@color/black"
@@ -108,8 +108,8 @@
             android:id="@+id/switchAllowMicrophone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end">
 
@@ -126,8 +126,8 @@
             android:id="@+id/textAllowDocument"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:text="@string/lwe_text_document"
             android:textColor="@color/black"
@@ -137,8 +137,8 @@
             android:id="@+id/switchAllowDocument"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end">
 

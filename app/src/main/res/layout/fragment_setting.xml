@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:showDividers="middle"
+    android:background="@color/background_grey"
     android:divider="@drawable/shape_main_hbf"
-    android:background="@color/color_grey_eaeaea"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -39,8 +39,8 @@
             android:id="@+id/textdefaultImageQuality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_quality_image"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -49,8 +49,8 @@
             android:id="@+id/radioDefaultImageQuality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end"
             android:orientation="horizontal">
@@ -59,32 +59,32 @@
                 android:id="@+id/radioImageQualityHigh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:checked="true"
                 android:text="@string/lwe_radio_high"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:checked="true"/>
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/radioImageQualityMiddle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:text="@string/lwe_radio_mid"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/radioImageQualityLow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:text="@string/lwe_radio_low"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </RadioGroup>
 
@@ -99,8 +99,8 @@
             android:id="@+id/textdefaultVideoQuality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_quality_video"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -109,8 +109,8 @@
             android:id="@+id/radioDefaultVideoQuality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end"
             android:orientation="horizontal">
@@ -119,32 +119,32 @@
                 android:id="@+id/radioVideoQualityHigh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:checked="true"
                 android:text="@string/lwe_radio_high"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:checked="true"/>
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/radioVideoQualityMiddle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:text="@string/lwe_radio_mid"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <RadioButton
                 android:id="@+id/radioVideoQualityLow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:text="@string/lwe_radio_low"
                 android:textColor="@color/black"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </RadioGroup>
 
@@ -159,8 +159,8 @@
             android:id="@+id/textMessageRemending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_message_reminder"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -169,8 +169,8 @@
             android:id="@+id/switchMessageRemending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end">
 
@@ -187,8 +187,8 @@
             android:id="@+id/textGravityInduction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_gravity"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -197,8 +197,8 @@
             android:id="@+id/switchGravityInduction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:gravity="end">
 
@@ -215,8 +215,8 @@
             android:id="@+id/textPermissionSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_permission"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -226,9 +226,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
@@ -243,8 +243,8 @@
             android:id="@+id/textClearCache"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_clear_cache"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -254,9 +254,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
@@ -271,8 +271,8 @@
             android:id="@+id/textUserAgreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_user_agreement"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -282,9 +282,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 

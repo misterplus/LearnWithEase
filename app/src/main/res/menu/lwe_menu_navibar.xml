@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/naviHome"
+        android:enabled="true"
+        android:icon="@drawable/lwe_icon_home"
+        android:title="@string/lwe_text_home"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/naviFriend"
+        android:enabled="true"
+        android:icon="@drawable/lwe_icon_friend"
+        android:title="@string/lwe_text_friend"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/naviMine"
+        android:enabled="true"
+        android:icon="@drawable/lwe_icon_mine"
+        android:title="@string/lwe_text_mine"
+        app:showAsAction="withText" />
+</menu>
