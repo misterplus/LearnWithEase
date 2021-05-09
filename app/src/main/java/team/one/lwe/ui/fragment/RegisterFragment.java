@@ -225,6 +225,8 @@ public class RegisterFragment extends Fragment {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
             } else if (!password.equals(confirmPassword)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
+            } else if (name.length() == 0 || name.length() > 16) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_name);
             } else if (age < 1 || age > 120) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
             } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
