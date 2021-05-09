@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_grey"
-        android:divider="@drawable/shape_main_hbf"
+        android:divider="@drawable/lwe_background_grey"
         android:orientation="vertical"
         android:showDividers="middle">
 
