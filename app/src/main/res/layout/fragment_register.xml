@@ -60,9 +60,9 @@
                 android:layout_toEndOf="@+id/imageUsername"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
                 android:hint="@string/lwe_hint_username"
+                android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -94,9 +94,9 @@
                 android:layout_toEndOf="@+id/imagePassword"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
                 android:hint="@string/lwe_hint_password"
+                android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -128,9 +128,9 @@
                 android:layout_toEndOf="@+id/imageconfirmPassword"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
                 android:hint="@string/lwe_hint_confirm_password"
+                android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
-                android:imeOptions="actionNext"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -161,9 +161,9 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toEndOf="@+id/imageName"
                 android:hint="@string/lwe_hint_name"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:imeOptions="actionDone"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -209,9 +209,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:checked="true"
                     android:text="@string/lwe_radio_unknown"
-                    android:textSize="20sp"
-                    android:checked="true"/>
+                    android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/radioMale"
@@ -255,9 +255,10 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toEndOf="@+id/imageAge"
                 android:hint="@string/lwe_hint_age"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="number"
-                android:imeOptions="actionDone"
+                android:maxLength="3"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -344,11 +345,11 @@
                 android:id="@+id/spinnerEdu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:paddingEnd="20dp"
-                android:background="@drawable/lwe_background_spinner"/>
+                android:background="@drawable/lwe_background_spinner"
+                android:paddingEnd="20dp" />
 
         </RelativeLayout>
 
@@ -382,11 +383,11 @@
                 android:id="@+id/spinnerGrade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:paddingEnd="20dp"
-                android:background="@drawable/lwe_background_spinner"/>
+                android:background="@drawable/lwe_background_spinner"
+                android:paddingEnd="20dp" />
 
         </RelativeLayout>
 
@@ -422,9 +423,9 @@
                 android:id="@+id/textSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="40dp"
-                android:layout_alignParentEnd="true"
                 android:text="@string/lwe_placeholder_school"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -433,11 +434,11 @@
                 android:id="@+id/spinnerSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20dp"
-                android:paddingEnd="20dp"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/lwe_background_spinner"/>
+                android:background="@drawable/lwe_background_spinner"
+                android:paddingEnd="20dp" />
 
         </RelativeLayout>
 
