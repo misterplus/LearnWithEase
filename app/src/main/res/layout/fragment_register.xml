@@ -298,7 +298,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="5dp"
                 android:layout_toStartOf="@id/buttonCity"
-                android:text="@string/lwe_placeholder_citypicker"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
