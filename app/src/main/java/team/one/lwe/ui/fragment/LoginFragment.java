@@ -1,5 +1,6 @@
 package team.one.lwe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +24,10 @@ import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
+import team.one.lwe.ui.activity.LoginActivity;
+import team.one.lwe.ui.activity.MainActivity;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.NavigationUtils;
 import team.one.lwe.util.TextUtils;
@@ -115,12 +119,12 @@ public class LoginFragment extends Fragment {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
                 //TODO: go to main page
-                NimUIKit.startP2PSession(view.getContext(), "plus_dev");
+                startActivity(new Intent(getContext(), MainActivity.class));
                 // ^ this is only a placeholder for now
                 //RELEASE: enable caching
                 // caching is disabled for debugging purposes
-                //Preferences.saveUserAccount(getContext(), info.getAccount());
-                //Preferences.saveUserToken(getContext(), info.getToken());
+                Preferences.saveUserAccount(getContext(), info.getAccount());
+                Preferences.saveUserToken(getContext(), info.getToken());
             }
 
             @Override

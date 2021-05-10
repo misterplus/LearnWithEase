@@ -63,7 +63,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: optimize register fragment
         view = inflater.inflate(R.layout.fragment_register, container, false);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_register);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_register, true);
         ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
         CityConfig cityConfig = new CityConfig.Builder()
                 .confirTextColor("#0887FD")

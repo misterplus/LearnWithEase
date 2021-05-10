@@ -46,6 +46,7 @@
     <string name="lwe_title_perm">权限设置</string>
     <string name="lwe_title_clear_cache">清理空间</string>
     <string name="lwe_title_edit_profile">编辑资料</string>
+    <string name="lwe_title_friend">好友</string>
 
 <!--    文本-->
     <string name="lwe_text_gender">性别</string>
@@ -97,6 +98,11 @@
     <string name="lwe_placeholder_name">昵称</string>
     <string name="lwe_placeholder_username">ID</string>
     <string name="lwe_placeholder_signature">签名</string>
+
+    <string-array name="lwe_pager_friend">
+        <item>最近联系人</item>
+        <item>通讯录</item>
+    </string-array>
 
     <string-array name="lwe_spinner_edu">
         <item>小学</item>
