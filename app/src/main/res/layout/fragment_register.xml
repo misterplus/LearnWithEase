@@ -60,8 +60,10 @@
                 android:layout_toEndOf="@+id/imageUsername"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
                 android:hint="@string/lwe_hint_username"
+                android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -92,8 +94,44 @@
                 android:layout_toEndOf="@+id/imagePassword"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
                 android:hint="@string/lwe_hint_password"
+                android:imeOptions="actionNext"
                 android:importantForAutofill="no"
                 android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageconfirmPassword"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/lwe_icon_password" />
+
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@+id/imageconfirmPassword"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
+                android:hint="@string/lwe_hint_confirm_password"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -123,8 +161,10 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toEndOf="@+id/imageName"
                 android:hint="@string/lwe_hint_name"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -215,8 +255,11 @@
                 android:layout_marginEnd="20dp"
                 android:layout_toEndOf="@+id/imageAge"
                 android:hint="@string/lwe_hint_age"
+                android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="number"
+                android:maxLength="3"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -255,7 +298,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="5dp"
                 android:layout_toStartOf="@id/buttonCity"
-                android:text="@string/lwe_placeholder_citypicker"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

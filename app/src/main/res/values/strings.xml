@@ -4,6 +4,7 @@
 <!--    提示类-->
     <string name="lwe_hint_username">请输入用户名</string>
     <string name="lwe_hint_password">请输入密码</string>
+    <string name="lwe_hint_confirm_password">请再次输入密码</string>
     <string name="lwe_hint_name">请输入昵称</string>
     <string name="lwe_hint_age">请输入年龄</string>
     <string name="lwe_hint_confirm">确认</string>
@@ -21,13 +22,18 @@
 
 <!--    错误提示-->
     <string name="lwe_error_login_format">用户名或密码格式有误</string>
-    <string name="lwe_error_age_format">年龄有误，请填写数字</string>
+    <string name="lwe_error_age_format">年龄有误，请填写1至120的数字</string>
     <string name="lwe_error_confail">服务器异常，请稍后再试</string>
     <string name="lwe_error_timeout">连接超时，请稍后再试</string>
     <string name="lwe_error_unknown">出现未知错误，请稍后再试</string>
     <string name="lwe_error_login_info">用户名或密码错误</string>
+    <string name="lwe_error_confirm_password">两次密码输入不一致</string>
+    <string name="lwe_error_name">昵称不能为空且长度不大于16位</string>
+    <string name="lwe_error_age">请输入正确年龄</string>
+    <string name="lwe_error_city">请填写所在地区</string>
     <string name="lwe_error_login_retry">登录次数过多，请稍后再试</string>
     <string name="lwe_error_nonetwork">网络连接异常，请检查您的网络设置</string>
+    <string name="lwe_error_register">该用户名已注册</string>
 
 <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
@@ -165,6 +171,7 @@
     </string-array>
 
     <string-array name="lwe_spinner_school">
+        <item>其他大学</item>
         <item>北京大学</item>
         <item>中国人民大学</item>
         <item>清华大学</item>
