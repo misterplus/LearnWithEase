@@ -7,6 +7,7 @@
     <string name="lwe_hint_confirm_password">请再次输入密码</string>
     <string name="lwe_hint_name">请输入昵称</string>
     <string name="lwe_hint_age">请输入年龄</string>
+    <string name="lwe_hint_age_again">请重新输入年龄</string>
     <string name="lwe_hint_confirm">确认</string>
     <string name="lwe_hint_register_username">在此处填写用户名</string>
 
@@ -15,6 +16,7 @@
     <string name="lwe_button_lost_password">找回密码</string>
     <string name="lwe_button_register">新用户注册</string>
     <string name="lwe_button_register_real">注册</string>
+    <string name="lwe_button_done">完成</string>
     <string name="lwe_button_login">→</string>
 
 <!--    成功提示-->
@@ -76,6 +78,7 @@
     <string name="lwe_text_mine">我的</string>
     <string name="lwe_text_signature">个性签名</string>
     <string name="lwe_text_nickname">昵称</string>
+    <string name="lwe_nickname">昵称</string>
     <string name="lwe_text_personal_info">个人信息</string>
     <string name="lwe_text_avatar">头像</string>
 

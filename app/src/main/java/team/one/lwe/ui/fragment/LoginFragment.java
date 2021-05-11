@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
@@ -32,6 +34,12 @@ public class LoginFragment extends Fragment {
 
     private View view;
     private EditText editTextUsername, editTextPassword;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
+
+    private void onSwitchPressed() {
+        getFragmentManager().beginTransaction().replace(R.id.container,new MineFragment()).commit();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -115,7 +123,8 @@ public class LoginFragment extends Fragment {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
                 //TODO: go to main page
-                NimUIKit.startP2PSession(view.getContext(), "plus_dev");
+                onSwitchPressed();
+                //NimUIKit.startP2PSession(view.getContext(), "plus_dev");
                 // ^ this is only a placeholder for now
                 //RELEASE: enable caching
                 // caching is disabled for debugging purposes

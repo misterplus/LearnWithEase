@@ -12,7 +12,7 @@ import team.one.lwe.R;
 
 public class WelcomeActivity extends UI {
 
-    private static final boolean DEV_FRONT = true;
+    private static final boolean DEV_FRONT = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
