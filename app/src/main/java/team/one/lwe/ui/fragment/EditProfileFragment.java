@@ -36,12 +36,16 @@ import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallbackWrapper;
+import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.GenderEnum;
+import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 import cn.hutool.json.JSONArray;
@@ -85,6 +89,7 @@ public class EditProfileFragment extends Fragment {
         editNickname.setText(user.getName());
         editNickname.setFocusable(true);
         textPersonalSignature.setText(user.getSignature());
+        textPersonalSignature.setFocusable(true);
         String json =  user.getExtension();
         Map userExtension = JSON.parseObject(json, Map.class);
         editTextAge.setText(userExtension.get("age").toString());
@@ -94,64 +99,60 @@ public class EditProfileFragment extends Fragment {
                 editNickname.setText("");
             } else {
                 String nickname = editNickname.getText().toString();
-                int gender = Integer.getInteger(user.getGenderEnum().toString());
-                int age = Integer.getInteger(userExtension.get("age").toString());
-                int bak = Integer.getInteger(userExtension.get("bak").toString());
-                int grade = Integer.getInteger(userExtension.get("grade").toString());
-                String province = userExtension.get("province").toString();
-                String city = userExtension.get("city").toString();
-                String area = userExtension.get("area").toString();
-                String school = userExtension.get("school").toString();
-                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
-                new NetworkThread(view) {
-                    @Override
-                    public ASResponse doRequest() {
-                        return APIUtils.register(user1);
-                    }
-
-                    @Override
-                    public void onSuccess(ASResponse asp) {
-                        DialogMaker.dismissProgressDialog();
-                        ToastHelper.showToast(getContext(), getString(R.string.lwe_success_update));
-                    }
-
-                    @Override
-                    public void onFailed(int code, String desc) {
-                        DialogMaker.dismissProgressDialog();
-                        switch (code) {
-                            case 408: {
-                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
-                                break;
-                            }
-                            case 414: {
-                                if (desc.equals("already register"))
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_register);
-                                else
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                                break;
-                            }
-                            case 415: {
-                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
-                                break;
-                            }
-                            default: {
-                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onException(Exception e) {
-                        DialogMaker.dismissProgressDialog();
-                        super.onException(e);
-                    }
-
-                }.start();
+//                int gender = Integer.getInteger(user.getGenderEnum().toString());
+//                int age = Integer.getInteger(userExtension.get("age").toString());
+//                int bak = Integer.getInteger(userExtension.get("bak").toString());
+//                int grade = Integer.getInteger(userExtension.get("grade").toString());
+//                String province = userExtension.get("province").toString();
+//                String city = userExtension.get("city").toString();
+//                String area = userExtension.get("area").toString();
+//                String school = userExtension.get("school").toString();
+//                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.Name, nickname);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
             }
-
         });
 
-        
+        textPersonalSignature.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                textPersonalSignature.setText("");
+            } else {
+                String signature = textPersonalSignature.getText().toString();
+//                int gender = Integer.getInteger(user.getGenderEnum().toString());
+//                int age = Integer.getInteger(userExtension.get("age").toString());
+//                int bak = Integer.getInteger(userExtension.get("bak").toString());
+//                int grade = Integer.getInteger(userExtension.get("grade").toString());
+//                String province = userExtension.get("province").toString();
+//                String city = userExtension.get("city").toString();
+//                String area = userExtension.get("area").toString();
+//                String school = userExtension.get("school").toString();
+//                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.SIGNATURE, signature);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
+            }
+        });
+
+        editTextAge.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                editTextAge.setText("");
+            } else {
+                String age = editTextAge.getText().toString();
+//                int gender = Integer.getInteger(user.getGenderEnum().toString());
+//                int age = Integer.getInteger(userExtension.get("age").toString());
+//                int bak = Integer.getInteger(userExtension.get("bak").toString());
+//                int grade = Integer.getInteger(userExtension.get("grade").toString());
+//                String province = userExtension.get("province").toString();
+//                String city = userExtension.get("city").toString();
+//                String area = userExtension.get("area").toString();
+//                String school = userExtension.get("school").toString();
+//                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.undefined, age);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
+            }
+        });
 
         TextView textCityPicker = view.findViewById(R.id.textCityPicker);
         TextView textCity = view.findViewById(R.id.textCity);
