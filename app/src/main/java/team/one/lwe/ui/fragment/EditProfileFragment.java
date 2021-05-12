@@ -1,9 +1,11 @@
 package team.one.lwe.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,20 +20,35 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.fastjson.JSON;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
+import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.constant.GenderEnum;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+
+import java.util.Map;
+
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.Preference;
 import team.one.lwe.bean.User;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.network.NetworkThread;
@@ -46,23 +63,96 @@ public class EditProfileFragment extends Fragment {
     private final String[] cPickerNames = new String[3];
     private View view;
 
-    private void onBackPressed() {
-        getActivity().onBackPressed();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish mine fragment
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile);
-        ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile,true);
+        BottomNavigationView navibar = getActivity().findViewById(R.id.navibar);
+        navibar.setVisibility(View.GONE);
+        ((UI) getActivity()).setToolBar(getActivity().findViewById(R.id.toolbar), R.id.toolbar, options);
         CityConfig cityConfig = new CityConfig.Builder()
                 .confirTextColor("#0887FD")
                 .build();
         cPicker.setConfig(cityConfig);
         cPicker.init(this.getContext());
-        //EditText editNickname = view.findViewById(R.id.nickname);
+        EditText editNickname = view.findViewById(R.id.nickname);
         EditText editTextAge = view.findViewById(R.id.editTextAge);
+        EditText textPersonalSignature = view.findViewById(R.id.PersonalSignature);
+
+        String account = NimUIKit.getAccount();
+        NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
+        editNickname.setText(user.getName());
+        editNickname.setFocusable(true);
+        textPersonalSignature.setText(user.getSignature());
+        String json =  user.getExtension();
+        Map userExtension = JSON.parseObject(json, Map.class);
+        editTextAge.setText(userExtension.get("age").toString());
+
+        editNickname.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                editNickname.setText("");
+            } else {
+                String nickname = editNickname.getText().toString();
+                int gender = Integer.getInteger(user.getGenderEnum().toString());
+                int age = Integer.getInteger(userExtension.get("age").toString());
+                int bak = Integer.getInteger(userExtension.get("bak").toString());
+                int grade = Integer.getInteger(userExtension.get("grade").toString());
+                String province = userExtension.get("province").toString();
+                String city = userExtension.get("city").toString();
+                String area = userExtension.get("area").toString();
+                String school = userExtension.get("school").toString();
+                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
+                new NetworkThread(view) {
+                    @Override
+                    public ASResponse doRequest() {
+                        return APIUtils.register(user1);
+                    }
+
+                    @Override
+                    public void onSuccess(ASResponse asp) {
+                        DialogMaker.dismissProgressDialog();
+                        ToastHelper.showToast(getContext(), getString(R.string.lwe_success_update));
+                    }
+
+                    @Override
+                    public void onFailed(int code, String desc) {
+                        DialogMaker.dismissProgressDialog();
+                        switch (code) {
+                            case 408: {
+                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                                break;
+                            }
+                            case 414: {
+                                if (desc.equals("already register"))
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_register);
+                                else
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                                break;
+                            }
+                            case 415: {
+                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                                break;
+                            }
+                            default: {
+                                ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onException(Exception e) {
+                        DialogMaker.dismissProgressDialog();
+                        super.onException(e);
+                    }
+
+                }.start();
+            }
+
+        });
+
+        
+
         TextView textCityPicker = view.findViewById(R.id.textCityPicker);
         TextView textCity = view.findViewById(R.id.textCity);
         TextView textSchool = view.findViewById(R.id.textSchool);
@@ -73,7 +163,6 @@ public class EditProfileFragment extends Fragment {
         SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
         Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
         RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
-        Button buttonEditProfileDone = view.findViewById(R.id.buttonEditProfileDone);
 
         String[] eduValues = getResources().getStringArray(R.array.lwe_spinner_edu);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, eduValues);
@@ -199,87 +288,12 @@ public class EditProfileFragment extends Fragment {
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
 
-        buttonEditProfileDone.setOnClickListener(view1 -> {
-            //String nickname = editNickname.getText().toString();
-            int gender;
-            int age = Integer.parseInt(editTextAge.getText().toString());
-            int bak = spinnerEdu.getSelectedItemPosition();
-            int grade = spinnerGrade.getSelectedItemPosition();
-            if (age < 1 || age > 120) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
-            } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_city);
-            } else if (!NetworkUtil.isNetAvailable(getActivity())) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-            } else {
-                DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_register));
-                try {
-                    switch (((RadioButton) view.findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
-                        case "女": {
-                            gender = 2;
-                            break;
-                        }
-                        case "男": {
-                            gender = 1;
-                            break;
-                        }
-                        default: {
-                            gender = 0;
-                        }
-                    }
-                    String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
-                    User user = new User("","","", gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school));
-                    new NetworkThread(view) {
-                        @Override
-                        public ASResponse doRequest() {
-                            return APIUtils.register(user);
-                        }
-
-                        @Override
-                        public void onSuccess(ASResponse asp) {
-                            DialogMaker.dismissProgressDialog();
-                            ToastHelper.showToast(getContext(), getString(R.string.lwe_success_register));
-                            onBackPressed();
-                        }
-
-                        @Override
-                        public void onFailed(int code, String desc) {
-                            DialogMaker.dismissProgressDialog();
-                            switch (code) {
-                                case 408: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
-                                    break;
-                                }
-                                case 414: {
-                                    if (desc.equals("already register"))
-                                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_register);
-                                    else
-                                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                                    break;
-                                }
-                                case 415: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
-                                    break;
-                                }
-                                default: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onException(Exception e) {
-                            DialogMaker.dismissProgressDialog();
-                            super.onException(e);
-                        }
-
-                    }.start();
-                } catch (NumberFormatException e) {
-                    DialogMaker.dismissProgressDialog();
-                    ToastHelper.showToast(getContext(), getString(R.string.lwe_error_age_format));
-                }
-            }
-        });
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().findViewById(R.id.navibar).setVisibility(View.VISIBLE);
     }
 }

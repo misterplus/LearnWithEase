@@ -1,5 +1,6 @@
 package team.one.lwe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
+import team.one.lwe.ui.activity.LoginActivity;
+import team.one.lwe.ui.activity.MainActivity;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.NavigationUtils;
 import team.one.lwe.util.TextUtils;
@@ -34,12 +37,6 @@ public class LoginFragment extends Fragment {
 
     private View view;
     private EditText editTextUsername, editTextPassword;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
-
-    private void onSwitchPressed() {
-        getFragmentManager().beginTransaction().replace(R.id.container,new MineFragment()).commit();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -123,7 +120,7 @@ public class LoginFragment extends Fragment {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
                 //TODO: go to main page
-                onSwitchPressed();
+                startActivity(new Intent(getActivity(), MainActivity.class));
                 //NimUIKit.startP2PSession(view.getContext(), "plus_dev");
                 // ^ this is only a placeholder for now
                 //RELEASE: enable caching

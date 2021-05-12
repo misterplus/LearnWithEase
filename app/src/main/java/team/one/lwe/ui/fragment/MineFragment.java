@@ -32,12 +32,10 @@ import static com.netease.nim.uikit.api.NimUIKit.getAccount;
 public class MineFragment extends Fragment {
 
     private View view;
-    private TextView textUsername, textPersonalSignature;
-    private static final String TAG = "MineFragment";
+    TextView textUsername, textPersonalSignature;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO: finish mine fragment
         view = inflater.inflate(R.layout.fragment_mine, container, false);
         textUsername = view.findViewById(R.id.textUsername);
         textPersonalSignature = view.findViewById(R.id.textPersonalSignature);
@@ -48,9 +46,6 @@ public class MineFragment extends Fragment {
         String signature = user.getSignature();
         textUsername.setText(account);
         textPersonalSignature.setText(signature);
-
-
-
         return view;
     }
 }
