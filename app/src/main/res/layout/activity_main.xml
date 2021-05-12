@@ -38,3 +38,4 @@
         app:itemTextColor="@drawable/lwe_navibar_selector_color"
         app:menu="@menu/lwe_menu_navibar" />
 </LinearLayout>
+

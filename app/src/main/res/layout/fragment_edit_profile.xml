@@ -80,10 +80,7 @@
                 android:layout_toStartOf="@id/nicknameArrow"
                 android:layout_marginEnd="10dp"
                 android:gravity="end"
-                android:hint="@string/lwe_nickname"
-                android:inputType="text"
-                android:imeOptions="actionNext"
-                android:singleLine="true"
+                android:text="@string/lwe_placeholder_name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 tools:ignore="TextViewEdits" />
