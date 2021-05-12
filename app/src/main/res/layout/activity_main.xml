@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.MainActivity">
+    android:orientation="vertical"
+    tools:context=".ui.activity.LoginActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/app_bar_layout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:titleMarginStart="30dp"
-                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
-                app:titleTextAppearance="@style/Toolbar.TitleText" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navibar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/white"
         app:itemIconTint="@drawable/lwe_navibar_selector_color"
         app:itemTextColor="@drawable/lwe_navibar_selector_color"
         app:menu="@menu/lwe_menu_navibar" />
-</RelativeLayout>
+</LinearLayout>
+

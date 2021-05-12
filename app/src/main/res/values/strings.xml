@@ -7,6 +7,7 @@
     <string name="lwe_hint_confirm_password">请再次输入密码</string>
     <string name="lwe_hint_name">请输入昵称</string>
     <string name="lwe_hint_age">请输入年龄</string>
+    <string name="lwe_hint_age_again">请重新输入年龄</string>
     <string name="lwe_hint_confirm">确认</string>
     <string name="lwe_hint_register_username">在此处填写用户名</string>
 
@@ -15,6 +16,7 @@
     <string name="lwe_button_lost_password">找回密码</string>
     <string name="lwe_button_register">新用户注册</string>
     <string name="lwe_button_register_real">注册</string>
+    <string name="lwe_button_done">完成</string>
     <string name="lwe_button_login">→</string>
 
 <!--    成功提示-->
@@ -55,7 +57,7 @@
     <string name="lwe_text_school">所在学校</string>
     <string name="lwe_text_grade">年级</string>
     <string name="lwe_text_id">ID:</string>
-    <string name="lwe_text_preference">修改偏好</string>
+    <string name="lwe_text_edit_preference">修改偏好</string>
     <string name="lwe_text_setting">软件设置</string>
     <string name="lwe_text_history">学习历史</string>
     <string name="lwe_text_about">关于我们</string>
@@ -77,8 +79,17 @@
     <string name="lwe_text_mine">我的</string>
     <string name="lwe_text_signature">个性签名</string>
     <string name="lwe_text_nickname">昵称</string>
+    <string name="lwe_nickname">昵称</string>
     <string name="lwe_text_personal_info">个人信息</string>
     <string name="lwe_text_avatar">头像</string>
+    <string name="lwe_text_preference">自习偏好</string>
+    <string name="lwe_text_time_study">自习时长</string>
+    <string name="lwe_text_time_rest">小憩时长</string>
+    <string name="lwe_text_content_study">学习内容</string>
+    <string name="lwe_text_same_city">同城优先</string>
+    <string name="lwe_text_same_school">同校优先</string>
+    <string name="lwe_text_same_gender">同性优先</string>
+    <string name="lwe_text_new_room_first">优先加入新房间</string>
 
 <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
@@ -98,6 +109,39 @@
     <string name="lwe_placeholder_name">昵称</string>
     <string name="lwe_placeholder_username">ID</string>
     <string name="lwe_placeholder_signature">签名</string>
+
+    <string-array name="lwe_spinner_time_study">
+        <item>不限时</item>
+        <item>30分钟</item>
+        <item>45分钟</item>
+        <item>1小时</item>
+        <item>1.5小时</item>
+        <item>2小时</item>
+        <item>3小时</item>
+    </string-array>
+
+    <string-array name="lwe_spinner_time_rest">
+        <item>不限时</item>
+        <item>5分钟</item>
+        <item>10分钟</item>
+        <item>15分钟</item>
+        <item>20分钟</item>
+    </string-array>
+
+    <string-array name="lwe_spinner_content_study">
+        <item>全部</item>
+        <item>哲学</item>
+        <item>经济学</item>
+        <item>法学</item>
+        <item>教育学</item>
+        <item>文学</item>
+        <item>历史学</item>
+        <item>理学</item>
+        <item>工学</item>
+        <item>农学</item>
+        <item>医学</item>
+        <item>管理学</item>
+        <item>艺术学</item>
 
     <string-array name="lwe_pager_friend">
         <item>最近联系人</item>

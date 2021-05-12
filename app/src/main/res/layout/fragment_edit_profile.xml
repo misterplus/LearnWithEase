@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:showDividers="middle"
     android:divider="@drawable/lwe_background_grey"
     android:background="@color/color_grey_eaeaea"
     android:orientation="vertical">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
-            app:titleTextAppearance="@style/Toolbar.TitleText" />
-    </com.google.android.material.appbar.AppBarLayout>
 
     <View
         android:id="@+id/divider2"
@@ -98,7 +82,8 @@
                 android:gravity="end"
                 android:text="@string/lwe_placeholder_name"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="TextViewEdits" />
 
         <ImageButton
             android:id="@+id/nicknameArrow"
@@ -141,9 +126,13 @@
             android:layout_toStartOf="@+id/signatureArrow"
             android:gravity="end"
             android:layout_marginEnd="10dp"
-            android:text="@string/lwe_placeholder_signature"
+            android:hint="@string/lwe_placeholder_signature"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:ignore="TextViewEdits" />
 
         <ImageButton
             android:id="@+id/signatureArrow"
@@ -160,33 +149,294 @@
 
 
     <RelativeLayout
-        android:id="@+id/fragment_edit_profile_personal_information"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:background="@color/white">
 
-            <TextView
-                android:id="@+id/textPersonalInformation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:text="@string/lwe_text_personal_info"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/imageGender"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_icon_gender" />
 
-        <ImageButton
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageGender"
+            android:text="@string/lwe_text_gender"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <RadioGroup
+            android:id="@+id/groupGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
             android:layout_centerVertical="true"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
+            android:layout_marginEnd="30dp"
+            android:orientation="horizontal">
 
+            <RadioButton
+                android:id="@+id/radioUnknown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:checked="true"
+                android:text="@string/lwe_radio_unknown"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="@string/lwe_radio_male"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lwe_radio_female"
+                android:textSize="20sp" />
+        </RadioGroup>
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imageAge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_icon_age" />
+
+        <EditText
+            android:id="@+id/editTextAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toEndOf="@+id/imageAge"
+            android:hint="@string/lwe_hint_age_again"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imageCity"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_icon_city" />
+
+        <TextView
+            android:id="@+id/textCityPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageCity"
+            android:text="@string/lwe_text_city"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@id/buttonCity"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/buttonCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/nim_arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imageEdu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_icon_edu" />
+
+        <TextView
+            android:id="@+id/textEduPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageEdu"
+            android:text="@string/lwe_text_edu"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinnerEdu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/lwe_background_spinner"
+            android:paddingEnd="20dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/imageGrade"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_icon_grade" />
+
+        <TextView
+            android:id="@+id/textGradePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageGrade"
+            android:text="@string/lwe_text_grade"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinnerGrade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/lwe_background_spinner"
+            android:paddingEnd="20dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rowSchool"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageSchool"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_icon_school" />
+
+        <TextView
+            android:id="@+id/textSchoolPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/imageSchool"
+            android:text="@string/lwe_text_school"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textSchool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="40dp"
+            android:text="@string/lwe_placeholder_school"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/spinnerSchool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/lwe_background_spinner"
+            android:paddingEnd="20dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/buttonEditProfileDone"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/lwe_button_round_blue"
+            android:contentDescription="@string/empty"
+            android:text="@string/lwe_button_done"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

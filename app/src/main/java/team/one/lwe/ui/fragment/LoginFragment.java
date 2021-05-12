@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
@@ -36,6 +38,12 @@ public class LoginFragment extends Fragment {
 
     private View view;
     private EditText editTextUsername, editTextPassword;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
+
+    private void onSwitchPressed() {
+        getFragmentManager().beginTransaction().replace(R.id.container,new MineFragment()).commit();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
