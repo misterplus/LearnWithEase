@@ -13,11 +13,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
@@ -34,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.Preference;
 import team.one.lwe.bean.User;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.network.NetworkThread;
@@ -86,6 +89,13 @@ public class RegisterFragment extends Fragment {
         Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
         RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
+        Spinner spinnerTimeStudy = view.findViewById(R.id.spinnerTimeStudy);
+        Spinner spinnerTimeRest = view.findViewById(R.id.spinnerTimeRest);
+        Spinner spinnerContentStudy = view.findViewById(R.id.spinnerContentStudy);
+        SwitchMaterial switchSameCity = view.findViewById(R.id.switchSameCity);
+        SwitchMaterial switchSameSchool = view.findViewById(R.id.switchSameSchool);
+        SwitchMaterial switchSameGender = view.findViewById(R.id.switchSameGender);
+        SwitchMaterial switchNewRoomFirst = view.findViewById(R.id.switchNewRoomFirst);
 
         String[] eduValues = getResources().getStringArray(R.array.lwe_spinner_edu);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, eduValues);
@@ -186,6 +196,22 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+
+        String[] timeValues = getResources().getStringArray(R.array.lwe_spinner_time_study);
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, timeValues);
+        adapter4.setDropDownViewResource(R.layout.lwe_spinner_item);
+        spinnerTimeStudy.setAdapter(adapter4);
+
+        String[] restValues = getResources().getStringArray(R.array.lwe_spinner_time_rest);
+        ArrayAdapter<String> adapter5 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, restValues);
+        adapter5.setDropDownViewResource(R.layout.lwe_spinner_item);
+        spinnerTimeRest.setAdapter(adapter5);
+
+        String[] contentValues = getResources().getStringArray(R.array.lwe_spinner_content_study);
+        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, contentValues);
+        adapter6.setDropDownViewResource(R.layout.lwe_spinner_item);
+        spinnerContentStudy.setAdapter(adapter6);
+
         cPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
             @Override
             public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
@@ -250,7 +276,8 @@ public class RegisterFragment extends Fragment {
                         }
                     }
                     String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
-                    User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school));
+                    Preference pref = new Preference(spinnerTimeStudy.getSelectedItemPosition(), spinnerTimeRest.getSelectedItemPosition(), spinnerContentStudy.getSelectedItemPosition(), switchSameCity.isChecked(), switchSameSchool.isChecked(), switchSameGender.isChecked(), switchNewRoomFirst.isChecked());
+                    User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school, pref));
                     new NetworkThread(view) {
                         @Override
                         public ASResponse doRequest() {

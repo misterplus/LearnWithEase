@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserInfo {
     private int age, grade, bak; //grade = 0 for graduated
     private String province, city, area, school; // names
+    private Preference pref;
 }
