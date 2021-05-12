@@ -1,6 +1,8 @@
 package team.one.lwe.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +73,7 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish mine fragment
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile,true);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile, true);
         BottomNavigationView navibar = getActivity().findViewById(R.id.navibar);
         navibar.setVisibility(View.GONE);
         ((UI) getActivity()).setToolBar(getActivity().findViewById(R.id.toolbar), R.id.toolbar, options);
@@ -81,53 +83,59 @@ public class EditProfileFragment extends Fragment {
         cPicker.setConfig(cityConfig);
         cPicker.init(this.getContext());
         EditText editNickname = view.findViewById(R.id.nickname);
-        EditText editTextAge = view.findViewById(R.id.editTextAge);
         EditText textPersonalSignature = view.findViewById(R.id.PersonalSignature);
+        EditText editTextAge = view.findViewById(R.id.editTextAge);
+        ImageButton nicknameArrow = view.findViewById(R.id.nicknameArrow);
+        ImageButton signatureArrow = view.findViewById(R.id.signatureArrow);
+        ImageButton ageArrow = view.findViewById(R.id.ageArrow);
 
         String account = NimUIKit.getAccount();
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
+        String json = user.getExtension();
+        Map userExtension = JSON.parseObject(json, Map.class);
+        int gender = user.getGenderEnum().getValue();
         editNickname.setText(user.getName());
         editNickname.setFocusable(true);
+        editNickname.setInputType(InputType.TYPE_NULL);
         textPersonalSignature.setText(user.getSignature());
         textPersonalSignature.setFocusable(true);
-        String json =  user.getExtension();
-        Map userExtension = JSON.parseObject(json, Map.class);
+        textPersonalSignature.setInputType(InputType.TYPE_NULL);
         editTextAge.setText(userExtension.get("age").toString());
+        editTextAge.setFocusable(true);
+        editTextAge.setInputType(InputType.TYPE_NULL);
+
+        nicknameArrow.setOnClickListener(v -> {
+            editNickname.requestFocus();
+            editNickname.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+            editNickname.setTextColor(Color.BLUE);
+        });
+
+        signatureArrow.setOnClickListener(v -> {
+            textPersonalSignature.requestFocus();
+            textPersonalSignature.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+            textPersonalSignature.setTextColor(Color.BLUE);
+        });
+
+        ageArrow.setOnClickListener(v -> {
+            editTextAge.requestFocus();
+            editTextAge.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+            editTextAge.setTextColor(Color.BLUE);
+        });
 
         editNickname.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
-                editNickname.setText("");
-            } else {
+            if (!hasFocus) {
                 String nickname = editNickname.getText().toString();
-//                int gender = Integer.getInteger(user.getGenderEnum().toString());
-//                int age = Integer.getInteger(userExtension.get("age").toString());
-//                int bak = Integer.getInteger(userExtension.get("bak").toString());
-//                int grade = Integer.getInteger(userExtension.get("grade").toString());
-//                String province = userExtension.get("province").toString();
-//                String city = userExtension.get("city").toString();
-//                String area = userExtension.get("area").toString();
-//                String school = userExtension.get("school").toString();
-//                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.Name, nickname);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
+                editNickname.setInputType(InputType.TYPE_NULL);
+                editNickname.setTextColor(Color.BLACK);
             }
         });
 
         textPersonalSignature.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
-                textPersonalSignature.setText("");
-            } else {
+            if (!hasFocus) {
                 String signature = textPersonalSignature.getText().toString();
-//                int gender = Integer.getInteger(user.getGenderEnum().toString());
-//                int age = Integer.getInteger(userExtension.get("age").toString());
-//                int bak = Integer.getInteger(userExtension.get("bak").toString());
-//                int grade = Integer.getInteger(userExtension.get("grade").toString());
-//                String province = userExtension.get("province").toString();
-//                String city = userExtension.get("city").toString();
-//                String area = userExtension.get("area").toString();
-//                String school = userExtension.get("school").toString();
-//                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.SIGNATURE, signature);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
@@ -135,21 +143,54 @@ public class EditProfileFragment extends Fragment {
         });
 
         editTextAge.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
-                editTextAge.setText("");
-            } else {
-                String age = editTextAge.getText().toString();
-//                int gender = Integer.getInteger(user.getGenderEnum().toString());
-//                int age = Integer.getInteger(userExtension.get("age").toString());
-//                int bak = Integer.getInteger(userExtension.get("bak").toString());
-//                int grade = Integer.getInteger(userExtension.get("grade").toString());
-//                String province = userExtension.get("province").toString();
-//                String city = userExtension.get("city").toString();
-//                String area = userExtension.get("area").toString();
-//                String school = userExtension.get("school").toString();
-//                User user1 = new User("","",nickname, gender, new UserInfo(age, grade, bak, province, city, area, school, new Preference(2,2,2,true,true,true,true)));
+            if (hasFocus) {
+                String newage = editTextAge.getText().toString();
+                userExtension.replace("age", newage);
+                JSONObject jsonObject = new JSONObject(userExtension);
+                String extension = jsonObject.toString();
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
-                fields.put(UserInfoFieldEnum.undefined, age);
+                fields.put(UserInfoFieldEnum.EXTEND, extension);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
+            }
+        });
+
+        RadioGroup groupGender = view.findViewById(R.id.groupGender);
+        RadioButton femaleButton = view.findViewById(R.id.radioFemale);
+        RadioButton maleButton = view.findViewById(R.id.radioMale);
+        RadioButton unknownButton = view.findViewById(R.id.radioUnknown);
+
+        try {
+            switch (gender) {
+                case 2: {
+                    femaleButton.setChecked(true);
+                    break;
+                }
+                case 1: {
+                    maleButton.setChecked(true);
+                    break;
+                }
+                default: {
+                    unknownButton.setChecked(true);
+                }
+            }
+        } catch (Exception e) {
+            DialogMaker.dismissProgressDialog();
+        }
+
+        groupGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            int gender;
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (femaleButton.getId() == checkedId) {
+                    gender = 2;
+                } else if (maleButton.getId() == checkedId) {
+                    gender = 1;
+                } else if (unknownButton.getId() == checkedId) {
+                    gender = 0;
+                }
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.GENDER, gender);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
             }
         });
@@ -158,7 +199,6 @@ public class EditProfileFragment extends Fragment {
         TextView textCity = view.findViewById(R.id.textCity);
         TextView textSchool = view.findViewById(R.id.textSchool);
         TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
-        RadioGroup groupGender = view.findViewById(R.id.groupGender);
         ImageButton buttonCity = view.findViewById(R.id.buttonCity);
         Spinner spinnerEdu = view.findViewById(R.id.spinnerEdu);
         SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
@@ -188,6 +228,12 @@ public class EditProfileFragment extends Fragment {
                     textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
+                userExtension.replace("school", school);
+                JSONObject jsonObject = new JSONObject(userExtension);
+                String extension = jsonObject.toString();
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.EXTEND, extension);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
             }
 
             @Override
@@ -243,6 +289,14 @@ public class EditProfileFragment extends Fragment {
                         values = getResources().getStringArray(R.array.lwe_spinner_grade_0);
                     }
                 }
+
+                userExtension.replace("bak", eduValues[i]);
+                JSONObject jsonObject = new JSONObject(userExtension);
+                String extension = jsonObject.toString();
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.EXTEND, extension);
+
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
@@ -260,6 +314,26 @@ public class EditProfileFragment extends Fragment {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
+            }
+        });
+
+        spinnerGrade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                userExtension.replace("grade", gradeValues[i]);
+                JSONObject jsonObject = new JSONObject(userExtension);
+                String extension = jsonObject.toString();
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.EXTEND, extension);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                userExtension.replace("grade", gradeValues[0]);
+                JSONObject jsonObject = new JSONObject(userExtension);
+                String extension = jsonObject.toString();
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.EXTEND, extension);
             }
         });
 
@@ -285,6 +359,15 @@ public class EditProfileFragment extends Fragment {
                     textCity.setTextScaleX((float) 1.0);
                 }
                 textCity.setText(text);
+
+                userExtension.replace("province", cPickerNames[0]);
+                userExtension.replace("city", cPickerNames[1]);
+                userExtension.replace("area", cPickerNames[2]);
+                JSONObject jsonObject = new JSONObject(userExtension);
+                String extension = jsonObject.toString();
+                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                fields.put(UserInfoFieldEnum.EXTEND, extension);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
             }
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
