@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -180,24 +181,45 @@ public abstract class UI extends AppCompatActivity {
         return handler;
     }
 
+
+    /**
+     * 获取点击事件
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            hideKeyboard(ev, getCurrentFocus());
+            View view = getCurrentFocus();
+            if (isHideInput(view, ev)) {
+                HideSoftInput(view.getWindowToken());
+                view.clearFocus();
+            }
         }
         return super.dispatchTouchEvent(ev);
     }
 
-    protected void hideKeyboard(MotionEvent event, View view) {
-        if (view instanceof EditText) {
-            int[] location = {0, 0};
-            view.getLocationInWindow(location);
-            int left = location[0], top = location[1], right = left + view.getWidth(), bottom = top + view.getHeight();
-            if (event.getRawX() < left || event.getRawX() > right || event.getY() < top || event.getRawY() > bottom) {
-                showKeyboard(false);
-            }
+    /**
+     * 判定是否需要隐藏
+     */
+    private boolean isHideInput(View v, MotionEvent ev) {
+        if ((v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+            return !(ev.getX() > left) || !(ev.getX() < right) || !(ev.getY() > top) || !(ev.getY() < bottom);
+        }
+        return false;
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    private void HideSoftInput(IBinder token) {
+        if (token != null) {
+            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            manager.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
 
     protected void showKeyboard(boolean isShow) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

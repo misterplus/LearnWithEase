@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
@@ -27,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
-import team.one.lwe.ui.activity.LoginActivity;
 import team.one.lwe.ui.activity.MainActivity;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.NavigationUtils;

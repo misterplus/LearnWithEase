@@ -2,15 +2,11 @@ package team.one.lwe.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -22,10 +18,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.alibaba.fastjson.JSON;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
@@ -33,15 +27,10 @@ import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
-import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.RequestCallbackWrapper;
-import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.uinfo.UserService;
-import com.netease.nimlib.sdk.uinfo.constant.GenderEnum;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -50,18 +39,9 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import team.one.lwe.R;
-import team.one.lwe.bean.ASResponse;
-import team.one.lwe.bean.Preference;
-import team.one.lwe.bean.User;
 import team.one.lwe.bean.UserInfo;
-import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
-import team.one.lwe.util.APIUtils;
-import team.one.lwe.util.NavigationUtils;
-import team.one.lwe.util.TextUtils;
 
 public class EditProfileFragment extends Fragment {
 
@@ -91,35 +71,34 @@ public class EditProfileFragment extends Fragment {
 
         String account = NimUIKit.getAccount();
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
-        String json = user.getExtension();
-        Map userExtension = JSON.parseObject(json, Map.class);
+        UserInfo userExtension = new Gson().fromJson(user.getExtension(), UserInfo.class);
         int gender = user.getGenderEnum().getValue();
         editNickname.setText(user.getName());
-        editNickname.setFocusable(true);
-        editNickname.setInputType(InputType.TYPE_NULL);
         textPersonalSignature.setText(user.getSignature());
-        textPersonalSignature.setFocusable(true);
-        textPersonalSignature.setInputType(InputType.TYPE_NULL);
-        editTextAge.setText(userExtension.get("age").toString());
-        editTextAge.setFocusable(true);
-        editTextAge.setInputType(InputType.TYPE_NULL);
+        editTextAge.setText(String.valueOf(userExtension.getAge()));
 
         nicknameArrow.setOnClickListener(v -> {
+            editNickname.setFocusable(true);
+            editNickname.setFocusableInTouchMode(true);
             editNickname.requestFocus();
-            editNickname.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-            editNickname.setTextColor(Color.BLUE);
+            editNickname.findFocus();
+            editNickname.setTextColor(Color.GRAY);
         });
 
         signatureArrow.setOnClickListener(v -> {
+            textPersonalSignature.setFocusable(true);
+            textPersonalSignature.setFocusableInTouchMode(true);
             textPersonalSignature.requestFocus();
-            textPersonalSignature.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-            textPersonalSignature.setTextColor(Color.BLUE);
+            textPersonalSignature.findFocus();
+            textPersonalSignature.setTextColor(Color.GRAY);
         });
 
         ageArrow.setOnClickListener(v -> {
+            editTextAge.setFocusable(true);
+            editTextAge.setFocusableInTouchMode(true);
             editTextAge.requestFocus();
-            editTextAge.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-            editTextAge.setTextColor(Color.BLUE);
+            editTextAge.findFocus();
+            editTextAge.setTextColor(Color.GRAY);
         });
 
         editNickname.setOnFocusChangeListener((v, hasFocus) -> {
@@ -128,8 +107,9 @@ public class EditProfileFragment extends Fragment {
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.Name, nickname);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
-                editNickname.setInputType(InputType.TYPE_NULL);
+                editNickname.setFocusable(false);
                 editNickname.setTextColor(Color.BLACK);
+                editNickname.clearFocus();
             }
         });
 
@@ -139,18 +119,23 @@ public class EditProfileFragment extends Fragment {
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.SIGNATURE, signature);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
+                textPersonalSignature.setFocusable(false);
+                textPersonalSignature.setTextColor(Color.BLACK);
+                textPersonalSignature.clearFocus();
             }
         });
 
         editTextAge.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                String newage = editTextAge.getText().toString();
-                userExtension.replace("age", newage);
-                JSONObject jsonObject = new JSONObject(userExtension);
-                String extension = jsonObject.toString();
+            if (!hasFocus) {
+                int newage = Integer.parseInt(editTextAge.getText().toString());
+                userExtension.setAge(newage);
+                String extension = new Gson().toJson(userExtension);
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.EXTEND, extension);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
+                editTextAge.setFocusable(false);
+                editTextAge.setTextColor(Color.BLACK);
+                editTextAge.clearFocus();
             }
         });
 
@@ -205,6 +190,20 @@ public class EditProfileFragment extends Fragment {
         Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
         RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
 
+        String text;
+        if (userExtension.getProvince().equals(userExtension.getCity()))
+            text = String.format(getString(R.string.lwe_placeholder_cityformat2), userExtension.getProvince(), userExtension.getArea());
+        else
+            text = String.format(getString(R.string.lwe_placeholder_cityformat3), userExtension.getProvince(), userExtension.getCity(), userExtension.getArea());
+        if (text.length() >= 16) {
+            textCityPicker.setVisibility(View.INVISIBLE);
+            textCity.setTextScaleX((float) (16.0 / text.length()));
+        } else {
+            textCityPicker.setVisibility(View.VISIBLE);
+            textCity.setTextScaleX((float) 1.0);
+        }
+        textCity.setText(text);
+
         String[] eduValues = getResources().getStringArray(R.array.lwe_spinner_edu);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, eduValues);
         adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
@@ -228,9 +227,8 @@ public class EditProfileFragment extends Fragment {
                     textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
-                userExtension.replace("school", school);
-                JSONObject jsonObject = new JSONObject(userExtension);
-                String extension = jsonObject.toString();
+                userExtension.setSchool(school);
+                String extension = new Gson().toJson(userExtension);
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.EXTEND, extension);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
@@ -243,10 +241,58 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        String[] gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
+        String[] gradeValues;
+        switch (userExtension.getBak()) {
+            case 0: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
+                break;
+            }
+            case 1: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_1);
+                break;
+            }
+            case 2: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_2);
+                break;
+            }
+            case 3: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_3);
+                break;
+            }
+            case 4: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_4);
+                break;
+            }
+            case 5: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_5);
+                break;
+            }
+            case 6: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_6);
+                break;
+            }
+            case 7: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_7);
+                break;
+            }
+            default: {
+                gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
+            }
+        }
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
         adapter3.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerGrade.setAdapter(adapter3);
+
+        spinnerEdu.setSelection(userExtension.getBak(), true);
+        spinnerGrade.setSelection(userExtension.getGrade(), true);
+        if (userExtension.getBak() > 3) {
+            rowSchool.setVisibility(View.VISIBLE);
+            for (int i = 0; i < schoolValues.length; i++)
+                if (schoolValues[i].equals(userExtension.getSchool())) {
+                    spinnerSchool.setSelection(i, true);
+                    break;
+                }
+        }
 
         spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -290,13 +336,12 @@ public class EditProfileFragment extends Fragment {
                     }
                 }
 
-                userExtension.replace("bak", eduValues[i]);
-                JSONObject jsonObject = new JSONObject(userExtension);
-                String extension = jsonObject.toString();
+                userExtension.setBak(i);
+                String extension = new Gson().toJson(userExtension);
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.EXTEND, extension);
-
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
+
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
@@ -305,12 +350,54 @@ public class EditProfileFragment extends Fragment {
                     rowSchool.setVisibility(View.VISIBLE);
                 } else {
                     rowSchool.setVisibility(View.GONE);
+                    userExtension.setSchool("");
+                    extension = new Gson().toJson(userExtension);
+                    fields = new HashMap<>(1);
+                    fields.put(UserInfoFieldEnum.EXTEND, extension);
+                    NIMClient.getService(UserService.class).updateUserInfo(fields);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                String[] gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
+                String[] gradeValues;
+                switch (userExtension.getBak()) {
+                    case 0: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
+                        break;
+                    }
+                    case 1: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_1);
+                        break;
+                    }
+                    case 2: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_2);
+                        break;
+                    }
+                    case 3: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_3);
+                        break;
+                    }
+                    case 4: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_4);
+                        break;
+                    }
+                    case 5: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_5);
+                        break;
+                    }
+                    case 6: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_6);
+                        break;
+                    }
+                    case 7: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_7);
+                        break;
+                    }
+                    default: {
+                        gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
+                    }
+                }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
@@ -320,37 +407,30 @@ public class EditProfileFragment extends Fragment {
         spinnerGrade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                userExtension.replace("grade", gradeValues[i]);
-                JSONObject jsonObject = new JSONObject(userExtension);
-                String extension = jsonObject.toString();
+                userExtension.setGrade(i);
+                String extension = new Gson().toJson(userExtension);
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.EXTEND, extension);
+                NIMClient.getService(UserService.class).updateUserInfo(fields);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                userExtension.replace("grade", gradeValues[0]);
-                JSONObject jsonObject = new JSONObject(userExtension);
-                String extension = jsonObject.toString();
-                Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
-                fields.put(UserInfoFieldEnum.EXTEND, extension);
+
             }
         });
 
         cPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
             @Override
             public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
-                //set ids
                 cPickerNames[0] = province.getName();
                 cPickerNames[1] = city.getName();
                 cPickerNames[2] = district.getName();
-                //set views
                 String text;
                 if (province.getName().equals(city.getName()))
                     text = String.format(getString(R.string.lwe_placeholder_cityformat2), province.getName(), district.getName());
                 else
                     text = String.format(getString(R.string.lwe_placeholder_cityformat3), province.getName(), city.getName(), district.getName());
-                //scales horizontally
                 if (text.length() >= 16) {
                     textCityPicker.setVisibility(View.INVISIBLE);
                     textCity.setTextScaleX((float) (16.0 / text.length()));
@@ -360,18 +440,16 @@ public class EditProfileFragment extends Fragment {
                 }
                 textCity.setText(text);
 
-                userExtension.replace("province", cPickerNames[0]);
-                userExtension.replace("city", cPickerNames[1]);
-                userExtension.replace("area", cPickerNames[2]);
-                JSONObject jsonObject = new JSONObject(userExtension);
-                String extension = jsonObject.toString();
+                userExtension.setProvince(cPickerNames[0]);
+                userExtension.setCity(cPickerNames[1]);
+                userExtension.setArea(cPickerNames[2]);
+                String extension = new Gson().toJson(userExtension);
                 Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
                 fields.put(UserInfoFieldEnum.EXTEND, extension);
                 NIMClient.getService(UserService.class).updateUserInfo(fields);
             }
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
-
         return view;
     }
 
