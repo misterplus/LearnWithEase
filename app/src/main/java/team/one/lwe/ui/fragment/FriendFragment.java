@@ -6,10 +6,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -32,11 +32,19 @@ public class FriendFragment extends Fragment {
     private List<Fragment> fragmentList = new ArrayList<>();
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().findViewById(R.id.buttonsFriend).setVisibility(View.GONE);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish friend fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend, false);
         ((UI)getActivity()).setToolBar(R.id.toolbar, options);
+        RelativeLayout buttonsFriend = getActivity().findViewById(R.id.buttonsFriend);
+        buttonsFriend.setVisibility(View.VISIBLE);
         TabLayout tabFriend = view.findViewById(R.id.tabFriend);
         ViewPager2 pagerFriend = view.findViewById(R.id.pagerFriend);
         fragmentList.add(new RecentContactsFragment());
@@ -54,11 +62,10 @@ public class FriendFragment extends Fragment {
             }
         });
         new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
-        return view;
-    }
+        ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
+        buttonFriendAdd.setOnClickListener(v -> {
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.lwe_menu_friend,menu);
+        });
+        return view;
     }
 }

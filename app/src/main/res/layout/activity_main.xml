@@ -25,15 +25,18 @@
             <RelativeLayout
                 android:id="@+id/buttonsFriend"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
                 <ImageButton
-                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ysf_ic_input_bottom_add"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/buttonFriendAdd"
                     android:background="@color/transparent"
                     android:contentDescription="@string/empty"
-                    android:layout_marginEnd="10dp"/>
+                    android:src="@drawable/ysf_ic_input_bottom_add" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
