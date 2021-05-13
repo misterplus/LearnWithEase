@@ -10,6 +10,7 @@
     <string name="lwe_hint_age_again">请重新输入年龄</string>
     <string name="lwe_hint_confirm">确认</string>
     <string name="lwe_hint_register_username">在此处填写用户名</string>
+    <string name="lwe_hint_friend_add">请输入你要添加的好友名称</string>
 
 <!--    按钮文字-->
     <string name="lwe_button_phone_login">手机号登录</string>
@@ -18,6 +19,7 @@
     <string name="lwe_button_register_real">注册</string>
     <string name="lwe_button_done">完成</string>
     <string name="lwe_button_login">→</string>
+    <string name="lwe_button_cancel">取消</string>
 
 <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
@@ -142,6 +144,7 @@
         <item>医学</item>
         <item>管理学</item>
         <item>艺术学</item>
+    </string-array>
 
     <string-array name="lwe_pager_friend">
         <item>最近联系人</item>
