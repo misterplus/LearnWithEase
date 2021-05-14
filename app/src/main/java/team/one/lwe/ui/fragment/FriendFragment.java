@@ -25,16 +25,19 @@ import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.util.NavigationUtils;
 
 public class FriendFragment extends Fragment {
     private View view;
 
     private List<Fragment> fragmentList = new ArrayList<>();
+    private TabLayoutMediator mediator;
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         getActivity().findViewById(R.id.buttonsFriend).setVisibility(View.GONE);
+        mediator.detach();
     }
 
     @Override
@@ -61,10 +64,13 @@ public class FriendFragment extends Fragment {
                 return fragmentList.size();
             }
         });
-        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
+        mediator = new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> {
+            tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position]);
+        });
+        mediator.attach();
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
         buttonFriendAdd.setOnClickListener(v -> {
-
+            NavigationUtils.navigateTo(this, new AddFriendFragment(), true);
         });
         return view;
     }
