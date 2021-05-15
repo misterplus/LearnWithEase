@@ -1,5 +1,7 @@
 package team.one.lwe.util;
 
+import com.google.gson.Gson;
+import com.netease.nimlib.sdk.InvocationFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
@@ -7,29 +9,32 @@ import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import java.util.HashMap;
 import java.util.Map;
 
+import team.one.lwe.bean.UserInfo;
+
 public class UserUtils {
 
-    public static void updateUserNickName(String nickname) {
+    public static InvocationFuture<Void> updateUserNickName(String nickname) {
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
         fields.put(UserInfoFieldEnum.Name, nickname);
-        NIMClient.getService(UserService.class).updateUserInfo(fields);
+        return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static void updateUerSignature(String signature){
+    public static InvocationFuture<Void> updateUserSignature(String signature) {
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
         fields.put(UserInfoFieldEnum.SIGNATURE, signature);
-        NIMClient.getService(UserService.class).updateUserInfo(fields);
+        return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static void updateUerGender(int gender){
+    public static InvocationFuture<Void> updateUserGender(int gender) {
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
         fields.put(UserInfoFieldEnum.GENDER, gender);
-        NIMClient.getService(UserService.class).updateUserInfo(fields);
+        return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static void updateUerExtension(String extension){
+    public static InvocationFuture<Void> updateUserExtension(UserInfo userExtension) {
+        String extension = new Gson().toJson(userExtension);
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
         fields.put(UserInfoFieldEnum.EXTEND, extension);
-        NIMClient.getService(UserService.class).updateUserInfo(fields);
+        return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 }

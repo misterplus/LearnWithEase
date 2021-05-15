@@ -28,8 +28,10 @@ import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
@@ -37,6 +39,8 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
+import team.one.lwe.ui.callback.UpdateCallback;
+import team.one.lwe.ui.listener.TextLockListener;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.UserUtils;
 
@@ -75,22 +79,20 @@ public class EditProfileFragment extends Fragment {
         editTextPersonalSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
 
-        nicknameArrow.setOnClickListener(v -> {
-            getFocus(editTextNickname);
-        });
-
-        signatureArrow.setOnClickListener(v -> {
-            getFocus(editTextPersonalSignature);
-        });
-
-        ageArrow.setOnClickListener(v -> {
-            getFocus(editTextAge);
-        });
+        nicknameArrow.setOnClickListener(new TextLockListener(editTextNickname));
+        signatureArrow.setOnClickListener(new TextLockListener(editTextPersonalSignature));
+        ageArrow.setOnClickListener(new TextLockListener(editTextAge));
 
         editTextNickname.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 String nickname = editTextNickname.getText().toString();
-                UserUtils.updateUserNickName(nickname);
+                if (nickname.isEmpty() || nickname.length() > 16) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_name);
+                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    UserUtils.updateUserNickName(nickname).setCallback(new UpdateCallback<>(view));
+                }
                 loseFocus(editTextNickname);
             }
         });
@@ -98,17 +100,28 @@ public class EditProfileFragment extends Fragment {
         editTextPersonalSignature.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 String signature = editTextPersonalSignature.getText().toString();
-                UserUtils.updateUerSignature(signature);
+                if (signature.length() > 20) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_signature);
+                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback<>(view));
+                }
                 loseFocus(editTextPersonalSignature);
             }
         });
 
         editTextAge.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                int newage = Integer.parseInt(editTextAge.getText().toString());
-                userExtension.setAge(newage);
-                String extension = new Gson().toJson(userExtension);
-                UserUtils.updateUerExtension(extension);
+                int age = Integer.parseInt(editTextAge.getText().toString());
+                if (age < 1 || age > 120) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
+                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    userExtension.setAge(age);
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                }
                 loseFocus(editTextAge);
             }
         });
@@ -139,15 +152,27 @@ public class EditProfileFragment extends Fragment {
         groupGender.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.radioFemale: {
-                    UserUtils.updateUerGender(2);
+                    if (!NetworkUtil.isNetAvailable(getActivity())) {
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                    } else {
+                        UserUtils.updateUserGender(2).setCallback(new UpdateCallback<>(view));
+                    }
                     break;
                 }
                 case R.id.radioMale: {
-                    UserUtils.updateUerGender(1);
+                    if (!NetworkUtil.isNetAvailable(getActivity())) {
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                    } else {
+                        UserUtils.updateUserGender(1).setCallback(new UpdateCallback<>(view));
+                    }
                     break;
                 }
                 default: {
-                    UserUtils.updateUerGender(0);
+                    if (!NetworkUtil.isNetAvailable(getActivity())) {
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                    } else {
+                        UserUtils.updateUserGender(0).setCallback(new UpdateCallback<>(view));
+                    }
                 }
             }
         });
@@ -199,9 +224,12 @@ public class EditProfileFragment extends Fragment {
                     textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
-                userExtension.setSchool(school);
-                String extension = new Gson().toJson(userExtension);
-                UserUtils.updateUerExtension(extension);
+                if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    userExtension.setSchool(school);
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                }
             }
 
             @Override
@@ -235,9 +263,12 @@ public class EditProfileFragment extends Fragment {
                 String[] values;
                 values = getGradeValues(i);
 
-                userExtension.setBak(i);
-                String extension = new Gson().toJson(userExtension);
-                UserUtils.updateUerExtension(extension);
+                if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    userExtension.setBak(i);
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                }
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
@@ -248,8 +279,7 @@ public class EditProfileFragment extends Fragment {
                 } else {
                     rowSchool.setVisibility(View.GONE);
                     userExtension.setSchool("");
-                    extension = new Gson().toJson(userExtension);
-                    UserUtils.updateUerExtension(extension);
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
                 }
             }
 
@@ -267,9 +297,12 @@ public class EditProfileFragment extends Fragment {
         spinnerGrade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                userExtension.setGrade(i);
-                String extension = new Gson().toJson(userExtension);
-                UserUtils.updateUerExtension(extension);
+                if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    userExtension.setGrade(i);
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                }
             }
 
             @Override
@@ -298,11 +331,14 @@ public class EditProfileFragment extends Fragment {
                 }
                 textCity.setText(text);
 
-                userExtension.setProvince(cPickerNames[0]);
-                userExtension.setCity(cPickerNames[1]);
-                userExtension.setArea(cPickerNames[2]);
-                String extension = new Gson().toJson(userExtension);
-                UserUtils.updateUerExtension(extension);
+                if (!NetworkUtil.isNetAvailable(getActivity())) {
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                } else {
+                    userExtension.setProvince(cPickerNames[0]);
+                    userExtension.setCity(cPickerNames[1]);
+                    userExtension.setArea(cPickerNames[2]);
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                }
             }
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
@@ -315,7 +351,7 @@ public class EditProfileFragment extends Fragment {
         getActivity().findViewById(R.id.navibar).setVisibility(View.VISIBLE);
     }
 
-    public void getFocus(EditText editText) {
+    private void getFocus(EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
@@ -323,13 +359,13 @@ public class EditProfileFragment extends Fragment {
         editText.setTextColor(Color.GRAY);
     }
 
-    public void loseFocus(EditText editText) {
+    private void loseFocus(EditText editText) {
         editText.setFocusable(false);
         editText.setTextColor(Color.BLACK);
         editText.clearFocus();
     }
 
-    public String[] getGradeValues(int i) {
+    private String[] getGradeValues(int i) {
         switch (i) {
             case 1: {
                 return getResources().getStringArray(R.array.lwe_spinner_grade_1);

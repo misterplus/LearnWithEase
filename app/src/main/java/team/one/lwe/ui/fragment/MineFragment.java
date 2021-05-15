@@ -29,8 +29,9 @@ public class MineFragment extends Fragment {
         textUsername = view.findViewById(R.id.textUsername);
         textPersonalSignature = view.findViewById(R.id.textPersonalSignature);
         ImageButton buttonEditProfile = view.findViewById(R.id.buttonEditProfile);
+        ImageButton buttonPreference = view.findViewById(R.id.buttonPreference);
         buttonEditProfile.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditProfileFragment(), true));
-        buttonEditProfile.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditPreferenceFragment(), true));
+        buttonPreference.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditPreferenceFragment(), true));
         String account = NimUIKit.getAccount();
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         String signature = user.getSignature();
