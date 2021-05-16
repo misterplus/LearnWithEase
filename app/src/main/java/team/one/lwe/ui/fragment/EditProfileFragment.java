@@ -1,6 +1,5 @@
 package team.one.lwe.ui.fragment;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
-import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
@@ -47,10 +45,8 @@ import team.one.lwe.util.UserUtils;
 public class EditProfileFragment extends Fragment {
 
     private final CityPickerView cPicker = new CityPickerView();
-    private final String[] cPickerNames = new String[3];
     private View view;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish mine fragment
@@ -64,57 +60,72 @@ public class EditProfileFragment extends Fragment {
                 .build();
         cPicker.setConfig(cityConfig);
         cPicker.init(this.getContext());
-        EditText editTextNickname = view.findViewById(R.id.nickname);
-        EditText editTextPersonalSignature = view.findViewById(R.id.PersonalSignature);
+        EditText editTextName = view.findViewById(R.id.editTextName);
+        EditText editTextSignature = view.findViewById(R.id.editTextSignature);
         EditText editTextAge = view.findViewById(R.id.editTextAge);
-        ImageButton nicknameArrow = view.findViewById(R.id.nicknameArrow);
-        ImageButton signatureArrow = view.findViewById(R.id.signatureArrow);
-        ImageButton ageArrow = view.findViewById(R.id.ageArrow);
+        ImageButton buttonName = view.findViewById(R.id.buttonName);
+        ImageButton buttonSignature = view.findViewById(R.id.buttonSignature);
+        ImageButton buttonAge = view.findViewById(R.id.buttonAge);
+        ImageButton buttonCity = view.findViewById(R.id.buttonCity);
+        ImageButton buttonAvatar = view.findViewById(R.id.buttonAvatar);
+        RadioGroup groupGender = view.findViewById(R.id.groupGender);
+        RadioButton radioFemale = view.findViewById(R.id.radioFemale);
+        RadioButton radioMale = view.findViewById(R.id.radioMale);
+        RadioButton radioUnknown = view.findViewById(R.id.radioUnknown);
+        TextView textCityPicker = view.findViewById(R.id.textCityPicker);
+        TextView textCity = view.findViewById(R.id.textCity);
+        TextView textSchool = view.findViewById(R.id.textSchool);
+        TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
+        Spinner spinnerEdu = view.findViewById(R.id.spinnerEdu);
+        Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
+        SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
+        RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
 
         String account = NimUIKit.getAccount();
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         UserInfo userExtension = new Gson().fromJson(user.getExtension(), UserInfo.class);
         int gender = user.getGenderEnum().getValue();
-        editTextNickname.setText(user.getName());
-        editTextPersonalSignature.setText(user.getSignature());
+        editTextName.setText(user.getName());
+        editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
 
-        nicknameArrow.setOnClickListener(new TextLockListener(editTextNickname));
-        signatureArrow.setOnClickListener(new TextLockListener(editTextPersonalSignature));
-        ageArrow.setOnClickListener(new TextLockListener(editTextAge));
-
-        editTextNickname.setOnFocusChangeListener((v, hasFocus) -> {
+        editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                String nickname = editTextNickname.getText().toString();
-                if (nickname.isEmpty() || nickname.length() > 16) {
+                loseFocus(editTextName);
+                String name = editTextName.getText().toString();
+                if (UserUtils.isNameInvalid(name))
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_name);
-                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
+                else if (!NetworkUtil.isNetAvailable(getActivity()))
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-                } else {
-                    UserUtils.updateUserNickName(nickname).setCallback(new UpdateCallback<>(view));
-                }
-                loseFocus(editTextNickname);
+                else
+                    UserUtils.updateUserNickName(name).setCallback(new UpdateCallback<>(view));
             }
         });
 
-        editTextPersonalSignature.setOnFocusChangeListener((v, hasFocus) -> {
+        editTextSignature.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                String signature = editTextPersonalSignature.getText().toString();
-                if (signature.length() > 20) {
+                loseFocus(editTextSignature);
+                String signature = editTextSignature.getText().toString();
+                if (UserUtils.isSignatureInvalid(signature))
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_signature);
-                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
+                else if (!NetworkUtil.isNetAvailable(getActivity()))
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-                } else {
-                    UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback<>(view));
+                else {
+                    if (signature.isEmpty()) {
+                        editTextSignature.setText(getString(R.string.lwe_text_empty_signature));
+                        UserUtils.updateUserSignature(getString(R.string.lwe_text_empty_signature)).setCallback(new UpdateCallback<>(view));
+                    }
+                    else
+                        UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback<>(view));
                 }
-                loseFocus(editTextPersonalSignature);
             }
         });
 
         editTextAge.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
+                loseFocus(editTextAge);
                 int age = Integer.parseInt(editTextAge.getText().toString());
-                if (age < 1 || age > 120) {
+                if (UserUtils.isAgeInvalid(age)) {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
                 } else if (!NetworkUtil.isNetAvailable(getActivity())) {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
@@ -122,31 +133,21 @@ public class EditProfileFragment extends Fragment {
                     userExtension.setAge(age);
                     UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
                 }
-                loseFocus(editTextAge);
             }
         });
 
-        RadioGroup groupGender = view.findViewById(R.id.groupGender);
-        RadioButton femaleButton = view.findViewById(R.id.radioFemale);
-        RadioButton maleButton = view.findViewById(R.id.radioMale);
-        RadioButton unknownButton = view.findViewById(R.id.radioUnknown);
-
-        try {
-            switch (gender) {
-                case 2: {
-                    femaleButton.setChecked(true);
-                    break;
-                }
-                case 1: {
-                    maleButton.setChecked(true);
-                    break;
-                }
-                default: {
-                    unknownButton.setChecked(true);
-                }
+        switch (gender) {
+            case 2: {
+                radioFemale.setChecked(true);
+                break;
             }
-        } catch (Exception e) {
-            DialogMaker.dismissProgressDialog();
+            case 1: {
+                radioMale.setChecked(true);
+                break;
+            }
+            default: {
+                radioUnknown.setChecked(true);
+            }
         }
 
         groupGender.setOnCheckedChangeListener((group, checkedId) -> {
@@ -176,16 +177,6 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
-
-        TextView textCityPicker = view.findViewById(R.id.textCityPicker);
-        TextView textCity = view.findViewById(R.id.textCity);
-        TextView textSchool = view.findViewById(R.id.textSchool);
-        TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
-        ImageButton buttonCity = view.findViewById(R.id.buttonCity);
-        Spinner spinnerEdu = view.findViewById(R.id.spinnerEdu);
-        SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
-        Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
-        RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
 
         String text;
         if (userExtension.getProvince().equals(userExtension.getCity()))
@@ -239,20 +230,18 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        String[] gradeValues;
-        gradeValues = getGradeValues(userExtension.getBak());
-
+        String[] gradeValues = UserUtils.getGradeValues(getResources(), userExtension.getBak());
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
         adapter3.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerGrade.setAdapter(adapter3);
 
-        spinnerEdu.setSelection(userExtension.getBak(), true);
-        spinnerGrade.setSelection(userExtension.getGrade(), true);
+        spinnerEdu.setSelection(userExtension.getBak(), false);
+        spinnerGrade.setSelection(userExtension.getGrade(), false);
         if (userExtension.getBak() > 3) {
             rowSchool.setVisibility(View.VISIBLE);
             for (int i = 0; i < schoolValues.length; i++)
                 if (schoolValues[i].equals(userExtension.getSchool())) {
-                    spinnerSchool.setSelection(i, true);
+                    spinnerSchool.setSelection(i, false);
                     break;
                 }
         }
@@ -260,34 +249,28 @@ public class EditProfileFragment extends Fragment {
         spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] values;
-                values = getGradeValues(i);
-
                 if (!NetworkUtil.isNetAvailable(getActivity())) {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
                 } else {
                     userExtension.setBak(i);
+                    if (i > 3) {
+                        rowSchool.setVisibility(View.VISIBLE);
+                    } else {
+                        rowSchool.setVisibility(View.GONE);
+                        userExtension.setSchool("");
+                    }
                     UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
                 }
 
+                String[] values = UserUtils.getGradeValues(getResources(), i);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
-
-                if (i > 3) {
-                    rowSchool.setVisibility(View.VISIBLE);
-                } else {
-                    rowSchool.setVisibility(View.GONE);
-                    userExtension.setSchool("");
-                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
-                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                String[] gradeValues;
-                gradeValues = getGradeValues(userExtension.getBak());
-
+                String[] gradeValues = UserUtils.getGradeValues(getResources(), userExtension.getBak());
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
@@ -304,19 +287,14 @@ public class EditProfileFragment extends Fragment {
                     UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
         cPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
             @Override
             public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
-                cPickerNames[0] = province.getName();
-                cPickerNames[1] = city.getName();
-                cPickerNames[2] = district.getName();
                 String text;
                 if (province.getName().equals(city.getName()))
                     text = String.format(getString(R.string.lwe_placeholder_cityformat2), province.getName(), district.getName());
@@ -334,14 +312,24 @@ public class EditProfileFragment extends Fragment {
                 if (!NetworkUtil.isNetAvailable(getActivity())) {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
                 } else {
-                    userExtension.setProvince(cPickerNames[0]);
-                    userExtension.setCity(cPickerNames[1]);
-                    userExtension.setArea(cPickerNames[2]);
+                    userExtension.setProvince(province.getName());
+                    userExtension.setCity(city.getName());
+                    userExtension.setArea(district.getName());
                     UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
                 }
             }
         });
+
+        buttonName.setOnClickListener(new TextLockListener(editTextName));
+        buttonSignature.setOnClickListener(new TextLockListener(editTextSignature));
+        buttonAge.setOnClickListener(new TextLockListener(editTextAge));
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
+        buttonAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return view;
     }
 
@@ -351,46 +339,9 @@ public class EditProfileFragment extends Fragment {
         getActivity().findViewById(R.id.navibar).setVisibility(View.VISIBLE);
     }
 
-    private void getFocus(EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        editText.findFocus();
-        editText.setTextColor(Color.GRAY);
-    }
-
     private void loseFocus(EditText editText) {
         editText.setFocusable(false);
         editText.setTextColor(Color.BLACK);
         editText.clearFocus();
-    }
-
-    private String[] getGradeValues(int i) {
-        switch (i) {
-            case 1: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_1);
-            }
-            case 2: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_2);
-            }
-            case 3: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_3);
-            }
-            case 4: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_4);
-            }
-            case 5: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_5);
-            }
-            case 6: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_6);
-            }
-            case 7: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_7);
-            }
-            default: {
-                return getResources().getStringArray(R.array.lwe_spinner_grade_0);
-            }
-        }
     }
 }

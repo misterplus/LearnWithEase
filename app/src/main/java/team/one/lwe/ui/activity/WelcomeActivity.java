@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.activity.UI;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.nos.NosService;
 
 import team.one.lwe.LWECache;
 import team.one.lwe.R;

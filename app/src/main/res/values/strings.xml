@@ -95,6 +95,8 @@
     <string name="lwe_text_same_school">同校优先</string>
     <string name="lwe_text_same_gender">同性优先</string>
     <string name="lwe_text_new_room_first">优先加入新房间</string>
+    <string name="lwe_text_empty_signature">暂无签名</string>
+    <string name="lwe_text_age">年龄</string>
 
 <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
@@ -114,6 +116,7 @@
     <string name="lwe_placeholder_name">昵称</string>
     <string name="lwe_placeholder_username">ID</string>
     <string name="lwe_placeholder_signature">签名</string>
+    <string name="lwe_placeholder_age">年龄</string>
 
     <string-array name="lwe_spinner_time_study">
         <item>不限时</item>

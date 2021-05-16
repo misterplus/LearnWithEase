@@ -42,6 +42,7 @@ import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
+import team.one.lwe.util.UserUtils;
 
 public class RegisterFragment extends Fragment {
 
@@ -250,9 +251,9 @@ public class RegisterFragment extends Fragment {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
             } else if (!password.equals(confirmPassword)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
-            } else if (name.isEmpty() || name.length() > 16) {
+            } else if (UserUtils.isNameInvalid(name)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_name);
-            } else if (age < 1 || age > 120) {
+            } else if (UserUtils.isAgeInvalid(age)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
             } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_city);
@@ -276,7 +277,7 @@ public class RegisterFragment extends Fragment {
                     }
                     String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
                     Preference pref = new Preference(spinnerTimeStudy.getSelectedItemPosition(), spinnerTimeRest.getSelectedItemPosition(), spinnerContentStudy.getSelectedItemPosition(), switchSameCity.isChecked(), switchSameSchool.isChecked(), switchSameGender.isChecked(), switchNewRoomFirst.isChecked());
-                    User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school, pref));
+                    User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school, pref), "", getString(R.string.lwe_text_empty_signature));
                     new NetworkThread(view) {
                         @Override
                         public ASResponse doRequest() {

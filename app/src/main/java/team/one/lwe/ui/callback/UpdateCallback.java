@@ -18,7 +18,7 @@ public class UpdateCallback<T> implements RequestCallback<T> {
 
     @Override
     public void onSuccess(T param) {
-        Log.i(this.getClass().getSimpleName(), "update success");
+        Log.i(view.getTransitionName(), "update success");
     }
 
     @Override
@@ -49,6 +49,6 @@ public class UpdateCallback<T> implements RequestCallback<T> {
 
     @Override
     public void onException(Throwable e) {
-        e.printStackTrace();
+        Log.e(view.getTransitionName(), Log.getStackTraceString(e));
     }
 }
