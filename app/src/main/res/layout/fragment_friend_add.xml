@@ -22,7 +22,8 @@
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
             android:hint="@string/lwe_hint_friend_add"
             android:inputType="text"
-            android:paddingStart="30dp" />
+            android:paddingStart="30dp"
+            android:imeOptions="actionSearch"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -48,9 +49,76 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/searchResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@drawable/lwe_background_grey"
+        android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageAvatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/lwe_placeholder_avatar"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/textName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_toEndOf="@id/imageAvatar"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:text="@string/lwe_placeholder_name"
+                android:textSize="22sp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/textSignature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_grey"
+                android:layout_toEndOf="@id/imageAvatar"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:text="@string/lwe_placeholder_signature"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/buttonAdd"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/lwe_button_round_blue"
+                android:contentDescription="@string/empty"
+                android:text="@string/lwe_button_friend_add"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/background_grey" />
+
+    </LinearLayout>
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
     </ListView>
+
+
 </LinearLayout>

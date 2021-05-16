@@ -20,6 +20,7 @@
     <string name="lwe_button_done">完成</string>
     <string name="lwe_button_login">→</string>
     <string name="lwe_button_cancel">取消</string>
+    <string name="lwe_button_friend_add">添加</string>
 
 <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
