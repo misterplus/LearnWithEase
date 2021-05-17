@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.activity.UI;
 
 import team.one.lwe.LWECache;
@@ -25,7 +24,6 @@ public class WelcomeActivity extends UI {
                 startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
             }
             else {
-                //TODO: go to main page
                 startActivity(new Intent(this, MainActivity.class));
             }
             return false;

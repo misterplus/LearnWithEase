@@ -116,11 +116,7 @@ public class LoginFragment extends Fragment {
             public void onSuccess(LoginInfo info) {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
-                //TODO: go to main page
                 startActivity(new Intent(getContext(), MainActivity.class));
-                // ^ this is only a placeholder for now
-                //RELEASE: enable caching
-                // caching is disabled for debugging purposes
                 Preferences.saveUserAccount(getContext(), info.getAccount());
                 Preferences.saveUserToken(getContext(), info.getToken());
             }

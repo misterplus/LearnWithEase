@@ -11,6 +11,7 @@
     <string name="lwe_hint_confirm">确认</string>
     <string name="lwe_hint_register_username">在此处填写用户名</string>
     <string name="lwe_hint_friend_add">请输入你要添加的好友名称</string>
+    <string name="lwe_hint_reason">请填写验证信息</string>
 
 <!--    按钮文字-->
     <string name="lwe_button_phone_login">手机号登录</string>
@@ -21,9 +22,12 @@
     <string name="lwe_button_login">→</string>
     <string name="lwe_button_cancel">取消</string>
     <string name="lwe_button_friend_add">添加</string>
+    <string name="lwe_button_accept">同意</string>
+    <string name="lwe_button_decline">拒绝</string>
 
 <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
+    <string name="lwe_success_add">已发送好友请求</string>
 
 <!--    错误提示-->
     <string name="lwe_error_login_format">用户名或密码格式有误</string>
@@ -39,10 +43,13 @@
     <string name="lwe_error_login_retry">登录次数过多，请稍后再试</string>
     <string name="lwe_error_nonetwork">网络连接异常，请检查您的网络设置</string>
     <string name="lwe_error_register">该用户名已注册</string>
+    <string name="lwe_error_search_no_result">无此用户</string>
+    <string name="lwe_error_reason">验证信息不能为空且不能超过30个字！</string>
 
 <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
     <string name="lwe_progress_register">注册中…</string>
+    <string name="lwe_progress_search">搜索中…</string>
 
 <!--    工具栏标题-->
     <string name="lwe_title_register">注册账号</string>
@@ -52,6 +59,7 @@
     <string name="lwe_title_clear_cache">清理空间</string>
     <string name="lwe_title_edit_profile">编辑资料</string>
     <string name="lwe_title_friend">好友</string>
+    <string name="lwe_title_friend_add">添加好友</string>
 
 <!--    文本-->
     <string name="lwe_text_gender">性别</string>
@@ -93,6 +101,8 @@
     <string name="lwe_text_same_school">同校优先</string>
     <string name="lwe_text_same_gender">同性优先</string>
     <string name="lwe_text_new_room_first">优先加入新房间</string>
+    <string name="lwe_text_friend_add">已添加</string>
+    <string name="lwe_text_reason">验证信息：</string>
 
 <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
@@ -112,6 +122,13 @@
     <string name="lwe_placeholder_name">昵称</string>
     <string name="lwe_placeholder_username">ID</string>
     <string name="lwe_placeholder_signature">签名</string>
+    <string name="lwe_placeholder_info">基本信息</string>
+
+    <string-array name="lwe_gender">
+        <item>私密</item>
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 
     <string-array name="lwe_spinner_time_study">
         <item>不限时</item>

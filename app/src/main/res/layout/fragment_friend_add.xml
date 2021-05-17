@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_grey"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,9 +22,10 @@
             android:background="@color/white"
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
             android:hint="@string/lwe_hint_friend_add"
+            android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingStart="30dp"
-            android:imeOptions="actionSearch"/>
+            android:singleLine="true" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,45 +55,47 @@
         android:id="@+id/searchResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@drawable/lwe_background_grey"
         android:orientation="vertical"
         android:showDividers="middle"
-        android:divider="@drawable/lwe_background_grey"
         android:visibility="gone">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="80dp"
+            android:background="@color/white">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageAvatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/lwe_placeholder_avatar"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:src="@drawable/lwe_placeholder_avatar" />
 
             <TextView
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_toEndOf="@id/imageAvatar"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/imageAvatar"
                 android:text="@string/lwe_placeholder_name"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"/>
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/textSignature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_grey"
-                android:layout_toEndOf="@id/imageAvatar"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/imageAvatar"
                 android:text="@string/lwe_placeholder_signature"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"/>
+                android:textColor="@color/text_grey"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/buttonAdd"
@@ -105,6 +109,19 @@
                 android:text="@string/lwe_button_friend_add"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@string/empty"
+                android:text="@string/lwe_text_friend_add"
+                android:textColor="@color/text_grey"
+                android:textSize="20sp"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <View
@@ -113,12 +130,52 @@
             android:background="@color/background_grey" />
 
     </LinearLayout>
-    <ListView
+
+    <LinearLayout
+        android:id="@+id/noResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@drawable/lwe_background_grey"
+        android:orientation="vertical"
+        android:showDividers="middle"
         android:visibility="gone">
 
-    </ListView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white">
 
+            <TextView
+                android:id="@+id/textNoAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:text="@string/lwe_error_search_no_result"
+                android:textColor="@color/text_grey"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/background_grey" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </ScrollView>
 
 </LinearLayout>

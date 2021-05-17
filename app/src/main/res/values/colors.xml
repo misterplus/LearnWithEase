@@ -4,4 +4,6 @@
     <color name="text_grey">#888888</color>
     <color name="primary">#0887FD</color>
     <color name="primary_pressed">#8CC8FF</color>
+    <color name="secondary">#B7A0A0</color>
+    <color name="secondary_pressed">#B79F9F</color>
 </resources>
