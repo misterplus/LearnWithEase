@@ -18,16 +18,16 @@
         android:layout_height="100dp"
         android:background="@color/white">
 
-        <ImageButton
-            android:id="@+id/buttonHeadimage"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/lwe_button_mine_headimage"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:riv_oval="true"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/buttonAvatar"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_headportrait_edit_profile" />
 
         <TextView
             android:id="@+id/textUsername"

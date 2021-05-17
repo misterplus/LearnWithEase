@@ -33,6 +33,7 @@ import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
@@ -43,7 +44,9 @@ import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.nos.NosService;
+import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import com.yalantis.ucrop.UCrop;
@@ -51,7 +54,9 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
@@ -95,6 +100,7 @@ public class EditProfileFragment extends Fragment {
         TextView textCity = view.findViewById(R.id.textCity);
         TextView textSchool = view.findViewById(R.id.textSchool);
         TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
+        RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
         Spinner spinnerEdu = view.findViewById(R.id.spinnerEdu);
         Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
         SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
@@ -107,6 +113,8 @@ public class EditProfileFragment extends Fragment {
         editTextName.setText(user.getName());
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
+
+        imageAvatar.setImageURI(UserUtils.getAvatar(imageAvatar, account));
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -424,12 +432,35 @@ public class EditProfileFragment extends Fragment {
                         //TODO: handle upload result
                         @Override
                         public void onSuccess(String url) {
-
+                            Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+                            fields.put(UserInfoFieldEnum.AVATAR, url);
+                            NIMClient.getService(UserService.class).updateUserInfo(fields);
+                            ToastHelper.showToast(view.getContext(), R.string.lwe_success_update);
                         }
 
                         @Override
                         public void onFailed(int code) {
-
+                            switch (code) {
+                                case 408: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                                    break;
+                                }
+                                case 415: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_connection);
+                                    break;
+                                }
+                                case 416: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_frequently);
+                                    break;
+                                }
+                                case 500: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                                    break;
+                                }
+                                default: {
+                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                                }
+                            }
                         }
 
                         @Override
