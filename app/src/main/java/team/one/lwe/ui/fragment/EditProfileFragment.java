@@ -1,7 +1,12 @@
 package team.one.lwe.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,11 +36,22 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
+import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
+import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
+import com.netease.nim.uikit.common.util.C;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.nos.NosService;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
@@ -46,10 +64,11 @@ public class EditProfileFragment extends Fragment {
 
     private final CityPickerView cPicker = new CityPickerView();
     private View view;
+    private Uri uri;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO: finish mine fragment
+        //TODO: finish this fragment
         view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile, true);
         BottomNavigationView navibar = getActivity().findViewById(R.id.navibar);
@@ -114,8 +133,7 @@ public class EditProfileFragment extends Fragment {
                     if (signature.isEmpty()) {
                         editTextSignature.setText(getString(R.string.lwe_text_empty_signature));
                         UserUtils.updateUserSignature(getString(R.string.lwe_text_empty_signature)).setCallback(new UpdateCallback<>(view));
-                    }
-                    else
+                    } else
                         UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback<>(view));
                 }
             }
@@ -287,6 +305,7 @@ public class EditProfileFragment extends Fragment {
                     UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -324,13 +343,111 @@ public class EditProfileFragment extends Fragment {
         buttonSignature.setOnClickListener(new TextLockListener(editTextSignature));
         buttonAge.setOnClickListener(new TextLockListener(editTextAge));
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());
-        buttonAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        List<PopupMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new PopupMenuItem(0, "拍照"));
+        menuItems.add(new PopupMenuItem(1, "从相册选择"));
+        NIMPopupMenu menu = new NIMPopupMenu(getActivity(), menuItems, item -> {
+            switch (item.getTag()) {
+                case 0: {
+                    File caption = new File(getActivity().getExternalCacheDir(), "caption_avatar.jpg");
+                    try {
+                        if (caption.exists())
+                            caption.delete();
+                        caption.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
+                    if (Build.VERSION.SDK_INT >= 24)
+                        uri = FileProvider.getUriForFile(getContext(), "team.one.lwe.ipc.provider.file", caption);
+                    else
+                        uri = Uri.fromFile(caption);
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(intent, 0);
+                    break;
+                }
+                case 1: {
+                    Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 1);
+                }
             }
         });
+        buttonAvatar.setOnClickListener(v -> menu.show(view.findViewById(R.id.buttonAvatar)));
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case 0: {
+                    File cropped = new File(getActivity().getExternalCacheDir(), "avatar_cropped.png");
+                    try {
+                        if (cropped.exists())
+                            cropped.delete();
+                        cropped.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Uri uriCropped = Uri.fromFile(cropped);
+                    UCrop.of(uri, uriCropped)
+                            .withAspectRatio(1, 1)
+                            .withMaxResultSize(400, 400)
+                            .start(getContext(), this);
+                    break;
+                }
+                case 1: {
+                    uri = data.getData();
+                    File cropped = new File(getActivity().getExternalCacheDir(), "avatar_cropped.png");
+                    try {
+                        if (cropped.exists())
+                            cropped.delete();
+                        cropped.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Uri uriCropped = Uri.fromFile(cropped);
+                    UCrop.of(uri, uriCropped)
+                            .withAspectRatio(1, 1)
+                            .withMaxResultSize(400, 400)
+                            .start(getContext(), this);
+                    break;
+                }
+                case UCrop.REQUEST_CROP: {
+                    //TODO: handle cropped results
+                    Uri uriResult = UCrop.getOutput(data);
+                    File result = new File(uriResult.getPath());
+                    NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RequestCallback<String>() {
+
+                        //TODO: handle upload result
+                        @Override
+                        public void onSuccess(String url) {
+
+                        }
+
+                        @Override
+                        public void onFailed(int code) {
+
+                        }
+
+                        @Override
+                        public void onException(Throwable exception) {
+
+                        }
+                    });
+                }
+                case UCrop.RESULT_ERROR: {
+                    //TODO: handle ucrop errors
+                    try {
+                        throw UCrop.getError(data);
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     @Override

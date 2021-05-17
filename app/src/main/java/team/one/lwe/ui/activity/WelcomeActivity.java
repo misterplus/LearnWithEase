@@ -28,7 +28,7 @@ public class WelcomeActivity extends UI {
             }
             else {
                 //TODO: go to main page
-                NimUIKit.startP2PSession(this, "plus_dev");
+                startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
             }
             return false;
         }).sendEmptyMessageDelayed(0, 3000);

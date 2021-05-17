@@ -84,7 +84,7 @@
             android:gravity="end"
             android:hint="@string/lwe_nickname"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -131,7 +131,7 @@
             android:gravity="end"
             android:hint="@string/lwe_placeholder_signature"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -443,5 +443,11 @@
             android:paddingEnd="20dp" />
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </FrameLayout>
 
 </LinearLayout>
