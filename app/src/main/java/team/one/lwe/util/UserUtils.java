@@ -62,6 +62,7 @@ public class UserUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //TODO: callback
         NIMClient.getService(NosService.class).download(url, nosThumbParam, avatar.getAbsolutePath());
         if (Build.VERSION.SDK_INT >= 24)
             return FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
