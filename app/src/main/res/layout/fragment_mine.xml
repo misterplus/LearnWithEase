@@ -23,11 +23,11 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
-            app:riv_oval="true"
             android:layout_marginEnd="10dp"
             android:layout_toStartOf="@id/buttonAvatar"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_headportrait_edit_profile" />
+            android:src="@drawable/lwe_headportrait_edit_profile"
+            app:riv_oval="true" />
 
         <TextView
             android:id="@+id/textUsername"

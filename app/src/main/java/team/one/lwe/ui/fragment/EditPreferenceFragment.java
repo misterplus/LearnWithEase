@@ -14,7 +14,7 @@ import com.netease.nim.uikit.common.activity.UI;
 import team.one.lwe.R;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
-public class EditPreferenceFragment extends Fragment{
+public class EditPreferenceFragment extends Fragment {
 
     private View view;
 
@@ -24,7 +24,6 @@ public class EditPreferenceFragment extends Fragment{
         BottomNavigationView navibar = getActivity().findViewById(R.id.navibar);
         navibar.setVisibility(View.GONE);
         ((UI) getActivity()).setToolBar(getActivity().findViewById(R.id.toolbar), R.id.toolbar, options);
-
         return view;
     }
 }

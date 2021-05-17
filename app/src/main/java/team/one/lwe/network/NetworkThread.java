@@ -36,8 +36,7 @@ public abstract class NetworkThread extends Thread {
             view.post(() -> {
                 if (asp.isSuccess()) {
                     onSuccess(asp);
-                }
-                else {
+                } else {
                     onFailed(asp.getCode(), asp.getDesc());
                 }
             });
@@ -45,11 +44,9 @@ public abstract class NetworkThread extends Thread {
             view.post(() -> {
                 if (e.causeInstanceOf(ConnectException.class) && e.getMessage().contains("Failed to connect to")) { //connection refused
                     onFailed(415, "connection failed");
-                }
-                else if (e.causeInstanceOf(SocketTimeoutException.class)) {
+                } else if (e.causeInstanceOf(SocketTimeoutException.class)) {
                     onFailed(408, "connection timeout");
-                }
-                else {
+                } else {
                     onException(e);
                 }
             });
@@ -57,8 +54,7 @@ public abstract class NetworkThread extends Thread {
             view.post(() -> {
                 if ("Connection reset".equals(e.getMessage())) { //connection reset
                     onFailed(415, "connection failed");
-                }
-                else {
+                } else {
                     onException(e);
                 }
             });

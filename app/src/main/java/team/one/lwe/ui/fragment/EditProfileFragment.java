@@ -44,7 +44,6 @@ import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.nos.NosService;
-import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
@@ -114,7 +113,7 @@ public class EditProfileFragment extends Fragment {
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
 
-        imageAvatar.setImageURI(UserUtils.getAvatar(imageAvatar, account));
+        imageAvatar.setImageURI(UserUtils.getAvatarUri(imageAvatar, account, user.getAvatar()));
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {

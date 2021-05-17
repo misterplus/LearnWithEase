@@ -6,7 +6,6 @@ import android.os.Build;
 import android.view.View;
 
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.netease.nimlib.sdk.InvocationFuture;
@@ -15,7 +14,6 @@ import com.netease.nimlib.sdk.nos.NosService;
 import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
-import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,23 +50,23 @@ public class UserUtils {
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static Uri getAvatar(View view, String account) {
-        NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
+    public static Uri getAvatarUri(View view, String account, String url) {
+        //TODO: local url caching
         NosThumbParam nosThumbParam = new NosThumbParam();
         nosThumbParam.height = 100;
         nosThumbParam.width = 100;
-        File head = new File(view.getContext().getExternalCacheDir() + "/avatar", account + user.getAvatar());
+        File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("avatar_%s", account));
         try {
-            if (!head.exists())
-                head.createNewFile();
+            if (!avatar.exists())
+                avatar.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        NIMClient.getService(NosService.class).download(user.getAvatar(), nosThumbParam, head.getAbsolutePath());
+        NIMClient.getService(NosService.class).download(url, nosThumbParam, avatar.getAbsolutePath());
         if (Build.VERSION.SDK_INT >= 24)
-            return FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", head);
+            return FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
         else
-            return Uri.fromFile(head);
+            return Uri.fromFile(avatar);
     }
 
     public static boolean isNameInvalid(String name) {

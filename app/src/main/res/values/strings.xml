@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="lwe_app_name">易自习</string>
 
-<!--    提示类-->
+    <!--    提示类-->
     <string name="lwe_hint_username">请输入用户名</string>
     <string name="lwe_hint_password">请输入密码</string>
     <string name="lwe_hint_confirm_password">请再次输入密码</string>
@@ -11,7 +11,7 @@
     <string name="lwe_hint_confirm">确认</string>
     <string name="lwe_hint_register_username">在此处填写用户名</string>
 
-<!--    按钮文字-->
+    <!--    按钮文字-->
     <string name="lwe_button_phone_login">手机号登录</string>
     <string name="lwe_button_lost_password">找回密码</string>
     <string name="lwe_button_register">新用户注册</string>
@@ -19,11 +19,11 @@
     <string name="lwe_button_done">完成</string>
     <string name="lwe_button_login">→</string>
 
-<!--    成功提示-->
+    <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
     <string name="lwe_success_update">修改成功</string>
 
-<!--    错误提示-->
+    <!--    错误提示-->
     <string name="lwe_error_login_format">用户名或密码格式有误</string>
     <string name="lwe_error_age_format">年龄有误，请填写1至120的数字</string>
     <string name="lwe_error_confail">服务器异常，请稍后再试</string>
@@ -42,11 +42,11 @@
     <string name="lwe_error_register">该用户名已注册</string>
     <string name="lwe_error_update">修改信息失败，请重试</string>
 
-<!--    进度提示-->
+    <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
     <string name="lwe_progress_register">注册中…</string>
 
-<!--    工具栏标题-->
+    <!--    工具栏标题-->
     <string name="lwe_title_register">注册账号</string>
     <string name="lwe_title_mine">我的页面</string>
     <string name="lwe_title_setting">软件设置</string>
@@ -55,7 +55,7 @@
     <string name="lwe_title_edit_profile">编辑资料</string>
     <string name="lwe_title_edit_prefernce">修改偏好</string>
 
-<!--    文本-->
+    <!--    文本-->
     <string name="lwe_text_gender">性别</string>
     <string name="lwe_text_city">所在城市</string>
     <string name="lwe_text_edu">教育背景</string>
@@ -98,7 +98,7 @@
     <string name="lwe_text_empty_signature">暂无签名</string>
     <string name="lwe_text_age">年龄</string>
 
-<!--    单选文本-->
+    <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
     <string name="lwe_radio_female">女</string>
     <string name="lwe_radio_unknown">私密</string>
@@ -106,7 +106,7 @@
     <string name="lwe_radio_mid">中</string>
     <string name="lwe_radio_low">低</string>
 
-<!--    占位符-->
+    <!--    占位符-->
     <string name="lwe_placeholder_citypicker">选择城市</string>
     <string name="lwe_placeholder_cityformat2">%1$s %2$s</string>
     <string name="lwe_placeholder_cityformat3">%1$s %2$s %3$s</string>

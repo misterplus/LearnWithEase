@@ -21,7 +21,7 @@ public class LoginActivity extends UI {
 
         //TODO: handle failed requests
         if (ActivityCompat.checkSelfPermission(this, "android.permission.CAMERA") == PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
         }
 
         if (savedInstanceState == null) {

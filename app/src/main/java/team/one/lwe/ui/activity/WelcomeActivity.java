@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.activity.UI;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.nos.NosService;
 
 import team.one.lwe.LWECache;
 import team.one.lwe.R;
@@ -25,8 +22,7 @@ public class WelcomeActivity extends UI {
             if (LWECache.noCache()) {
                 // redirect to main if is developing frontend
                 startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
-            }
-            else {
+            } else {
                 //TODO: go to main page
                 startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
             }
