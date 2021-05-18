@@ -17,7 +17,12 @@ import team.one.lwe.db.DaoSession;
 
 public class LWEApplication extends Application {
 
+    private static LWEApplication instance;
     private DaoSession daoSession;
+
+    public static LWEApplication getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
@@ -27,6 +32,7 @@ public class LWEApplication extends Application {
             initUiKit();
         }
         initGreenDao();
+        instance = this;
     }
 
     private void initGreenDao() {

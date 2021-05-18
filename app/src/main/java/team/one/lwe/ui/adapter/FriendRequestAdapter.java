@@ -15,12 +15,15 @@ import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.model.AddFriendNotify;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.model.SystemMessage;
+import com.netease.nimlib.sdk.uinfo.UserService;
 
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import team.one.lwe.LWEApplication;
 import team.one.lwe.R;
 import team.one.lwe.ui.callback.VoidSuccessCallback;
+import team.one.lwe.util.UserUtils;
 
 @AllArgsConstructor
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.ViewHolder> {
@@ -38,8 +41,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
     public void onBindViewHolder(@NonNull FriendRequestAdapter.ViewHolder holder, int position) {
         SystemMessage requestMsg = requests.get(position);
         AddFriendNotify request = (AddFriendNotify) requestMsg.getAttachObject();
-        //TODO: set avatar
-        //holder.imageAvatar.setImageURI("set avatar");
+        holder.imageAvatar.setImageURI(UserUtils.getAvatarUri(holder.view, request.getAccount(), NIMClient.getService(UserService.class).getUserInfo(request.getAccount()).getAvatar()));
         holder.textName.setText(request.getAccount());
         holder.textReason.setText(request.getMsg());
         holder.buttonAccept.setOnClickListener(v -> {

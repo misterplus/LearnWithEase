@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nimlib.sdk.NIMClient;
@@ -26,6 +27,7 @@ import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.util.UserUtils;
 
 public class AddVerifyFragment extends Fragment {
     private final String account;
@@ -41,14 +43,15 @@ public class AddVerifyFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_friend_add_verify, container, false);
         getActivity().findViewById(R.id.app_bar_layout).setVisibility(View.VISIBLE);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend_add, true);
-        ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
+        ((UI) getActivity()).setToolBar(R.id.toolbar, options);
 
-        //TODO: set avatar
+        RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
         TextView textName = view.findViewById(R.id.textName);
         TextView textInfo = view.findViewById(R.id.textInfo);
         Button buttonAdd = view.findViewById(R.id.buttonAdd);
         EditText editTextReason = view.findViewById(R.id.editTextReason);
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
+        imageAvatar.setImageURI(UserUtils.getAvatarUri(view, account, info.getAvatar()));
         textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.NIMClient;
@@ -33,6 +34,7 @@ import team.one.lwe.R;
 import team.one.lwe.ui.adapter.FriendRequestAdapter;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.NavigationUtils;
+import team.one.lwe.util.UserUtils;
 
 import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD_FRIEND_VERIFY_REQUEST;
 
@@ -67,10 +69,11 @@ public class AddFriendFragment extends Fragment {
                     public void onSuccess(List<NimUserInfo> list) {
                         if (!list.isEmpty()) {
                             NimUserInfo info = list.get(0);
-                            //TODO: set avatar
                             searchedAccount = info.getAccount();
+                            RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
                             TextView textName = view.findViewById(R.id.textName);
                             TextView textSignature = view.findViewById(R.id.textSignature);
+                            imageAvatar.setImageURI(UserUtils.getAvatarUri(view, searchedAccount, info.getAvatar()));
                             textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
                             textSignature.setText(info.getSignature());
                             boolean isMyFriend = NIMClient.getService(FriendService.class).isMyFriend(info.getAccount()) || info.getAccount().equals(NimUIKit.getAccount());
@@ -102,14 +105,26 @@ public class AddFriendFragment extends Fragment {
             @Override
             public void onSuccess(List<SystemMessage> msg) {
                 List<SystemMessage> requests = new ArrayList<>();
+                List<String> accounts = new ArrayList<>();
                 for (SystemMessage m : msg) {
                     if (m.getAttachObject() instanceof AddFriendNotify && ((AddFriendNotify) m.getAttachObject()).getEvent() == RECV_ADD_FRIEND_VERIFY_REQUEST) {
                         requests.add(m);
+                        accounts.add(((AddFriendNotify) m.getAttachObject()).getAccount());
                     }
                 }
-                RecyclerView listRequest = view.findViewById(R.id.listRequest);
-                FriendRequestAdapter adapter = new FriendRequestAdapter(requests);
-                listRequest.setAdapter(adapter);
+                NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new RegularCallback<List<NimUserInfo>>(view) {
+                    @Override
+                    public void onSuccess(List<NimUserInfo> infoList) {
+                        RecyclerView listRequest = view.findViewById(R.id.listRequest);
+                        FriendRequestAdapter adapter = new FriendRequestAdapter(requests);
+                        listRequest.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onFailed(int code) {
+                        //TODO: handle failed request
+                    }
+                });
             }
 
             @Override

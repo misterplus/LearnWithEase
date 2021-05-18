@@ -60,20 +60,19 @@ public class UserUtils {
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static boolean isAvatarCached(LWEApplication app, String account, String avatar) {
-        String cachedAvatar = CacheUtils.getAvatarCache(app, account);
+    public static boolean isAvatarCached(String account, String avatar) {
+        String cachedAvatar = CacheUtils.getAvatarCache(account);
         if (avatar.equals(cachedAvatar))
             return true;
         else {
-            CacheUtils.saveAvatarCache(app, account, avatar);
+            CacheUtils.saveAvatarCache(account, avatar);
             return false;
         }
     }
 
-    public static Uri getAvatarUri(LWEApplication app, View view, String account, String url) {
-        //TODO: local url caching
+    public static Uri getAvatarUri(View view, String account, String url) {
         File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("avatar_%s", account));
-        if (!isAvatarCached(app, account, url)) {
+        if (!isAvatarCached(account, url)) {
             NosThumbParam nosThumbParam = new NosThumbParam();
             nosThumbParam.height = 100;
             nosThumbParam.width = 100;

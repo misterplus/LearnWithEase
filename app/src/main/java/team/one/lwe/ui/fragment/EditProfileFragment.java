@@ -112,7 +112,7 @@ public class EditProfileFragment extends Fragment {
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
 
-        imageAvatar.setImageURI(UserUtils.getAvatarUri((LWEApplication) getActivity().getApplication(), imageAvatar, account, user.getAvatar()));
+        imageAvatar.setImageURI(UserUtils.getAvatarUri(imageAvatar, account, user.getAvatar()));
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -429,7 +429,7 @@ public class EditProfileFragment extends Fragment {
                         public void onSuccess(String url) {
                             UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback<>(view));
                             RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
-                            imageAvatar.setImageURI(UserUtils.getAvatarUri((LWEApplication) getActivity().getApplication(), view, NimUIKit.getAccount(), url));
+                            imageAvatar.setImageURI(UserUtils.getAvatarUri(view, NimUIKit.getAccount(), url));
                         }
 
                         @Override
