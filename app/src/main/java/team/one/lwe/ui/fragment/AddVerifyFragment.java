@@ -28,8 +28,8 @@ import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
 public class AddVerifyFragment extends Fragment {
-    private View view;
     private final String account;
+    private View view;
 
     public AddVerifyFragment(String account) {
         this.account = account;

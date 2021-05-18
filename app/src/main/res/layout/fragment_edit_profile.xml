@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:showDividers="middle"
-    android:divider="@drawable/lwe_background_grey"
     android:background="@color/color_grey_eaeaea"
-    android:orientation="vertical">
+    android:divider="@drawable/lwe_background_grey"
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <View
         android:id="@+id/divider2"
@@ -34,25 +34,24 @@
             android:id="@+id/imageHeadportrait"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_toStartOf="@id/headportraitArrow"
             android:layout_centerVertical="true"
-            android:src="@drawable/lwe_headportrait_edit_profile"
             android:layout_marginEnd="10dp"
-            android:contentDescription="@string/empty" />
+            android:layout_toStartOf="@id/headportraitArrow"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/lwe_headportrait_edit_profile" />
 
         <ImageButton
             android:id="@+id/headportraitArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
             android:background="@color/white"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
-
 
 
     <RelativeLayout
@@ -65,40 +64,38 @@
             android:id="@+id/textNickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_nickname"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="180dp"
-                android:layout_toStartOf="@id/nicknameArrow"
-                android:layout_marginEnd="10dp"
-                android:gravity="end"
-                android:text="@string/lwe_placeholder_name"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:ignore="TextViewEdits" />
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="180dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/nicknameArrow"
+            android:gravity="end"
+            android:text="@string/lwe_placeholder_name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            tools:ignore="TextViewEdits" />
 
         <ImageButton
             android:id="@+id/nicknameArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 
-            </RelativeLayout>
-
-
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -112,8 +109,8 @@
             android:id="@+id/textSignature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:text="@string/lwe_text_signature"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -123,12 +120,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             android:layout_toStartOf="@+id/signatureArrow"
             android:gravity="end"
-            android:layout_marginEnd="10dp"
             android:hint="@string/lwe_placeholder_signature"
-            android:inputType="text"
             android:imeOptions="actionDone"
+            android:inputType="text"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -139,9 +136,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
 

@@ -29,11 +29,11 @@
                 android:visibility="gone">
 
                 <ImageButton
+                    android:id="@+id/buttonFriendAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    android:id="@+id/buttonFriendAdd"
                     android:background="@color/transparent"
                     android:contentDescription="@string/empty"
                     android:src="@drawable/ysf_ic_input_bottom_add" />

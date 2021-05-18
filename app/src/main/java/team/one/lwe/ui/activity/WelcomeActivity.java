@@ -22,8 +22,7 @@ public class WelcomeActivity extends UI {
             if (LWECache.noCache()) {
                 // redirect to main if is developing frontend
                 startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
-            }
-            else {
+            } else {
                 startActivity(new Intent(this, MainActivity.class));
             }
             return false;

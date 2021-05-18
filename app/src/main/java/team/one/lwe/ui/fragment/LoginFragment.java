@@ -19,6 +19,7 @@ import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+
 import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
@@ -35,6 +36,14 @@ public class LoginFragment extends Fragment {
     private View view;
     private EditText editTextUsername, editTextPassword;
 
+    private static boolean isUsernameValid(@NotNull String username) {
+        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
+    }
+
+    private static boolean isPasswordValid(@NotNull String password) {
+        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login, container, false);
@@ -46,7 +55,7 @@ public class LoginFragment extends Fragment {
             String password = editTextPassword.getText().toString();
             if (!isUsernameValid(username) || !isPasswordValid(password)) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
-            } else if (!NetworkUtil.isNetAvailable(getActivity())){
+            } else if (!NetworkUtil.isNetAvailable(getActivity())) {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(view.getContext(), inflater.getContext().getString(R.string.lwe_progress_login), false);
@@ -64,16 +73,8 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    private static boolean isUsernameValid(@NotNull String username) {
-        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
-    }
-
-    private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
-    }
-
     private void doConvert(String username, String password) {
-        new NetworkThread(view){
+        new NetworkThread(view) {
             @Override
             public ASResponse doRequest() {
                 return APIUtils.convert(username, password);

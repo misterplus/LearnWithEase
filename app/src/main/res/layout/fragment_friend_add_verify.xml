@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background_grey">
+    android:background="@color/background_grey"
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
@@ -12,9 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@drawable/lwe_background_grey"
         android:orientation="vertical"
-        android:showDividers="middle"
-        android:divider="@drawable/lwe_background_grey">
+        android:showDividers="middle">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,33 +25,33 @@
                 android:id="@+id/imageAvatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/lwe_placeholder_avatar"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:src="@drawable/lwe_placeholder_avatar" />
 
             <TextView
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_toEndOf="@id/imageAvatar"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/imageAvatar"
                 android:text="@string/lwe_placeholder_name"
-                android:textSize="22sp"
-                android:layout_marginTop="10dp"/>
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/textInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_grey"
-                android:layout_toEndOf="@id/imageAvatar"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/imageAvatar"
                 android:text="@string/lwe_placeholder_info"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp"/>
+                android:textColor="@color/text_grey"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/buttonAdd"
@@ -72,15 +72,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">
+
             <TextView
                 android:id="@+id/textReasonPrefix"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textColor="@color/black"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_reason"
-                android:textSize="20sp"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -88,16 +89,17 @@
             android:layout_height="80dp"
             android:layout_margin="7dp"
             android:background="@drawable/nim_message_input_edittext_box">
+
             <EditText
                 android:id="@+id/editTextReason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:inputType="textNoSuggestions"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
+                android:background="@color/transparent"
                 android:hint="@string/lwe_hint_reason"
-                android:textSize="16sp"/>
+                android:inputType="textNoSuggestions"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
 

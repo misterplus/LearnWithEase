@@ -6,7 +6,6 @@ import com.netease.nim.uikit.common.activity.UI;
 
 import team.one.lwe.R;
 import team.one.lwe.ui.fragment.FriendFragment;
-import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
 public class MainActivity extends UI {
 

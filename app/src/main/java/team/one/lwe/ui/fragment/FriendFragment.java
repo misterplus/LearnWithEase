@@ -2,8 +2,6 @@ package team.one.lwe.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -30,7 +28,7 @@ import team.one.lwe.util.NavigationUtils;
 public class FriendFragment extends Fragment {
     private View view;
 
-    private List<Fragment> fragmentList = new ArrayList<>();
+    private final List<Fragment> fragmentList = new ArrayList<>();
 
     @Override
     public void onDestroyView() {
@@ -43,7 +41,7 @@ public class FriendFragment extends Fragment {
         //TODO: finish friend fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend, false);
-        ((UI)getActivity()).setToolBar(R.id.toolbar, options);
+        ((UI) getActivity()).setToolBar(R.id.toolbar, options);
         RelativeLayout buttonsFriend = getActivity().findViewById(R.id.buttonsFriend);
         buttonsFriend.setVisibility(View.VISIBLE);
         TabLayout tabFriend = view.findViewById(R.id.tabFriend);

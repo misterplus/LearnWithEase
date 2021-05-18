@@ -9,6 +9,7 @@ public class PostUtils {
 
     private static final boolean DEV_ENV = true;
     private static final String API_DOMAIN_NAME = DEV_ENV ? "http://10.0.2.2:8080" : "https://lwe.misterplus.plus";
+
     // 10.0.2.2 is for localhost in emulator
     // real server not deployed yet
     public static ASResponse doPostEncoded(@NonNull String url, int timeout, @NonNull String name, @NonNull Object value, @NonNull Object... parameters) {
@@ -36,4 +37,4 @@ public class PostUtils {
                 .execute();
         return new ASResponse(resp.body());
     }
- }
+}
