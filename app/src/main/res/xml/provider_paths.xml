@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <external-path
-        name="caption_avatar"
+        name="external_files"
         path="." />
 </paths>

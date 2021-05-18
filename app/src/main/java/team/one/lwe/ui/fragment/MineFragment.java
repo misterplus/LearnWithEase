@@ -38,7 +38,7 @@ public class MineFragment extends Fragment {
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         String signature = user.getSignature();
 
-        imageAvatar.setImageURI(UserUtils.getAvatarUri(imageAvatar, account, user.getAvatar()));
+        UserUtils.setAvatar(imageAvatar, account, user.getAvatar());
         textUsername.setText(account);
         textPersonalSignature.setText(signature);
         return view;
