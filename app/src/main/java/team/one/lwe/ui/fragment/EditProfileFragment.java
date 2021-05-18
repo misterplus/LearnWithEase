@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import team.one.lwe.LWEApplication;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.callback.UpdateCallback;
@@ -113,7 +115,7 @@ public class EditProfileFragment extends Fragment {
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
 
-        imageAvatar.setImageURI(UserUtils.getAvatarUri(imageAvatar, account, user.getAvatar()));
+        imageAvatar.setImageURI(UserUtils.getAvatarUri((LWEApplication) getActivity().getApplication(), imageAvatar, account, user.getAvatar()));
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -423,18 +425,14 @@ public class EditProfileFragment extends Fragment {
                     break;
                 }
                 case UCrop.REQUEST_CROP: {
-                    //TODO: handle cropped results
                     Uri uriResult = UCrop.getOutput(data);
                     File result = new File(uriResult.getPath());
                     NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RequestCallback<String>() {
-
-                        //TODO: handle upload result
                         @Override
                         public void onSuccess(String url) {
-                            Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
-                            fields.put(UserInfoFieldEnum.AVATAR, url);
-                            NIMClient.getService(UserService.class).updateUserInfo(fields);
-                            ToastHelper.showToast(view.getContext(), R.string.lwe_success_update);
+                            UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback<>(view));
+                            RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
+                            imageAvatar.setImageURI(UserUtils.getAvatarUri((LWEApplication) getActivity().getApplication(), view, NimUIKit.getAccount(), url));
                         }
 
                         @Override
@@ -463,13 +461,12 @@ public class EditProfileFragment extends Fragment {
                         }
 
                         @Override
-                        public void onException(Throwable exception) {
-
+                        public void onException(Throwable e) {
+                            Log.e(view.getTransitionName(), Log.getStackTraceString(e));
                         }
                     });
                 }
                 case UCrop.RESULT_ERROR: {
-                    //TODO: handle ucrop errors
                     try {
                         throw UCrop.getError(data);
                     } catch (Throwable throwable) {

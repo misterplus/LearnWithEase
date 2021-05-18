@@ -44,7 +44,6 @@ public class UpdateCallback<T> implements RequestCallback<T> {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
             }
         }
-
     }
 
     @Override

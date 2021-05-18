@@ -3,8 +3,10 @@ package team.one.lwe.ui.activity;
 import android.Manifest;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
 
 import team.one.lwe.R;
@@ -29,6 +31,21 @@ public class LoginActivity extends UI {
                     .beginTransaction()
                     .add(R.id.container, new LoginFragment())
                     .commit();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode) {
+            case 0: {
+                if (grantResults[0] == PERMISSION_DENIED) {
+                    ToastHelper.showToast(this, getString(R.string.lwe_error_perm));
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
+                }
+                break;
+            }
+            default:
+                break;
         }
     }
 }
