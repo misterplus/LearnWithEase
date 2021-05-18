@@ -53,6 +53,10 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.MainActivity" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
     <!-- 云信后台服务，请使用独立进程。 -->
     <service
@@ -100,6 +104,16 @@
         android:name="com.netease.nimlib.ipc.cp.provider.PreferenceContentProvider"
         android:authorities="team.one.lwe.ipc.provider.preference"
         android:exported="false" />
+
+        <provider
+            android:authorities="team.one.lwe.ipc.provider.file"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider"/>
+        </provider>
     </application>
 
 </manifest>

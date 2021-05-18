@@ -11,4 +11,5 @@ public class User {
     private String username, password, name;
     private int gender;
     private UserInfo ex;
+    private String icon, sign;
 }

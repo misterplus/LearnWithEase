@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -30,18 +31,19 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/imageHeadportrait"
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/headportraitArrow"
+            android:layout_toStartOf="@id/buttonAvatar"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_headportrait_edit_profile" />
+            android:src="@drawable/lwe_headportrait_edit_profile"
+            app:riv_oval="true" />
 
         <ImageButton
-            android:id="@+id/headportraitArrow"
+            android:id="@+id/buttonAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -70,22 +72,27 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/nickname"
+        <EditText
+            android:id="@+id/editTextName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
             android:layout_marginStart="180dp"
+            android:layout_marginTop="11dp"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@id/nicknameArrow"
+            android:layout_toStartOf="@id/buttonName"
+            android:background="@color/transparent"
+            android:focusable="false"
             android:gravity="end"
-            android:text="@string/lwe_placeholder_name"
+            android:hint="@string/lwe_nickname"
+            android:imeOptions="actionNext"
+            android:inputType="textNoSuggestions"
+            android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            tools:ignore="TextViewEdits" />
+            android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/nicknameArrow"
+            android:id="@+id/buttonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -96,7 +103,6 @@
             android:src="@drawable/nim_arrow_right" />
 
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/fragment_edit_profile_personal_signature"
@@ -115,24 +121,26 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/PersonalSignature"
+        <EditText
+            android:id="@+id/editTextSignature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/signatureArrow"
+            android:layout_toStartOf="@+id/buttonSignature"
+            android:background="@color/transparent"
+            android:focusable="false"
             android:gravity="end"
             android:hint="@string/lwe_placeholder_signature"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="20sp"
             tools:ignore="TextViewEdits" />
 
         <ImageButton
-            android:id="@+id/signatureArrow"
+            android:id="@+id/buttonSignature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -147,7 +155,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@color/white">
 
         <ImageView
@@ -208,7 +216,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@color/white">
 
         <ImageView
@@ -221,15 +229,26 @@
             android:contentDescription="@string/empty"
             android:src="@drawable/lwe_icon_age" />
 
-        <EditText
-            android:id="@+id/editTextAge"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/imageAge"
-            android:hint="@string/lwe_hint_age_again"
+            android:layout_toEndOf="@id/imageAge"
+            android:text="@string/lwe_text_age"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/buttonAge"
+            android:background="@color/transparent"
+            android:focusable="false"
+            android:hint="@string/lwe_placeholder_age"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="number"
@@ -238,11 +257,22 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
+        <ImageButton
+            android:id="@+id/buttonAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/nim_arrow_right" />
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@color/white">
 
         <ImageView
@@ -291,7 +321,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@color/white">
 
         <ImageView
@@ -329,7 +359,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@color/white">
 
         <ImageView
@@ -368,7 +398,7 @@
     <RelativeLayout
         android:id="@+id/rowSchool"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:background="@color/white"
         android:visibility="gone">
 
@@ -416,24 +446,10 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/white">
+        android:layout_height="50dp">
 
-        <Button
-            android:id="@+id/buttonEditProfileDone"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lwe_button_round_blue"
-            android:contentDescription="@string/empty"
-            android:text="@string/lwe_button_done"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
+    </FrameLayout>
 
 </LinearLayout>

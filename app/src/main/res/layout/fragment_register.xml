@@ -76,7 +76,7 @@
                 android:hint="@string/lwe_hint_username"
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
-                android:inputType="text"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -177,7 +177,7 @@
                 android:hint="@string/lwe_hint_name"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
-                android:inputType="text"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
