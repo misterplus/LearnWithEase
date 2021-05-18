@@ -36,7 +36,7 @@ public class LoginActivity extends UI {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode) {
+        switch (requestCode) {
             case 0: {
                 if (grantResults[0] == PERMISSION_DENIED) {
                     ToastHelper.showToast(this, getString(R.string.lwe_error_perm));
