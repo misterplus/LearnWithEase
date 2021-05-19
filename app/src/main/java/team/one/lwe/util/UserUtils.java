@@ -3,16 +3,13 @@ package team.one.lwe.util;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nimlib.sdk.InvocationFuture;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.nos.NosService;
 import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
@@ -24,6 +21,7 @@ import java.util.Map;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
+import team.one.lwe.ui.callback.RegularCallback;
 
 public class UserUtils {
 
@@ -58,25 +56,20 @@ public class UserUtils {
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static boolean isAvatarCached(String account, String avatar) {
-        String cachedAvatar = CacheUtils.getAvatarCache(account);
-        if (avatar.equals(cachedAvatar))
-            return true;
-        else {
-            CacheUtils.saveAvatarCache(account, avatar);
-            return false;
-        }
-    }
-
-    public static void setAvatar(RoundedImageView view, String account, String url) {
-        File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("avatar_%s.png", account));
-        //if (!isAvatarCached(account, url) || !avatar.exists()) {
-            NosThumbParam nosThumbParam = new NosThumbParam();
-            nosThumbParam.height = 400;
-            nosThumbParam.width = 400;
-            if (avatar.exists())
-                avatar.delete();
-            NIMClient.getService(NosService.class).download(url, nosThumbParam, avatar.getAbsolutePath()).setCallback(new RequestCallback<Void>() {
+    public static void setAvatar(RoundedImageView view, String url) {
+        File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("%s.png", url));
+        NosThumbParam nosThumbParam = new NosThumbParam();
+        nosThumbParam.height = 100;
+        nosThumbParam.width = 100;
+        if (avatar.exists()) {
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= 24)
+                uri = FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
+            else
+                uri = Uri.fromFile(avatar);
+            view.setImageURI(uri);
+        } else {
+            NIMClient.getService(NosService.class).download(url, nosThumbParam, avatar.getAbsolutePath()).setCallback(new RegularCallback<Void>(view.getContext()) {
                 @Override
                 public void onSuccess(Void param) {
                     Uri uri;
@@ -86,45 +79,8 @@ public class UserUtils {
                         uri = Uri.fromFile(avatar);
                     view.setImageURI(uri);
                 }
-
-                @Override
-                public void onFailed(int code) {
-                    switch (code) {
-                        case 408: {
-                            ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
-                            break;
-                        }
-                        case 415: {
-                            ToastHelper.showToast(view.getContext(), R.string.lwe_error_connection);
-                            break;
-                        }
-                        case 416: {
-                            ToastHelper.showToast(view.getContext(), R.string.lwe_error_frequently);
-                            break;
-                        }
-                        case 500: {
-                            ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
-                            break;
-                        }
-                        default: {
-                            ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                        }
-                    }
-                }
-
-                @Override
-                public void onException(Throwable e) {
-                    Log.e(view.getTransitionName(), Log.getStackTraceString(e));
-                }
             });
-//        } else {
-//            Uri uri;
-//            if (Build.VERSION.SDK_INT >= 24)
-//                uri = FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
-//            else
-//                uri = Uri.fromFile(avatar);
-//            view.setImageURI(uri);
-//        }
+        }
     }
 
     public static boolean isNameInvalid(String name) {

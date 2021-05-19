@@ -10,8 +10,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_weight="1" />
+        android:layout_height="10dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,19 +22,21 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/empty"
             android:src="@drawable/lwe_headportrait_edit_profile"
+            app:riv_border_color="@color/primary"
+            app:riv_border_width="2dp"
             app:riv_oval="true" />
 
         <TextView
             android:id="@+id/textUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="125dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@id/imageAvatar"
             android:text="@string/lwe_placeholder_name"
             android:textColor="@color/black"
             android:textSize="22sp" />
@@ -44,10 +45,10 @@
             android:id="@+id/textPersonalSignature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="125dp"
-            android:layout_marginTop="55dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="18dp"
+            android:layout_toEndOf="@id/imageAvatar"
             android:text="@string/lwe_placeholder_signature"
             android:textColor="@color/text_grey"
             android:textSize="16sp" />
@@ -65,8 +66,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_weight="1" />
+        android:layout_height="20dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,9 +86,9 @@
             android:id="@+id/textPreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/imagePreference"
             android:text="@string/lwe_text_edit_preference"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -124,9 +124,9 @@
             android:id="@+id/textHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/imageHistory"
             android:text="@string/lwe_text_history"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -162,9 +162,9 @@
             android:id="@+id/textSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/imageSetting"
             android:text="@string/lwe_text_setting"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -200,9 +200,9 @@
             android:id="@+id/textAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/imageAbout"
             android:text="@string/lwe_text_about"
             android:textColor="@color/black"
             android:textSize="20sp" />

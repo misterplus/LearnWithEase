@@ -24,6 +24,14 @@ public abstract class RegularCallback<T> implements RequestCallback<T> {
                 break;
             }
             case 415: {
+                ToastHelper.showToast(context, R.string.lwe_error_connection);
+                break;
+            }
+            case 416: {
+                ToastHelper.showToast(context, R.string.lwe_error_frequently);
+                break;
+            }
+            case 500: {
                 ToastHelper.showToast(context, R.string.lwe_error_confail);
                 break;
             }

@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.model.AddFriendNotify;
@@ -22,7 +21,6 @@ import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import team.one.lwe.LWEApplication;
 import team.one.lwe.R;
 import team.one.lwe.ui.callback.VoidSuccessCallback;
 import team.one.lwe.util.UserUtils;
@@ -45,7 +43,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         AddFriendNotify request = (AddFriendNotify) requestMsg.getAttachObject();
         String account = request.getAccount();
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
-        UserUtils.setAvatar(holder.imageAvatar, account, info.getAvatar());
+        UserUtils.setAvatar(holder.imageAvatar, info.getAvatar());
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
         holder.buttonAccept.setOnClickListener(v -> {

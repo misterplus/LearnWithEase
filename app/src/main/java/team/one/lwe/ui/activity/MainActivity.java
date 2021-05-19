@@ -22,8 +22,8 @@ import team.one.lwe.ui.fragment.MineFragment;
 
 public class MainActivity extends UI {
 
+    private final List<Integer> idList = Arrays.asList(R.id.naviHome, R.id.naviFriend, R.id.naviMine);
     private List<Fragment> fragmentList;
-    private List<Integer> idList = Arrays.asList(R.id.naviHome, R.id.naviFriend, R.id.naviMine);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class MainActivity extends UI {
 
         ViewPager2 pagerMain = findViewById(R.id.pagerMain);
         BottomNavigationView navibar = findViewById(R.id.navibar);
-        pagerMain.setAdapter( new FragmentStateAdapter(this) {
+        pagerMain.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -64,26 +64,5 @@ public class MainActivity extends UI {
                 return true;
             }
         });
-//        navibar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.naviFriend: {
-//                        getSupportFragmentManager()
-//                                .beginTransaction()
-//                                .replace(R.id.container, new RecentContactsFragment())
-//                                .commit();
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .add(R.id.container, new FriendFragment())
-//                    .commit();
-//        }
     }
 }

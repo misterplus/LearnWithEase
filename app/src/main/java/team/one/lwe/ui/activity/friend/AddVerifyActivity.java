@@ -41,7 +41,7 @@ public class AddVerifyActivity extends UI {
         Button buttonAdd = findViewById(R.id.buttonAdd);
         EditText editTextReason = findViewById(R.id.editTextReason);
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
-        UserUtils.setAvatar(imageAvatar, account, info.getAvatar());
+        UserUtils.setAvatar(imageAvatar, info.getAvatar());
         textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));

@@ -38,7 +38,7 @@ import team.one.lwe.util.UserUtils;
 import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD_FRIEND_VERIFY_REQUEST;
 
 public class AddFriendActivity extends UI {
-    
+
     private String searchedAccount;
 
     @Override
@@ -67,7 +67,7 @@ public class AddFriendActivity extends UI {
                             RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
                             TextView textName = findViewById(R.id.textName);
                             TextView textSignature = findViewById(R.id.textSignature);
-                            UserUtils.setAvatar(imageAvatar, searchedAccount, info.getAvatar());
+                            UserUtils.setAvatar(imageAvatar, info.getAvatar());
                             textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
                             textSignature.setText(info.getSignature());
                             boolean isMyFriend = NIMClient.getService(FriendService.class).isMyFriend(info.getAccount()) || info.getAccount().equals(NimUIKit.getAccount());
@@ -119,8 +119,7 @@ public class AddFriendActivity extends UI {
                 for (SystemMessage m : listBeingAdded) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(m.getMessageId());
                 }
-            }
-            else {
+            } else {
                 Intent intent = new Intent(this, AddVerifyActivity.class);
                 intent.putExtra("account", searchedAccount);
                 startActivity(intent);

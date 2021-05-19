@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 public class TextLockListener implements View.OnClickListener {
 
-    EditText editText;
+    private final EditText editText;
 
     public TextLockListener(EditText editText) {
         this.editText = editText;

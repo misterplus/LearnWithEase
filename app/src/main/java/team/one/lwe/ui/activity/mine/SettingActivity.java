@@ -1,17 +1,11 @@
-package team.one.lwe.ui.fragment;
+package team.one.lwe.ui.activity.mine;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.activity.UI;
@@ -27,23 +21,25 @@ import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 
-public class SettingFragment extends Fragment {
-    private View view;
+public class SettingActivity extends UI {
+
+    private static boolean isPasswordValid(@NotNull String password) {
+        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
+    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_setting, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_setting, true);
-        BottomNavigationView navibar = getActivity().findViewById(R.id.navibar);
-        navibar.setVisibility(View.GONE);
-        ((UI) getActivity()).setToolBar(getActivity().findViewById(R.id.toolbar), R.id.toolbar, options);
+        setToolBar(R.id.toolbar, options);
 
-        EditText editTextPassword = view.findViewById(R.id.editTextPassword);
-        EditText editTextConfirmPassword = view.findViewById(R.id.editTextConfirmPassword);
-        ImageButton buttonUpdatePassword = view.findViewById(R.id.buttonUpdatePassword);
-        ImageButton buttonConfirmPassword = view.findViewById(R.id.buttonConfirmPassword);
-        RelativeLayout passwordLayout = view.findViewById(R.id.passwordLayout);
-        RelativeLayout confirmPasswordLayout = view.findViewById(R.id.confirmPasswordLayout);
+        EditText editTextPassword = findViewById(R.id.editTextPassword);
+        EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        ImageButton buttonUpdatePassword = findViewById(R.id.buttonUpdatePassword);
+        ImageButton buttonConfirmPassword = findViewById(R.id.buttonConfirmPassword);
+        RelativeLayout passwordLayout = findViewById(R.id.passwordLayout);
+        RelativeLayout confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);
 
         buttonUpdatePassword.setOnClickListener(view -> {
             passwordLayout.setVisibility(View.VISIBLE);
@@ -59,23 +55,17 @@ public class SettingFragment extends Fragment {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_password);
                 } else if (!password.equals(confirmPassword)) {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
-                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
+                } else if (!NetworkUtil.isNetAvailable(getBaseContext())) {
                     ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
                 } else {
                     doUpdate(NimUIKit.getAccount(), password);
                 }
             }
         });
-
-        return view;
-    }
-
-    private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
     }
 
     private void doUpdate(String username, String password) {
-        new NetworkThread(view) {
+        new NetworkThread(findViewById(R.id.toolbar)) {
             @Override
             public ASResponse doRequest() {
                 return APIUtils.update(username, password);
@@ -83,7 +73,7 @@ public class SettingFragment extends Fragment {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_success_update);
+                ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
             }
 
             @Override
@@ -91,23 +81,23 @@ public class SettingFragment extends Fragment {
                 DialogMaker.dismissProgressDialog();
                 switch (code) {
                     case 408: {
-                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_timeout);
                         break;
                     }
                     case 415: {
-                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confail);
                         break;
                     }
                     default: {
-                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_unknown);
                     }
                 }
             }
 
             @Override
             public void onException(Exception e) {
-                DialogMaker.dismissProgressDialog();
                 super.onException(e);
+                DialogMaker.dismissProgressDialog();
             }
         }.start();
     }

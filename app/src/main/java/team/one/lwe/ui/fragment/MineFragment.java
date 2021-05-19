@@ -1,5 +1,6 @@
 package team.one.lwe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import team.one.lwe.R;
-import team.one.lwe.util.NavigationUtils;
+import team.one.lwe.ui.activity.mine.EditPrefActivity;
+import team.one.lwe.ui.activity.mine.EditProfileActivity;
+import team.one.lwe.ui.activity.mine.SettingActivity;
 import team.one.lwe.util.UserUtils;
 
 public class MineFragment extends Fragment {
@@ -32,15 +35,15 @@ public class MineFragment extends Fragment {
         ImageButton buttonEditProfile = view.findViewById(R.id.buttonEditProfile);
         ImageButton buttonPreference = view.findViewById(R.id.buttonPreference);
         ImageButton buttonSetting = view.findViewById(R.id.buttonSetting);
-        buttonEditProfile.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditProfileFragment(), true));
-        buttonPreference.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditPreferenceFragment(), true));
-        buttonSetting.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new SettingFragment(), true));
+        buttonEditProfile.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditProfileActivity.class)));
+        buttonPreference.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditPrefActivity.class)));
+        buttonSetting.setOnClickListener(view1 -> startActivity(new Intent(getContext(), SettingActivity.class)));
         String account = NimUIKit.getAccount();
         RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         String signature = user.getSignature();
 
-        UserUtils.setAvatar(imageAvatar, account, user.getAvatar());
+        UserUtils.setAvatar(imageAvatar, user.getAvatar());
         textUsername.setText(account);
         textPersonalSignature.setText(signature);
         return view;
