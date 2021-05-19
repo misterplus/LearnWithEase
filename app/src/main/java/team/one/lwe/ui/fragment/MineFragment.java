@@ -31,8 +31,10 @@ public class MineFragment extends Fragment {
         TextView textPersonalSignature = view.findViewById(R.id.textPersonalSignature);
         ImageButton buttonEditProfile = view.findViewById(R.id.buttonEditProfile);
         ImageButton buttonPreference = view.findViewById(R.id.buttonPreference);
+        ImageButton buttonSetting = view.findViewById(R.id.buttonSetting);
         buttonEditProfile.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditProfileFragment(), true));
         buttonPreference.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new EditPreferenceFragment(), true));
+        buttonSetting.setOnClickListener(view1 -> NavigationUtils.navigateTo(this, new SettingFragment(), true));
         String account = NimUIKit.getAccount();
         RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);

@@ -4,6 +4,7 @@
     <!--    提示类-->
     <string name="lwe_hint_username">请输入用户名</string>
     <string name="lwe_hint_password">请输入密码</string>
+    <string name="lwe_hint_new_password">请输入新密码</string>
     <string name="lwe_hint_confirm_password">请再次输入密码</string>
     <string name="lwe_hint_name">请输入昵称</string>
     <string name="lwe_hint_age">请输入年龄</string>
@@ -31,6 +32,7 @@
     <string name="lwe_error_unknown">出现未知错误，请稍后再试</string>
     <string name="lwe_error_login_info">用户名或密码错误</string>
     <string name="lwe_error_confirm_password">两次密码输入不一致</string>
+    <string name="lwe_error_password">密码为数字、字母、-+=_,.且长度大于等于6小于等于16且至少含两种字符</string>
     <string name="lwe_error_name">昵称不能为空且长度不大于16位</string>
     <string name="lwe_error_signature">个性签名长度不大于20位</string>
     <string name="lwe_error_age">请输入正确年龄</string>
@@ -85,6 +87,7 @@
     <string name="lwe_text_mine">我的</string>
     <string name="lwe_text_signature">个性签名</string>
     <string name="lwe_text_nickname">昵称</string>
+    <string name="lwe_text_update_password">更改密码</string>
     <string name="lwe_nickname">昵称</string>
     <string name="lwe_text_personal_info">个人信息</string>
     <string name="lwe_text_avatar">头像</string>

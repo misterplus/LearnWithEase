@@ -21,4 +21,11 @@ public class APIUtils {
                 "/user/register", 5000,
                 new Gson().toJson(user));
     }
+
+    public static ASResponse update(@NonNull String username, @NonNull String password) throws IORuntimeException {
+        return PostUtils.doPostEncoded(
+                "/user/convert", 5000,
+                "username", username,
+                "password", password);
+    }
 }
