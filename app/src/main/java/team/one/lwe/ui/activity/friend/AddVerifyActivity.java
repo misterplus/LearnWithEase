@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.constant.VerifyType;
@@ -20,11 +19,12 @@ import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
+import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.UserUtils;
 
-public class AddVerifyActivity extends UI {
+public class AddVerifyActivity extends LWEUI {
     private String account;
 
     @Override

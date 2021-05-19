@@ -9,7 +9,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.netease.nim.uikit.common.activity.UI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +19,7 @@ import team.one.lwe.ui.fragment.FriendFragment;
 import team.one.lwe.ui.fragment.HomeFragment;
 import team.one.lwe.ui.fragment.MineFragment;
 
-public class MainActivity extends UI {
+public class MainActivity extends LWEUI {
 
     private final List<Integer> idList = Arrays.asList(R.id.naviHome, R.id.naviFriend, R.id.naviMine);
     private List<Fragment> fragmentList;

@@ -63,8 +63,7 @@ public class FriendFragment extends Fragment {
                 return fragmentList.size();
             }
         });
-        String[] tabNames = {"最近联系人", "通讯录"};
-        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(tabNames[position]));
+        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
         buttonFriendAdd.setOnClickListener(new View.OnClickListener() {
             @Override

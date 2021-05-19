@@ -7,14 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 
 import team.one.lwe.R;
 import team.one.lwe.ui.fragment.LoginFragment;
 
 import static android.content.pm.PackageManager.PERMISSION_DENIED;
 
-public class LoginActivity extends UI {
+public class LoginActivity extends LWEUI {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -31,7 +31,6 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nim.uikit.common.util.C;
@@ -50,13 +49,14 @@ import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
+import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.callback.UpdateCallback;
 import team.one.lwe.ui.listener.TextLockListener;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.UserUtils;
 
-public class EditProfileActivity extends UI {
+public class EditProfileActivity extends LWEUI {
 
     private final CityPickerView cPicker = new CityPickerView();
     private Uri uri;

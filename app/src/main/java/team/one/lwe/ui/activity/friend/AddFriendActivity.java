@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
@@ -31,13 +30,14 @@ import java.util.Collections;
 import java.util.List;
 
 import team.one.lwe.R;
+import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.adapter.FriendRequestAdapter;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.UserUtils;
 
 import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD_FRIEND_VERIFY_REQUEST;
 
-public class AddFriendActivity extends UI {
+public class AddFriendActivity extends LWEUI {
 
     private String searchedAccount;
 

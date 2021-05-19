@@ -8,7 +8,6 @@ import android.widget.RelativeLayout;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 
@@ -17,11 +16,12 @@ import org.jetbrains.annotations.NotNull;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.network.NetworkThread;
+import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 
-public class SettingActivity extends UI {
+public class SettingActivity extends LWEUI {
 
     private static boolean isPasswordValid(@NotNull String password) {
         return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;

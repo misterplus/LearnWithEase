@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.netease.nim.uikit.common.activity.UI;
-
 import team.one.lwe.LWECache;
 import team.one.lwe.R;
 
-public class WelcomeActivity extends UI {
+public class WelcomeActivity extends LWEUI {
 
     private static final boolean DEV_FRONT = false;
 

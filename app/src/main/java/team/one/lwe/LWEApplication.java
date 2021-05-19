@@ -13,8 +13,15 @@ import com.netease.nimlib.sdk.util.NIMUtil;
 import java.io.File;
 
 import team.one.lwe.config.Preferences;
+import team.one.lwe.crash.CrashHandler;
 
 public class LWEApplication extends Application {
+
+    private static LWEApplication instance;
+
+    public static LWEApplication getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
@@ -24,6 +31,9 @@ public class LWEApplication extends Application {
             initUiKit();
         }
         initCacheDir();
+        instance = this;
+        CrashHandler crashHandler = CrashHandler.getCrashHandler();
+        crashHandler.init();
     }
 
     private void initCacheDir() {

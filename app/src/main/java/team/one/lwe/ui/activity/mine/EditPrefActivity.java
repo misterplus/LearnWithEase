@@ -10,7 +10,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.gson.Gson;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
@@ -19,11 +18,12 @@ import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import team.one.lwe.R;
 import team.one.lwe.bean.Preference;
 import team.one.lwe.bean.UserInfo;
+import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.UpdateCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.UserUtils;
 
-public class EditPrefActivity extends UI {
+public class EditPrefActivity extends LWEUI {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

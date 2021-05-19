@@ -62,6 +62,8 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".crash.CrashActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
 
     <!-- 云信后台服务，请使用独立进程。 -->
     <service
