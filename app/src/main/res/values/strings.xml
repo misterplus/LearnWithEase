@@ -117,6 +117,9 @@
     <string name="lwe_text_reason">验证信息：</string>
     <string name="lwe_text_empty_signature">暂无签名</string>
     <string name="lwe_text_age">年龄</string>
+    <string name="lwe_text_logout">退出登录</string>
+    <string name="lwe_text_user_setting">用户设置</string>
+    <string name="lwe_text_system_setting">系统设置</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>

@@ -24,7 +24,7 @@ public class APIUtils {
 
     public static ASResponse update(@NonNull String username, @NonNull String password) throws IORuntimeException {
         return PostUtils.doPostEncoded(
-                "/user/convert", 5000,
+                "/user/update", 5000,
                 "username", username,
                 "password", password);
     }

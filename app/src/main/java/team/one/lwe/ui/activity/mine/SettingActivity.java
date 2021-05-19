@@ -1,7 +1,11 @@
 package team.one.lwe.ui.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -10,13 +14,21 @@ import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
+import com.netease.nim.uikit.impl.cache.ChatRoomMemberCache;
+import com.netease.nim.uikit.impl.cache.FriendDataCache;
+import com.netease.nim.uikit.impl.cache.NimUserInfoCache;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.auth.AuthService;
 
 import org.jetbrains.annotations.NotNull;
 
+import team.one.lwe.LWECache;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
+import team.one.lwe.ui.activity.LoginActivity;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
@@ -36,31 +48,48 @@ public class SettingActivity extends LWEUI {
 
         EditText editTextPassword = findViewById(R.id.editTextPassword);
         EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        ImageButton buttonLogout = findViewById(R.id.buttonLogout);
         ImageButton buttonUpdatePassword = findViewById(R.id.buttonUpdatePassword);
         ImageButton buttonConfirmPassword = findViewById(R.id.buttonConfirmPassword);
         RelativeLayout passwordLayout = findViewById(R.id.passwordLayout);
         RelativeLayout confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout);
+
+        buttonLogout.setOnClickListener(view -> {
+            NIMClient.getService(AuthService.class).logout();
+            LWECache.clear();
+            Preferences.cleanCache(this);
+            Intent intent = new Intent();
+            intent.setClass(SettingActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         buttonUpdatePassword.setOnClickListener(view -> {
             passwordLayout.setVisibility(View.VISIBLE);
             confirmPasswordLayout.setVisibility(View.VISIBLE);
         });
 
-        buttonConfirmPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String password = editTextPassword.getText().toString();
-                String confirmPassword = editTextConfirmPassword.getText().toString();
-                if (!isPasswordValid(password)) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_password);
-                } else if (!password.equals(confirmPassword)) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
-                } else if (!NetworkUtil.isNetAvailable(getBaseContext())) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-                } else {
-                    doUpdate(NimUIKit.getAccount(), password);
-                }
+        buttonConfirmPassword.setOnClickListener(view -> {
+            String password = editTextPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
+            if (!isPasswordValid(password)) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_password);
+            } else if (!password.equals(confirmPassword)) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
+            } else if (!NetworkUtil.isNetAvailable(getBaseContext())) {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+            } else {
+                doUpdate(NimUIKit.getAccount(), password);
+                passwordLayout.setVisibility(View.GONE);
+                confirmPasswordLayout.setVisibility(View.GONE);
             }
+        });
+
+        editTextConfirmPassword.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                buttonConfirmPassword.callOnClick();
+            }
+            return false;
         });
     }
 

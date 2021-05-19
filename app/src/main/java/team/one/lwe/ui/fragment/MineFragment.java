@@ -42,7 +42,7 @@ public class MineFragment extends Fragment {
         RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         String signature = user.getSignature();
-
+        //TODO: 更换头像后返回，本页面头像不更新
         UserUtils.setAvatar(imageAvatar, user.getAvatar());
         textUsername.setText(account);
         textPersonalSignature.setText(signature);

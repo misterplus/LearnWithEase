@@ -30,6 +30,52 @@
         android:layout_height="10dp" />
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/textUserSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:text="@string/lwe_text_user_setting"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/fragment_setting_logout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/lwe_text_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:text="@string/lwe_text_logout"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/buttonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:contentDescription="@string/empty"
+            android:src="@drawable/nim_arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/fragment_setting_update_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -138,6 +184,23 @@
             android:background="@color/white"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/textSys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:text="@string/lwe_text_system_setting"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
