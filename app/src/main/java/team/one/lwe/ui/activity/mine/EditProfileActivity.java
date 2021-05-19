@@ -50,6 +50,7 @@ import java.util.List;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.activity.LWEUI;
+import team.one.lwe.ui.activity.MainActivity;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.callback.UpdateCallback;
 import team.one.lwe.ui.listener.TextLockListener;
@@ -412,6 +413,7 @@ public class EditProfileActivity extends LWEUI {
                             UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback(getBaseContext(), "avatar"));
                             RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
                             UserUtils.setAvatar(imageAvatar, url);
+                            UserUtils.setAvatar(MainActivity.getFragmentList().get(2).getView().findViewById(R.id.imageAvatar), url);
                         }
                     });
                 }
