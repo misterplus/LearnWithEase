@@ -70,7 +70,7 @@ public class UserUtils {
 
     public static void setAvatar(RoundedImageView view, String account, String url) {
         File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("avatar_%s.png", account));
-        if (!isAvatarCached(account, url) || !avatar.exists()) {
+        //if (!isAvatarCached(account, url) || !avatar.exists()) {
             NosThumbParam nosThumbParam = new NosThumbParam();
             nosThumbParam.height = 400;
             nosThumbParam.width = 400;
@@ -117,14 +117,14 @@ public class UserUtils {
                     Log.e(view.getTransitionName(), Log.getStackTraceString(e));
                 }
             });
-        } else {
-            Uri uri;
-            if (Build.VERSION.SDK_INT >= 24)
-                uri = FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
-            else
-                uri = Uri.fromFile(avatar);
-            view.setImageURI(uri);
-        }
+//        } else {
+//            Uri uri;
+//            if (Build.VERSION.SDK_INT >= 24)
+//                uri = FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
+//            else
+//                uri = Uri.fromFile(avatar);
+//            view.setImageURI(uri);
+//        }
     }
 
     public static boolean isNameInvalid(String name) {

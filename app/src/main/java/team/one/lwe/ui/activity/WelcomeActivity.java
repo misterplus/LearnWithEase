@@ -19,13 +19,16 @@ public class WelcomeActivity extends UI {
         setContentView(R.layout.activity_welcome);
         // redirect to login in 3 seconds
         new Handler(msg -> {
+            Intent intent;
             if (LWECache.noCache()) {
                 // redirect to main if is developing frontend
-                startActivity(new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class));
+                intent = new Intent(this, DEV_FRONT ? MainActivity.class : LoginActivity.class);
             } else {
-                startActivity(new Intent(this, MainActivity.class));
+                intent = new Intent(this, MainActivity.class);
             }
-            return false;
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            return true;
         }).sendEmptyMessageDelayed(0, 3000);
     }
 }

@@ -1,5 +1,6 @@
 package team.one.lwe.ui.callback;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
@@ -9,8 +10,8 @@ import team.one.lwe.R;
 
 public class VoidSuccessCallback extends RegularCallback<Void> {
 
-    public VoidSuccessCallback(View view) {
-        super(view);
+    public VoidSuccessCallback(Context context) {
+        super(context);
     }
 
     @Override
@@ -22,21 +23,21 @@ public class VoidSuccessCallback extends RegularCallback<Void> {
     public void onFailed(int code) {
         switch (code) {
             case 408: {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                ToastHelper.showToast(context, R.string.lwe_error_timeout);
                 break;
             }
             case 415: {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                ToastHelper.showToast(context, R.string.lwe_error_confail);
                 break;
             }
             default: {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                ToastHelper.showToast(context, R.string.lwe_error_unknown);
             }
         }
     }
 
     @Override
     public void onException(Throwable e) {
-        Log.e(view.getTransitionName(), Log.getStackTraceString(e));
+        Log.e(context.getPackageName(), Log.getStackTraceString(e));
     }
 }

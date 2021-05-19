@@ -1,24 +1,20 @@
-package team.one.lwe.ui.fragment;
+package team.one.lwe.ui.activity.friend;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
@@ -37,48 +33,40 @@ import java.util.List;
 import team.one.lwe.R;
 import team.one.lwe.ui.adapter.FriendRequestAdapter;
 import team.one.lwe.ui.callback.RegularCallback;
-import team.one.lwe.util.NavigationUtils;
 import team.one.lwe.util.UserUtils;
 
 import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD_FRIEND_VERIFY_REQUEST;
 
-public class AddFriendFragment extends Fragment {
-
-    private View view;
+public class AddFriendActivity extends UI {
+    
     private String searchedAccount;
 
-    private void onNavigateUpClicked() {
-        getActivity().onBackPressed();
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_friend_add, container, false);
-        getActivity().findViewById(R.id.app_bar_layout).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.navibar).setVisibility(View.GONE);
-        Button buttonCancel = view.findViewById(R.id.buttonCancel);
-        buttonCancel.setOnClickListener(v -> onNavigateUpClicked());
-        EditText editTextSearchUsername = view.findViewById(R.id.editTextSearchUsername);
-        Button buttonAdd = view.findViewById(R.id.buttonAdd);
-        TextView textAdd = view.findViewById(R.id.textAdd);
-        LinearLayout searchResult = view.findViewById(R.id.searchResult);
-        LinearLayout noResult = view.findViewById(R.id.noResult);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView((R.layout.activity_friend_add));
+        Button buttonCancel = findViewById(R.id.buttonCancel);
+        buttonCancel.setOnClickListener(v -> onBackPressed());
+        EditText editTextSearchUsername = findViewById(R.id.editTextSearchUsername);
+        Button buttonAdd = findViewById(R.id.buttonAdd);
+        TextView textAdd = findViewById(R.id.textAdd);
+        LinearLayout searchResult = findViewById(R.id.searchResult);
+        LinearLayout noResult = findViewById(R.id.noResult);
         final boolean[] isBeingAdded = {false};
         List<SystemMessage> listBeingAdded = new ArrayList<>();
 
         editTextSearchUsername.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
-                DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_search));
-                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(editTextSearchUsername.getText().toString())).setCallback(new RegularCallback<List<NimUserInfo>>(view) {
+                DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_search));
+                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(editTextSearchUsername.getText().toString())).setCallback(new RegularCallback<List<NimUserInfo>>(this) {
                     @Override
                     public void onSuccess(List<NimUserInfo> list) {
                         if (!list.isEmpty()) {
                             NimUserInfo info = list.get(0);
                             searchedAccount = info.getAccount();
-                            RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
-                            TextView textName = view.findViewById(R.id.textName);
-                            TextView textSignature = view.findViewById(R.id.textSignature);
+                            RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
+                            TextView textName = findViewById(R.id.textName);
+                            TextView textSignature = findViewById(R.id.textSignature);
                             UserUtils.setAvatar(imageAvatar, searchedAccount, info.getAvatar());
                             textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
                             textSignature.setText(info.getSignature());
@@ -98,7 +86,7 @@ public class AddFriendFragment extends Fragment {
                         }
                     }
                 });
-                NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new RegularCallback<List<SystemMessage>>(view) {
+                NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new RegularCallback<List<SystemMessage>>(this) {
                     @Override
                     public void onSuccess(List<SystemMessage> msg) {
                         for (SystemMessage m : msg) {
@@ -121,7 +109,7 @@ public class AddFriendFragment extends Fragment {
         });
         buttonAdd.setOnClickListener(v -> {
             if (isBeingAdded[0]) {
-                NIMClient.getService(FriendService.class).addFriend(new AddFriendData(searchedAccount, VerifyType.DIRECT_ADD, "")).setCallback(new RegularCallback<Void>(view) {
+                NIMClient.getService(FriendService.class).addFriend(new AddFriendData(searchedAccount, VerifyType.DIRECT_ADD, "")).setCallback(new RegularCallback<Void>(this) {
                     @Override
                     public void onSuccess(Void param) {
                         textAdd.setVisibility(View.VISIBLE);
@@ -132,27 +120,35 @@ public class AddFriendFragment extends Fragment {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(m.getMessageId());
                 }
             }
-            else
-                NavigationUtils.navigateTo(this, new AddVerifyFragment(searchedAccount), true);
+            else {
+                Intent intent = new Intent(this, AddVerifyActivity.class);
+                intent.putExtra("account", searchedAccount);
+                startActivity(intent);
+            }
         });
-        NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new RegularCallback<List<SystemMessage>>(view) {
+        NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new RegularCallback<List<SystemMessage>>(this) {
             @Override
             public void onSuccess(List<SystemMessage> msg) {
                 //TODO: deduplicate incoming requests
                 List<SystemMessage> requests = new ArrayList<>();
                 List<String> accounts = new ArrayList<>();
                 for (SystemMessage m : msg) {
-                    if (m.getAttachObject() instanceof AddFriendNotify && ((AddFriendNotify) m.getAttachObject()).getEvent() == RECV_ADD_FRIEND_VERIFY_REQUEST) {
-                        requests.add(m);
-                        accounts.add(((AddFriendNotify) m.getAttachObject()).getAccount());
+                    Object o = m.getAttachObject();
+                    if (o instanceof AddFriendNotify) {
+                        AddFriendNotify afn = (AddFriendNotify) o;
+                        if (afn.getEvent() == RECV_ADD_FRIEND_VERIFY_REQUEST) {
+                            requests.add(m);
+                            accounts.add(afn.getAccount());
+                        }
                     }
                 }
-                NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new RegularCallback<List<NimUserInfo>>(view) {
+                //SystemMsgUtils.deduplicateFriendRequests(requests);
+                NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new RegularCallback<List<NimUserInfo>>(getBaseContext()) {
                     @Override
                     public void onSuccess(List<NimUserInfo> infoList) {
-                        RecyclerView listRequest = view.findViewById(R.id.listRequest);
+                        RecyclerView listRequest = findViewById(R.id.listRequest);
                         FriendRequestAdapter adapter = new FriendRequestAdapter(requests);
-                        listRequest.setLayoutManager(new LinearLayoutManager(getContext()));
+                        listRequest.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                         listRequest.setAdapter(adapter);
                     }
 
@@ -168,13 +164,5 @@ public class AddFriendFragment extends Fragment {
                 //TODO: handle failed request
             }
         });
-        return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getActivity().findViewById(R.id.app_bar_layout).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.navibar).setVisibility(View.VISIBLE);
     }
 }

@@ -118,8 +118,8 @@ public class LoginFragment extends Fragment {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
                 startActivity(new Intent(getContext(), MainActivity.class));
-                Preferences.saveUserAccount(getContext(), info.getAccount());
-                Preferences.saveUserToken(getContext(), info.getToken());
+                //Preferences.saveUserAccount(getContext(), info.getAccount());
+                //Preferences.saveUserToken(getContext(), info.getToken());
             }
 
             @Override

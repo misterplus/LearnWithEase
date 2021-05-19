@@ -1,5 +1,6 @@
 package team.one.lwe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import team.one.lwe.R;
+import team.one.lwe.ui.activity.friend.AddFriendActivity;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
-import team.one.lwe.util.NavigationUtils;
 
 public class FriendFragment extends Fragment {
     private View view;
 
-    private final List<Fragment> fragmentList = new ArrayList<>();
+    private List<Fragment> fragmentList;
 
     @Override
     public void onDestroyView() {
@@ -46,6 +47,7 @@ public class FriendFragment extends Fragment {
         buttonsFriend.setVisibility(View.VISIBLE);
         TabLayout tabFriend = view.findViewById(R.id.tabFriend);
         ViewPager2 pagerFriend = view.findViewById(R.id.pagerFriend);
+        fragmentList = new ArrayList<>();
         fragmentList.add(new RecentContactsFragment());
         fragmentList.add(new ContactsFragment());
         pagerFriend.setAdapter(new FragmentStateAdapter(this) {
@@ -60,9 +62,15 @@ public class FriendFragment extends Fragment {
                 return fragmentList.size();
             }
         });
-        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position]));
+        String[] tabNames = {"最近联系人", "通讯录"};
+        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(tabNames[position]));
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
-        buttonFriendAdd.setOnClickListener(v -> NavigationUtils.navigateTo(this, new AddFriendFragment(), true));
+        buttonFriendAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), AddFriendActivity.class));
+            }
+        });
         return view;
     }
 }

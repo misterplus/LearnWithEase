@@ -49,14 +49,14 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
         holder.buttonAccept.setOnClickListener(v -> {
-            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new VoidSuccessCallback(holder.view));
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new VoidSuccessCallback(holder.view.getContext()));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
             holder.textAccept.setVisibility(View.VISIBLE);
             holder.buttonAccept.setVisibility(View.GONE);
             holder.buttonDecline.setVisibility(View.GONE);
         });
         holder.buttonDecline.setOnClickListener(v -> {
-            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new VoidSuccessCallback(holder.view));
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new VoidSuccessCallback(holder.view.getContext()));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
             holder.textDecline.setVisibility(View.VISIBLE);
             holder.buttonAccept.setVisibility(View.GONE);
