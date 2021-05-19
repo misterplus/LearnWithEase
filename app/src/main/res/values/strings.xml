@@ -109,6 +109,8 @@
     <string name="lwe_text_same_gender">同性优先</string>
     <string name="lwe_text_new_room_first">优先加入新房间</string>
     <string name="lwe_text_friend_add">已添加</string>
+    <string name="lwe_text_friend_accept">已同意</string>
+    <string name="lwe_text_friend_decline">已拒绝</string>
     <string name="lwe_text_reason">验证信息：</string>
     <string name="lwe_text_empty_signature">暂无签名</string>
     <string name="lwe_text_age">年龄</string>

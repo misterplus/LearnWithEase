@@ -276,6 +276,7 @@ public class RegisterFragment extends Fragment {
                     }
                     String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
                     Preference pref = new Preference(spinnerTimeStudy.getSelectedItemPosition(), spinnerTimeRest.getSelectedItemPosition(), spinnerContentStudy.getSelectedItemPosition(), switchSameCity.isChecked(), switchSameSchool.isChecked(), switchSameGender.isChecked(), switchNewRoomFirst.isChecked());
+                    //TODO: add default avatar
                     User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school, pref), "", getString(R.string.lwe_text_empty_signature));
                     new NetworkThread(view) {
                         @Override

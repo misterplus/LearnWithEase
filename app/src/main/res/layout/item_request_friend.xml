@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:divider="@drawable/lwe_background_grey"
     android:orientation="vertical"
     android:showDividers="middle">
@@ -13,6 +14,7 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageAvatar"
             android:layout_width="60dp"
+            app:riv_oval="true"
             android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
@@ -79,14 +81,27 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textAdd"
+            android:id="@+id/textAccept"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/empty"
-            android:text="@string/lwe_text_friend_add"
+            android:text="@string/lwe_text_friend_accept"
+            android:textColor="@color/text_grey"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textDecline"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/empty"
+            android:text="@string/lwe_text_friend_decline"
             android:textColor="@color/text_grey"
             android:textSize="20sp"
             android:visibility="gone" />

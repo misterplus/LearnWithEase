@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.model.AddFriendNotify;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.model.SystemMessage;
 import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import java.util.List;
 
@@ -41,16 +43,24 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
     public void onBindViewHolder(@NonNull FriendRequestAdapter.ViewHolder holder, int position) {
         SystemMessage requestMsg = requests.get(position);
         AddFriendNotify request = (AddFriendNotify) requestMsg.getAttachObject();
-        holder.imageAvatar.setImageURI(UserUtils.getAvatarUri(holder.view, request.getAccount(), NIMClient.getService(UserService.class).getUserInfo(request.getAccount()).getAvatar()));
-        holder.textName.setText(request.getAccount());
+        String account = request.getAccount();
+        NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
+        UserUtils.setAvatar(holder.imageAvatar, account, info.getAvatar());
+        holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
         holder.buttonAccept.setOnClickListener(v -> {
             NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new VoidSuccessCallback(holder.view));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+            holder.textAccept.setVisibility(View.VISIBLE);
+            holder.buttonAccept.setVisibility(View.GONE);
+            holder.buttonDecline.setVisibility(View.GONE);
         });
         holder.buttonDecline.setOnClickListener(v -> {
             NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new VoidSuccessCallback(holder.view));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+            holder.textDecline.setVisibility(View.VISIBLE);
+            holder.buttonAccept.setVisibility(View.GONE);
+            holder.buttonDecline.setVisibility(View.GONE);
         });
     }
 
@@ -63,10 +73,8 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
 
         private final View view;
         private final RoundedImageView imageAvatar;
-        private final TextView textName;
-        private final TextView textReason;
-        private final Button buttonAccept;
-        private final Button buttonDecline;
+        private final TextView textName, textReason, textAccept, textDecline;
+        private final Button buttonAccept, buttonDecline;
 
 
         public ViewHolder(View view) {
@@ -75,6 +83,8 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             imageAvatar = view.findViewById(R.id.imageAvatar);
             textName = view.findViewById(R.id.textName);
             textReason = view.findViewById(R.id.textReason);
+            textAccept = view.findViewById(R.id.textAccept);
+            textDecline = view.findViewById(R.id.textDecline);
             buttonAccept = view.findViewById(R.id.buttonAccept);
             buttonDecline = view.findViewById(R.id.buttonDecline);
         }

@@ -27,11 +27,16 @@ import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.util.NavigationUtils;
 import team.one.lwe.util.UserUtils;
 
 public class AddVerifyFragment extends Fragment {
     private final String account;
     private View view;
+
+    private void onNavigateUpClicked() {
+        getActivity().onBackPressed();
+    }
 
     public AddVerifyFragment(String account) {
         this.account = account;
@@ -51,7 +56,7 @@ public class AddVerifyFragment extends Fragment {
         Button buttonAdd = view.findViewById(R.id.buttonAdd);
         EditText editTextReason = view.findViewById(R.id.editTextReason);
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
-        imageAvatar.setImageURI(UserUtils.getAvatarUri(view, account, info.getAvatar()));
+        UserUtils.setAvatar(imageAvatar, account, info.getAvatar());
         textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));
@@ -67,6 +72,7 @@ public class AddVerifyFragment extends Fragment {
                     }
                 });
                 //TODO: go back to Friend Fragment
+                onNavigateUpClicked();
             }
         });
         return view;
@@ -75,5 +81,7 @@ public class AddVerifyFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        getActivity().findViewById(R.id.app_bar_layout).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.navibar).setVisibility(View.GONE);
     }
 }

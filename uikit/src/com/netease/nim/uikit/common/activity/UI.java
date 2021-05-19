@@ -240,6 +240,7 @@ public abstract class UI extends AppCompatActivity {
     /**
      * 隐藏软键盘
      */
+    //TODO: fix interaction with uikit
     private void HideSoftInput(IBinder token) {
         if (token != null) {
             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
