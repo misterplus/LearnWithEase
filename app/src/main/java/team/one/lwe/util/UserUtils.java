@@ -4,11 +4,11 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
-import android.view.View;
 
 import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nimlib.sdk.InvocationFuture;
 import com.netease.nimlib.sdk.NIMClient;
@@ -19,11 +19,9 @@ import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import team.one.lwe.LWEApplication;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 
@@ -70,23 +68,23 @@ public class UserUtils {
         }
     }
 
-    public static Uri getAvatarUri(View view, String account, String url) {
-        File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("avatar_%s", account));
-        if (!isAvatarCached(account, url)) {
+    public static void setAvatar(RoundedImageView view, String account, String url) {
+        File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("avatar_%s.png", account));
+        if (!isAvatarCached(account, url) || !avatar.exists()) {
             NosThumbParam nosThumbParam = new NosThumbParam();
-            nosThumbParam.height = 100;
-            nosThumbParam.width = 100;
-            try {
-                if (avatar.exists())
-                    avatar.delete();
-                avatar.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            nosThumbParam.height = 400;
+            nosThumbParam.width = 400;
+            if (avatar.exists())
+                avatar.delete();
             NIMClient.getService(NosService.class).download(url, nosThumbParam, avatar.getAbsolutePath()).setCallback(new RequestCallback<Void>() {
                 @Override
                 public void onSuccess(Void param) {
-
+                    Uri uri;
+                    if (Build.VERSION.SDK_INT >= 24)
+                        uri = FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
+                    else
+                        uri = Uri.fromFile(avatar);
+                    view.setImageURI(uri);
                 }
 
                 @Override
@@ -119,11 +117,14 @@ public class UserUtils {
                     Log.e(view.getTransitionName(), Log.getStackTraceString(e));
                 }
             });
+        } else {
+            Uri uri;
+            if (Build.VERSION.SDK_INT >= 24)
+                uri = FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
+            else
+                uri = Uri.fromFile(avatar);
+            view.setImageURI(uri);
         }
-        if (Build.VERSION.SDK_INT >= 24)
-            return FileProvider.getUriForFile(view.getContext(), "team.one.lwe.ipc.provider.file", avatar);
-        else
-            return Uri.fromFile(avatar);
     }
 
     public static boolean isNameInvalid(String name) {

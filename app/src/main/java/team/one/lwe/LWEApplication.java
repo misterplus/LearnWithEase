@@ -11,6 +11,8 @@ import com.netease.nimlib.sdk.SDKOptions;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
+import java.io.File;
+
 import team.one.lwe.config.Preferences;
 import team.one.lwe.db.DaoMaster;
 import team.one.lwe.db.DaoSession;
@@ -32,7 +34,14 @@ public class LWEApplication extends Application {
             initUiKit();
         }
         initGreenDao();
+        initCacheDir();
         instance = this;
+    }
+
+    private void initCacheDir() {
+        File avatar = new File(getApplicationContext().getExternalCacheDir() + "/avatar");
+        if (!avatar.exists())
+            avatar.mkdir();
     }
 
     private void initGreenDao() {

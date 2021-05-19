@@ -55,7 +55,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import team.one.lwe.LWEApplication;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.callback.UpdateCallback;
@@ -111,8 +110,7 @@ public class EditProfileFragment extends Fragment {
         editTextName.setText(user.getName());
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
-
-        imageAvatar.setImageURI(UserUtils.getAvatarUri(imageAvatar, account, user.getAvatar()));
+        UserUtils.setAvatar(imageAvatar, account, user.getAvatar());
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -429,7 +427,7 @@ public class EditProfileFragment extends Fragment {
                         public void onSuccess(String url) {
                             UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback<>(view));
                             RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
-                            imageAvatar.setImageURI(UserUtils.getAvatarUri(view, NimUIKit.getAccount(), url));
+                            UserUtils.setAvatar(imageAvatar, NimUIKit.getAccount(), url);
                         }
 
                         @Override
