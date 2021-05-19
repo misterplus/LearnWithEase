@@ -10,7 +10,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="5dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_headportrait_edit_profile"
+            android:src="@drawable/lwe_placeholder_avatar"
             app:riv_border_color="@color/primary"
             app:riv_border_width="2dp"
             app:riv_oval="true" />
@@ -66,7 +66,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="5dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

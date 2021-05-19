@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_grey_eaeaea"
+    android:background="@color/background_grey"
     android:divider="@drawable/lwe_background_grey"
     android:orientation="vertical"
     android:showDividers="middle">
@@ -26,18 +26,16 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <View
-        android:id="@+id/divider2"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="5dp" />
 
     <RelativeLayout
-        android:id="@+id/fragment_edit_profile_head_portrait"
         android:layout_width="match_parent"
         android:layout_height="82dp"
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/textHeadportrait"
+            android:id="@+id/textAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -48,13 +46,15 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imageAvatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:layout_toStartOf="@id/buttonAvatar"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_headportrait_edit_profile"
+            android:src="@drawable/lwe_placeholder_avatar"
+            app:riv_border_color="@color/primary"
+            app:riv_border_width="2dp"
             app:riv_oval="true" />
 
         <ImageButton
@@ -72,13 +72,12 @@
 
 
     <RelativeLayout
-        android:id="@+id/fragment_edit_profile_nickname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/textNickname"
+            android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -120,11 +119,9 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/fragment_edit_profile_personal_signature"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white">
-
 
         <TextView
             android:id="@+id/textSignature"

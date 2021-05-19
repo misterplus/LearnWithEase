@@ -34,6 +34,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        //TODO: rework toolbar buttons
         getActivity().findViewById(R.id.buttonsFriend).setVisibility(View.GONE);
     }
 

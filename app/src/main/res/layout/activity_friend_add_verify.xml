@@ -45,6 +45,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/lwe_placeholder_avatar"
+                app:riv_border_color="@color/primary"
+                app:riv_border_width="2dp"
                 app:riv_oval="true" />
 
             <TextView
