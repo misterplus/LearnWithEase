@@ -3,6 +3,8 @@ package team.one.lwe.util;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.core.content.FileProvider;
 
@@ -35,6 +37,10 @@ public class UserUtils {
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
         fields.put(UserInfoFieldEnum.SIGNATURE, signature);
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
+    }
+
+    public static void updateUserSignature(TextView view, String signature) {
+        view.setText(signature);
     }
 
     public static InvocationFuture<Void> updateUserGender(int gender) {

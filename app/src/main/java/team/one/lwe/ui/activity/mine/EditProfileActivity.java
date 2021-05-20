@@ -132,6 +132,7 @@ public class EditProfileActivity extends LWEUI {
                         UserUtils.updateUserSignature(getString(R.string.lwe_text_empty_signature)).setCallback(new UpdateCallback(this, "signature"));
                     } else
                         UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback(this, "signature"));
+                    UserUtils.updateUserSignature(MainActivity.getFragmentList().get(2).getView().findViewById(R.id.textPersonalSignature), signature);
                 }
             }
         });
