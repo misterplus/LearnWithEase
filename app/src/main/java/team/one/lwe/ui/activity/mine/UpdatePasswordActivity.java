@@ -21,10 +21,6 @@ import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 
 public class UpdatePasswordActivity extends LWEUI {
-    private String token;
-    private String jiaDeToken;
-    private String newPassword;
-    private String confirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +29,24 @@ public class UpdatePasswordActivity extends LWEUI {
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_update_password, true);
         setToolBar(R.id.toolbar, options);
 
-        jiaDeToken = Preferences.getUserAccount(getBaseContext());
         EditText editTextOldPassword = findViewById(R.id.editTextOldPassword);
         EditText editTextNewPassword = findViewById(R.id.editTextNewPassword);
         EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
         Button buttonConfirmPassword = findViewById(R.id.buttonConfirmPassword);
 
         buttonConfirmPassword.setOnClickListener(view -> {
-            newPassword = editTextNewPassword.getText().toString();
-            confirmPassword = editTextConfirmPassword.getText().toString();
             String oldPassword = editTextOldPassword.getText().toString();
-            doConvert(NimUIKit.getAccount(), oldPassword);
+            String newPassword = editTextNewPassword.getText().toString();
+            String confirmPassword = editTextConfirmPassword.getText().toString();
+            if (!isPasswordValid(newPassword)) {
+                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_password);
+            } else if (!newPassword.equals(confirmPassword)) {
+                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confirm_password);
+            } else if (!NetworkUtil.isNetAvailable(getBaseContext())) {
+                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
+            } else {
+                doUpdate(NimUIKit.getAccount(), oldPassword, newPassword);
+            }
         });
 
         editTextConfirmPassword.setOnEditorActionListener((textView, i, keyEvent) -> {
@@ -58,63 +61,16 @@ public class UpdatePasswordActivity extends LWEUI {
         return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
     }
 
-    private void doConvert(String username, String oldPassword) {
+    private void doUpdate(String username, String oldPassword, String newPassword) {
         new NetworkThread(findViewById(R.id.toolbar)) {
             @Override
             public ASResponse doRequest() {
-                return APIUtils.convert(username, oldPassword);
+                return APIUtils.update(username, oldPassword, newPassword);
             }
 
             @Override
             public void onSuccess(ASResponse asp) {
-                token = asp.getInfo().getStr("token");
-                if (!token.equals(Preferences.getUserToken(getBaseContext()))) {
-                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_old_password);
-                } else if (!isPasswordValid(newPassword)) {
-                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_password);
-                } else if (!newPassword.equals(confirmPassword)) {
-                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confirm_password);
-                } else if (!NetworkUtil.isNetAvailable(getBaseContext())) {
-                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
-                } else {
-                    doUpdate(NimUIKit.getAccount(), newPassword);
-                }
-            }
-
-            @Override
-            public void onFailed(int code, String desc) {
-                switch (code) {
-                    case 408: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_timeout);
-                        break;
-                    }
-                    case 415: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confail);
-                        break;
-                    }
-                    default: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_unknown);
-                    }
-                }
-            }
-
-            @Override
-            public void onException(Exception e) {
-                super.onException(e);
-            }
-        }.start();
-    }
-
-    private void doUpdate(String username, String password) {
-        new NetworkThread(findViewById(R.id.toolbar)) {
-            @Override
-            public ASResponse doRequest() {
-                return APIUtils.update(username, password);
-            }
-
-            @Override
-            public void onSuccess(ASResponse asp) {
-                Preferences.saveUserToken(getBaseContext(), token);
+                Preferences.saveUserToken(getApplicationContext(), asp.getInfo().getStr("token"));
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
                 finish();
             }
@@ -122,6 +78,10 @@ public class UpdatePasswordActivity extends LWEUI {
             @Override
             public void onFailed(int code, String desc) {
                 switch (code) {
+                    case 302: {
+                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_old_password);
+                        break;
+                    }
                     case 408: {
                         ToastHelper.showToast(getBaseContext(), R.string.lwe_error_timeout);
                         break;

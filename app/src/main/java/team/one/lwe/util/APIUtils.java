@@ -22,10 +22,11 @@ public class APIUtils {
                 new Gson().toJson(user));
     }
 
-    public static ASResponse update(@NonNull String username, @NonNull String password) throws IORuntimeException {
+    public static ASResponse update(@NonNull String username, @NonNull String oldPassword, @NonNull String newPassword) throws IORuntimeException {
         return PostUtils.doPostEncoded(
                 "/user/update", 5000,
                 "username", username,
-                "password", password);
+                "oldPassword", oldPassword,
+                "newPassword", newPassword);
     }
 }

@@ -36,7 +36,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@color/background_grey">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/textUserSetting"
@@ -86,7 +86,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:background="@color/background_grey">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/textSys"
