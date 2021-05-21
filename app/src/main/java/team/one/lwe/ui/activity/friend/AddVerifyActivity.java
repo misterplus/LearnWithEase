@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.constant.VerifyType;
@@ -22,7 +22,6 @@ import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
-import team.one.lwe.util.UserUtils;
 
 public class AddVerifyActivity extends LWEUI {
     private String account;
@@ -35,13 +34,13 @@ public class AddVerifyActivity extends LWEUI {
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend_add, true);
         setToolBar(R.id.toolbar, options);
 
-        RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
+        HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
         TextView textName = findViewById(R.id.textName);
         TextView textInfo = findViewById(R.id.textInfo);
         Button buttonAdd = findViewById(R.id.buttonAdd);
         EditText editTextReason = findViewById(R.id.editTextReason);
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
-        UserUtils.setAvatar(imageAvatar, info.getAvatar());
+        imageAvatar.loadBuddyAvatar(account);
         textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));

@@ -56,6 +56,7 @@ public class UserUtils {
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
+    @Deprecated
     public static void setAvatar(RoundedImageView view, String url) {
         File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("%s.png", url));
         NosThumbParam nosThumbParam = new NosThumbParam();

@@ -36,7 +36,7 @@ public class FriendFragment extends Fragment {
         //TODO: finish friend fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend, false);
-        ((UI) getActivity()).setToolBar(R.id.toolbar, options);
+        ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
         RelativeLayout buttonsFriend = view.findViewById(R.id.buttonsFriend);
         TabLayout tabFriend = view.findViewById(R.id.tabFriend);
         ViewPager2 pagerFriend = view.findViewById(R.id.pagerFriend);
@@ -57,6 +57,7 @@ public class FriendFragment extends Fragment {
         });
         new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
+        //TODO: rework this icon
         buttonFriendAdd.setOnClickListener(v -> startActivity(new Intent(getContext(), AddFriendActivity.class)));
         return view;
     }

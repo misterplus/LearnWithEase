@@ -13,9 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.constant.VerifyType;
@@ -37,7 +37,6 @@ import team.one.lwe.ui.callback.FetchFriendRequestCallback;
 import team.one.lwe.ui.callback.MissingInfoCallback;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.SystemMsgUtils;
-import team.one.lwe.util.UserUtils;
 
 import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD_FRIEND_VERIFY_REQUEST;
 
@@ -70,10 +69,10 @@ public class AddFriendActivity extends LWEUI {
                         if (!list.isEmpty()) {
                             NimUserInfo info = list.get(0);
                             searchedAccount = info.getAccount();
-                            RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
+                            HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
                             TextView textName = findViewById(R.id.textName);
                             TextView textSignature = findViewById(R.id.textSignature);
-                            UserUtils.setAvatar(imageAvatar, info.getAvatar());
+                            imageAvatar.loadBuddyAvatar(searchedAccount);
                             textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
                             textSignature.setText(info.getSignature());
                             boolean isMyFriend = NIMClient.getService(FriendService.class).isMyFriend(info.getAccount()) || info.getAccount().equals(NimUIKit.getAccount());

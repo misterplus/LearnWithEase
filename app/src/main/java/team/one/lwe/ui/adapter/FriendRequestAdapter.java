@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.model.AddFriendNotify;
@@ -23,7 +23,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import team.one.lwe.R;
 import team.one.lwe.ui.callback.VoidSuccessCallback;
-import team.one.lwe.util.UserUtils;
 
 @AllArgsConstructor
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.ViewHolder> {
@@ -43,7 +42,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         AddFriendNotify request = (AddFriendNotify) requestMsg.getAttachObject();
         String account = request.getAccount();
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
-        UserUtils.setAvatar(holder.imageAvatar, info.getAvatar());
+        holder.imageAvatar.loadBuddyAvatar(account);
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
         holder.buttonAccept.setOnClickListener(v -> {
@@ -70,7 +69,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final View view;
-        private final RoundedImageView imageAvatar;
+        private final HeadImageView imageAvatar;
         private final TextView textName, textReason, textAccept, textDecline;
         private final Button buttonAccept, buttonDecline;
 
