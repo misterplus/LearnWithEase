@@ -54,9 +54,10 @@ public class AddVerifyActivity extends LWEUI {
                     @Override
                     public void onSuccess(Void param) {
                         ToastHelper.showToast(getBaseContext(), getString(R.string.lwe_success_add));
+                        AddVerifyActivity.this.setResult(1);
+                        AddVerifyActivity.this.finish();
                     }
                 });
-                //TODO: go back to Friend Fragment
             }
         });
     }

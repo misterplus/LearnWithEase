@@ -32,20 +32,12 @@ public class FriendFragment extends Fragment {
     private List<Fragment> fragmentList;
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //TODO: rework toolbar buttons
-        getActivity().findViewById(R.id.buttonsFriend).setVisibility(View.GONE);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish friend fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend, false);
         ((UI) getActivity()).setToolBar(R.id.toolbar, options);
-        RelativeLayout buttonsFriend = getActivity().findViewById(R.id.buttonsFriend);
-        buttonsFriend.setVisibility(View.VISIBLE);
+        RelativeLayout buttonsFriend = view.findViewById(R.id.buttonsFriend);
         TabLayout tabFriend = view.findViewById(R.id.tabFriend);
         ViewPager2 pagerFriend = view.findViewById(R.id.pagerFriend);
         fragmentList = new ArrayList<>();
@@ -65,12 +57,7 @@ public class FriendFragment extends Fragment {
         });
         new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
-        buttonFriendAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddFriendActivity.class));
-            }
-        });
+        buttonFriendAdd.setOnClickListener(v -> startActivity(new Intent(getContext(), AddFriendActivity.class)));
         return view;
     }
 }

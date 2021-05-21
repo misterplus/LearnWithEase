@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +33,10 @@ import java.util.List;
 import team.one.lwe.R;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.adapter.FriendRequestAdapter;
+import team.one.lwe.ui.callback.FetchFriendRequestCallback;
+import team.one.lwe.ui.callback.MissingInfoCallback;
 import team.one.lwe.ui.callback.RegularCallback;
+import team.one.lwe.util.SystemMsgUtils;
 import team.one.lwe.util.UserUtils;
 
 import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD_FRIEND_VERIFY_REQUEST;
@@ -46,7 +50,9 @@ public class AddFriendActivity extends LWEUI {
         super.onCreate(savedInstanceState);
         setContentView((R.layout.activity_friend_add));
         Button buttonCancel = findViewById(R.id.buttonCancel);
-        buttonCancel.setOnClickListener(v -> onBackPressed());
+        buttonCancel.setOnClickListener(v -> {
+            AddFriendActivity.this.finish();
+        });
         EditText editTextSearchUsername = findViewById(R.id.editTextSearchUsername);
         Button buttonAdd = findViewById(R.id.buttonAdd);
         TextView textAdd = findViewById(R.id.textAdd);
@@ -58,7 +64,7 @@ public class AddFriendActivity extends LWEUI {
         editTextSearchUsername.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_search));
-                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(editTextSearchUsername.getText().toString())).setCallback(new RegularCallback<List<NimUserInfo>>(this) {
+                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(editTextSearchUsername.getText().toString())).setCallback(new MissingInfoCallback(this) {
                     @Override
                     public void onSuccess(List<NimUserInfo> list) {
                         if (!list.isEmpty()) {
@@ -86,7 +92,7 @@ public class AddFriendActivity extends LWEUI {
                         }
                     }
                 });
-                NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new RegularCallback<List<SystemMessage>>(this) {
+                NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new FetchFriendRequestCallback(this) {
                     @Override
                     public void onSuccess(List<SystemMessage> msg) {
                         for (SystemMessage m : msg) {
@@ -95,11 +101,6 @@ public class AddFriendActivity extends LWEUI {
                                 listBeingAdded.add(m);
                             }
                         }
-                    }
-
-                    @Override
-                    public void onFailed(int code) {
-                        //TODO: handle failed request
                     }
                 });
                 DialogMaker.dismissProgressDialog();
@@ -122,13 +123,12 @@ public class AddFriendActivity extends LWEUI {
             } else {
                 Intent intent = new Intent(this, AddVerifyActivity.class);
                 intent.putExtra("account", searchedAccount);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
-        NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new RegularCallback<List<SystemMessage>>(this) {
+        NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new FetchFriendRequestCallback(this) {
             @Override
             public void onSuccess(List<SystemMessage> msg) {
-                //TODO: deduplicate incoming requests
                 List<SystemMessage> requests = new ArrayList<>();
                 List<String> accounts = new ArrayList<>();
                 for (SystemMessage m : msg) {
@@ -141,8 +141,8 @@ public class AddFriendActivity extends LWEUI {
                         }
                     }
                 }
-                //SystemMsgUtils.deduplicateFriendRequests(requests);
-                NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new RegularCallback<List<NimUserInfo>>(getBaseContext()) {
+                SystemMsgUtils.deduplicateFriendRequests(requests);
+                NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new MissingInfoCallback(getBaseContext()) {
                     @Override
                     public void onSuccess(List<NimUserInfo> infoList) {
                         RecyclerView listRequest = findViewById(R.id.listRequest);
@@ -150,18 +150,16 @@ public class AddFriendActivity extends LWEUI {
                         listRequest.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                         listRequest.setAdapter(adapter);
                     }
-
-                    @Override
-                    public void onFailed(int code) {
-                        //TODO: handle failed request
-                    }
                 });
             }
-
-            @Override
-            public void onFailed(int code) {
-                //TODO: handle failed request
-            }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1) {
+            finish();
+        }
     }
 }
