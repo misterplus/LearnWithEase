@@ -2,6 +2,7 @@ package team.one.lwe.ui.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.netease.nimlib.sdk.NIMClient;
@@ -23,7 +24,7 @@ public class SettingActivity extends LWEUI {
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_setting, true);
         setToolBar(R.id.toolbar, options);
 
-        ImageButton buttonLogout = findViewById(R.id.buttonLogout);
+        Button buttonLogout = findViewById(R.id.buttonLogout);
         ImageButton buttonUpdatePassword = findViewById(R.id.buttonUpdatePassword);
 
         buttonLogout.setOnClickListener(view -> {

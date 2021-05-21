@@ -31,6 +31,7 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nim.uikit.common.util.C;
@@ -90,7 +91,7 @@ public class EditProfileActivity extends LWEUI {
         TextView textCity = findViewById(R.id.textCity);
         TextView textSchool = findViewById(R.id.textSchool);
         TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
-        RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
+        HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
         Spinner spinnerEdu = findViewById(R.id.spinnerEdu);
         Spinner spinnerGrade = findViewById(R.id.spinnerGrade);
         SearchableSpinner spinnerSchool = findViewById(R.id.spinnerSchool);
@@ -103,7 +104,7 @@ public class EditProfileActivity extends LWEUI {
         editTextName.setText(user.getName());
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
-        UserUtils.setAvatar(imageAvatar, user.getAvatar());
+        imageAvatar.loadBuddyAvatar(account);
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
@@ -412,9 +413,11 @@ public class EditProfileActivity extends LWEUI {
                         @Override
                         public void onSuccess(String url) {
                             UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback(getBaseContext(), "avatar"));
-                            RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
-                            UserUtils.setAvatar(imageAvatar, url);
-                            UserUtils.setAvatar(MainActivity.getFragmentList().get(2).getView().findViewById(R.id.imageAvatar), url);
+                            HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
+                            HeadImageView imageView_mineFragment = MainActivity.getFragmentList().get(2).getView().findViewById(R.id.imageAvatar);
+                            imageAvatar.loadAvatar(url);
+                            imageView_mineFragment.loadAvatar(url);
+                            RoundedImageView imageView = findViewById(R.id.imageAvatar);
                         }
                     });
                 }

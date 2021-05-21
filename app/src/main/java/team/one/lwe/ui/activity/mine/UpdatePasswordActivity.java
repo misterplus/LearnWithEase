@@ -1,6 +1,5 @@
 package team.one.lwe.ui.activity.mine;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -23,6 +22,7 @@ import team.one.lwe.util.TextUtils;
 
 public class UpdatePasswordActivity extends LWEUI {
     private String token;
+    private String jiaDeToken;
     private String newPassword;
     private String confirmPassword;
 
@@ -33,6 +33,7 @@ public class UpdatePasswordActivity extends LWEUI {
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_update_password, true);
         setToolBar(R.id.toolbar, options);
 
+        jiaDeToken = Preferences.getUserAccount(getBaseContext());
         EditText editTextOldPassword = findViewById(R.id.editTextOldPassword);
         EditText editTextNewPassword = findViewById(R.id.editTextNewPassword);
         EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
@@ -115,7 +116,7 @@ public class UpdatePasswordActivity extends LWEUI {
             public void onSuccess(ASResponse asp) {
                 Preferences.saveUserToken(getBaseContext(), token);
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
-                startActivity(new Intent(getBaseContext(), SettingActivity.class));
+                finish();
             }
 
             @Override

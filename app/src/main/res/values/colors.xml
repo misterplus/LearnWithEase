@@ -6,4 +6,6 @@
     <color name="primary_pressed">#8CC8FF</color>
     <color name="secondary">#B7A0A0</color>
     <color name="secondary_pressed">#B79F9F</color>
+    <color name="third">#FA2F2F</color>
+    <color name="third_pressed">#C33535</color>
 </resources>

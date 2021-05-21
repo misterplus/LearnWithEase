@@ -27,6 +27,7 @@
     <string name="lwe_button_friend_add">添加</string>
     <string name="lwe_button_accept">同意</string>
     <string name="lwe_button_decline">拒绝</string>
+    <string name="lwe_button_log_out">退出登录</string>
 
     <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>

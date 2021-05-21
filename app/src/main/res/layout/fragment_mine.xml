@@ -17,7 +17,7 @@
         android:layout_height="100dp"
         android:background="@color/white">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <com.netease.nim.uikit.common.ui.imageview.HeadImageView
             android:id="@+id/imageAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
