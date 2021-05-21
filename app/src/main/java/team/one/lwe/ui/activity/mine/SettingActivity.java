@@ -36,6 +36,6 @@ public class SettingActivity extends LWEUI {
             startActivity(intent);
         });
 
-        buttonUpdatePassword.setOnClickListener(view1 -> startActivity(new Intent(SettingActivity.this, UpdatePasswordActivity.class)));
+        buttonUpdatePassword.setOnClickListener(view1 -> startActivity(new Intent(this, UpdatePasswordActivity.class)));
     }
 }

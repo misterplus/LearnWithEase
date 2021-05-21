@@ -21,6 +21,7 @@
     <string name="lwe_button_register">新用户注册</string>
     <string name="lwe_button_register_real">注册</string>
     <string name="lwe_button_done">完成</string>
+    <string name="lwe_button_confirm">确定</string>
     <string name="lwe_button_login">→</string>
     <string name="lwe_button_cancel">取消</string>
     <string name="lwe_button_friend_add">添加</string>
