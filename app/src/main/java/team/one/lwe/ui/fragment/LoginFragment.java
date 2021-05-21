@@ -82,7 +82,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                doLogin(new LoginInfo(asp.getInfo().getStr("accid"), asp.getInfo().getStr("token")));
+                doLogin(asp.getInfo().toBean(LoginInfo.class));
             }
 
             @Override
