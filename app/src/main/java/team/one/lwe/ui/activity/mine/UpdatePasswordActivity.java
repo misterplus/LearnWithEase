@@ -8,6 +8,7 @@ import android.widget.EditText;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -70,7 +71,7 @@ public class UpdatePasswordActivity extends LWEUI {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                Preferences.saveUserToken(getApplicationContext(), asp.getInfo().getStr("token"));
+                Preferences.saveUserToken(getApplicationContext(), asp.getInfo().toBean(LoginInfo.class).getToken());
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
                 finish();
             }
@@ -94,11 +95,6 @@ public class UpdatePasswordActivity extends LWEUI {
                         ToastHelper.showToast(getBaseContext(), R.string.lwe_error_unknown);
                     }
                 }
-            }
-
-            @Override
-            public void onException(Exception e) {
-                super.onException(e);
             }
         }.start();
     }
