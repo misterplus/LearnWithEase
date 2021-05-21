@@ -1,4 +1,4 @@
-package team.one.lwe.ui.fragment;
+package team.one.lwe.ui.activity.mine;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,10 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -21,12 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
@@ -37,13 +31,11 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nim.uikit.common.util.C;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.nos.NosService;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
@@ -55,54 +47,53 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import team.one.lwe.LWEApplication;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
+import team.one.lwe.ui.activity.LWEUI;
+import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.callback.UpdateCallback;
 import team.one.lwe.ui.listener.TextLockListener;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.UserUtils;
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileActivity extends LWEUI {
 
     private final CityPickerView cPicker = new CityPickerView();
-    private View view;
     private Uri uri;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         //TODO: finish this fragment
-        view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        setContentView(R.layout.activity_edit_profile);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile, true);
-        BottomNavigationView navibar = getActivity().findViewById(R.id.navibar);
-        navibar.setVisibility(View.GONE);
-        ((UI) getActivity()).setToolBar(getActivity().findViewById(R.id.toolbar), R.id.toolbar, options);
+        setToolBar(R.id.toolbar, options);
         CityConfig cityConfig = new CityConfig.Builder()
                 .confirTextColor("#0887FD")
                 .build();
         cPicker.setConfig(cityConfig);
-        cPicker.init(this.getContext());
-        EditText editTextName = view.findViewById(R.id.editTextName);
-        EditText editTextSignature = view.findViewById(R.id.editTextSignature);
-        EditText editTextAge = view.findViewById(R.id.editTextAge);
-        ImageButton buttonName = view.findViewById(R.id.buttonName);
-        ImageButton buttonSignature = view.findViewById(R.id.buttonSignature);
-        ImageButton buttonAge = view.findViewById(R.id.buttonAge);
-        ImageButton buttonCity = view.findViewById(R.id.buttonCity);
-        ImageButton buttonAvatar = view.findViewById(R.id.buttonAvatar);
-        RadioGroup groupGender = view.findViewById(R.id.groupGender);
-        RadioButton radioFemale = view.findViewById(R.id.radioFemale);
-        RadioButton radioMale = view.findViewById(R.id.radioMale);
-        RadioButton radioUnknown = view.findViewById(R.id.radioUnknown);
-        TextView textCityPicker = view.findViewById(R.id.textCityPicker);
-        TextView textCity = view.findViewById(R.id.textCity);
-        TextView textSchool = view.findViewById(R.id.textSchool);
-        TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
-        RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
-        Spinner spinnerEdu = view.findViewById(R.id.spinnerEdu);
-        Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
-        SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
-        RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
+        cPicker.init(this);
+        EditText editTextName = findViewById(R.id.editTextName);
+        EditText editTextSignature = findViewById(R.id.editTextSignature);
+        EditText editTextAge = findViewById(R.id.editTextAge);
+        ImageButton buttonName = findViewById(R.id.buttonName);
+        ImageButton buttonSignature = findViewById(R.id.buttonSignature);
+        ImageButton buttonAge = findViewById(R.id.buttonAge);
+        ImageButton buttonCity = findViewById(R.id.buttonCity);
+        ImageButton buttonAvatar = findViewById(R.id.buttonAvatar);
+        RadioGroup groupGender = findViewById(R.id.groupGender);
+        RadioButton radioFemale = findViewById(R.id.radioFemale);
+        RadioButton radioMale = findViewById(R.id.radioMale);
+        RadioButton radioUnknown = findViewById(R.id.radioUnknown);
+        TextView textCityPicker = findViewById(R.id.textCityPicker);
+        TextView textCity = findViewById(R.id.textCity);
+        TextView textSchool = findViewById(R.id.textSchool);
+        TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
+        RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
+        Spinner spinnerEdu = findViewById(R.id.spinnerEdu);
+        Spinner spinnerGrade = findViewById(R.id.spinnerGrade);
+        SearchableSpinner spinnerSchool = findViewById(R.id.spinnerSchool);
+        RelativeLayout rowSchool = findViewById(R.id.rowSchool);
 
         String account = NimUIKit.getAccount();
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
@@ -111,19 +102,18 @@ public class EditProfileFragment extends Fragment {
         editTextName.setText(user.getName());
         editTextSignature.setText(user.getSignature());
         editTextAge.setText(String.valueOf(userExtension.getAge()));
-
-        imageAvatar.setImageURI(UserUtils.getAvatarUri(imageAvatar, account, user.getAvatar()));
+        UserUtils.setAvatar(imageAvatar, user.getAvatar());
 
         editTextName.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 loseFocus(editTextName);
                 String name = editTextName.getText().toString();
                 if (UserUtils.isNameInvalid(name))
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_name);
-                else if (!NetworkUtil.isNetAvailable(getActivity()))
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                    ToastHelper.showToast(this, R.string.lwe_error_name);
+                else if (!NetworkUtil.isNetAvailable(getBaseContext()))
+                    ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
                 else
-                    UserUtils.updateUserNickName(name).setCallback(new UpdateCallback<>(view));
+                    UserUtils.updateUserNickName(name).setCallback(new UpdateCallback(this, "name"));
             }
         });
 
@@ -132,15 +122,15 @@ public class EditProfileFragment extends Fragment {
                 loseFocus(editTextSignature);
                 String signature = editTextSignature.getText().toString();
                 if (UserUtils.isSignatureInvalid(signature))
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_signature);
-                else if (!NetworkUtil.isNetAvailable(getActivity()))
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                    ToastHelper.showToast(this, R.string.lwe_error_signature);
+                else if (!NetworkUtil.isNetAvailable(this))
+                    ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
                 else {
                     if (signature.isEmpty()) {
                         editTextSignature.setText(getString(R.string.lwe_text_empty_signature));
-                        UserUtils.updateUserSignature(getString(R.string.lwe_text_empty_signature)).setCallback(new UpdateCallback<>(view));
+                        UserUtils.updateUserSignature(getString(R.string.lwe_text_empty_signature)).setCallback(new UpdateCallback(this, "signature"));
                     } else
-                        UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback<>(view));
+                        UserUtils.updateUserSignature(signature).setCallback(new UpdateCallback(this, "signature"));
                 }
             }
         });
@@ -150,12 +140,12 @@ public class EditProfileFragment extends Fragment {
                 loseFocus(editTextAge);
                 int age = Integer.parseInt(editTextAge.getText().toString());
                 if (UserUtils.isAgeInvalid(age)) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
-                } else if (!NetworkUtil.isNetAvailable(getActivity())) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                    ToastHelper.showToast(this, R.string.lwe_error_age);
+                } else if (!NetworkUtil.isNetAvailable(this)) {
+                    ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
                 } else {
                     userExtension.setAge(age);
-                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback(this, "age"));
                 }
             }
         });
@@ -175,29 +165,21 @@ public class EditProfileFragment extends Fragment {
         }
 
         groupGender.setOnCheckedChangeListener((group, checkedId) -> {
+            if (!NetworkUtil.isNetAvailable(this)) {
+                ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
+                return;
+            }
             switch (checkedId) {
                 case R.id.radioFemale: {
-                    if (!NetworkUtil.isNetAvailable(getActivity())) {
-                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-                    } else {
-                        UserUtils.updateUserGender(2).setCallback(new UpdateCallback<>(view));
-                    }
+                    UserUtils.updateUserGender(2).setCallback(new UpdateCallback(this, "gender"));
                     break;
                 }
                 case R.id.radioMale: {
-                    if (!NetworkUtil.isNetAvailable(getActivity())) {
-                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-                    } else {
-                        UserUtils.updateUserGender(1).setCallback(new UpdateCallback<>(view));
-                    }
+                    UserUtils.updateUserGender(1).setCallback(new UpdateCallback(this, "gender"));
                     break;
                 }
                 default: {
-                    if (!NetworkUtil.isNetAvailable(getActivity())) {
-                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
-                    } else {
-                        UserUtils.updateUserGender(0).setCallback(new UpdateCallback<>(view));
-                    }
+                    UserUtils.updateUserGender(0).setCallback(new UpdateCallback(this, "gender"));
                 }
             }
         });
@@ -217,12 +199,12 @@ public class EditProfileFragment extends Fragment {
         textCity.setText(text);
 
         String[] eduValues = getResources().getStringArray(R.array.lwe_spinner_edu);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, eduValues);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, eduValues);
         adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerEdu.setAdapter(adapter);
 
         String[] schoolValues = getResources().getStringArray(R.array.lwe_spinner_school);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item_invisible, schoolValues);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item_invisible, schoolValues);
         adapter2.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerSchool.setAdapter(adapter2);
         spinnerSchool.setTitle(getString(R.string.lwe_placeholder_school));
@@ -239,11 +221,11 @@ public class EditProfileFragment extends Fragment {
                     textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
-                if (!NetworkUtil.isNetAvailable(getActivity())) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                if (!NetworkUtil.isNetAvailable(getBaseContext())) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
                 } else {
                     userExtension.setSchool(school);
-                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback(getBaseContext(), "school"));
                 }
             }
 
@@ -255,7 +237,7 @@ public class EditProfileFragment extends Fragment {
         });
 
         String[] gradeValues = UserUtils.getGradeValues(getResources(), userExtension.getBak());
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, gradeValues);
         adapter3.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerGrade.setAdapter(adapter3);
 
@@ -273,8 +255,8 @@ public class EditProfileFragment extends Fragment {
         spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!NetworkUtil.isNetAvailable(getActivity())) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                if (!NetworkUtil.isNetAvailable(getBaseContext())) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
                 } else {
                     userExtension.setBak(i);
                     if (i > 3) {
@@ -283,11 +265,11 @@ public class EditProfileFragment extends Fragment {
                         rowSchool.setVisibility(View.GONE);
                         userExtension.setSchool("");
                     }
-                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback(getBaseContext(), "education"));
                 }
 
                 String[] values = UserUtils.getGradeValues(getResources(), i);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.lwe_spinner_item, values);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
             }
@@ -295,7 +277,7 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 String[] gradeValues = UserUtils.getGradeValues(getResources(), userExtension.getBak());
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.lwe_spinner_item, gradeValues);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
             }
@@ -304,11 +286,11 @@ public class EditProfileFragment extends Fragment {
         spinnerGrade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (!NetworkUtil.isNetAvailable(getActivity())) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                if (!NetworkUtil.isNetAvailable(getBaseContext())) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
                 } else {
                     userExtension.setGrade(i);
-                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback(getBaseContext(), "grade"));
                 }
             }
 
@@ -334,13 +316,13 @@ public class EditProfileFragment extends Fragment {
                 }
                 textCity.setText(text);
 
-                if (!NetworkUtil.isNetAvailable(getActivity())) {
-                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                if (!NetworkUtil.isNetAvailable(getBaseContext())) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
                 } else {
                     userExtension.setProvince(province.getName());
                     userExtension.setCity(city.getName());
                     userExtension.setArea(district.getName());
-                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback<>(view));
+                    UserUtils.updateUserExtension(userExtension).setCallback(new UpdateCallback(getBaseContext(), "city"));
                 }
             }
         });
@@ -352,10 +334,10 @@ public class EditProfileFragment extends Fragment {
         List<PopupMenuItem> menuItems = new ArrayList<>();
         menuItems.add(new PopupMenuItem(0, "拍照"));
         menuItems.add(new PopupMenuItem(1, "从相册选择"));
-        NIMPopupMenu menu = new NIMPopupMenu(getActivity(), menuItems, item -> {
+        NIMPopupMenu menu = new NIMPopupMenu(this, menuItems, item -> {
             switch (item.getTag()) {
                 case 0: {
-                    File caption = new File(getActivity().getExternalCacheDir(), "caption_avatar.jpg");
+                    File caption = new File(this.getExternalCacheDir(), "caption_avatar.jpg");
                     try {
                         if (caption.exists())
                             caption.delete();
@@ -365,7 +347,7 @@ public class EditProfileFragment extends Fragment {
                     }
 
                     if (Build.VERSION.SDK_INT >= 24)
-                        uri = FileProvider.getUriForFile(getContext(), "team.one.lwe.ipc.provider.file", caption);
+                        uri = FileProvider.getUriForFile(this, "team.one.lwe.ipc.provider.file", caption);
                     else
                         uri = Uri.fromFile(caption);
                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
@@ -380,16 +362,16 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         });
-        buttonAvatar.setOnClickListener(v -> menu.show(view.findViewById(R.id.buttonAvatar)));
-        return view;
+        buttonAvatar.setOnClickListener(v -> menu.show(findViewById(R.id.buttonAvatar)));
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case 0: {
-                    File cropped = new File(getActivity().getExternalCacheDir(), "avatar_cropped.png");
+                    File cropped = new File(this.getExternalCacheDir(), "avatar_cropped.png");
                     try {
                         if (cropped.exists())
                             cropped.delete();
@@ -401,12 +383,12 @@ public class EditProfileFragment extends Fragment {
                     UCrop.of(uri, uriCropped)
                             .withAspectRatio(1, 1)
                             .withMaxResultSize(400, 400)
-                            .start(getContext(), this);
+                            .start(this);
                     break;
                 }
                 case 1: {
                     uri = data.getData();
-                    File cropped = new File(getActivity().getExternalCacheDir(), "avatar_cropped.png");
+                    File cropped = new File(this.getExternalCacheDir(), "avatar_cropped.png");
                     try {
                         if (cropped.exists())
                             cropped.delete();
@@ -418,48 +400,18 @@ public class EditProfileFragment extends Fragment {
                     UCrop.of(uri, uriCropped)
                             .withAspectRatio(1, 1)
                             .withMaxResultSize(400, 400)
-                            .start(getContext(), this);
+                            .start(this);
                     break;
                 }
                 case UCrop.REQUEST_CROP: {
                     Uri uriResult = UCrop.getOutput(data);
                     File result = new File(uriResult.getPath());
-                    NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RequestCallback<String>() {
+                    NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RegularCallback<String>(this) {
                         @Override
                         public void onSuccess(String url) {
-                            UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback<>(view));
-                            RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
-                            imageAvatar.setImageURI(UserUtils.getAvatarUri(view, NimUIKit.getAccount(), url));
-                        }
-
-                        @Override
-                        public void onFailed(int code) {
-                            switch (code) {
-                                case 408: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
-                                    break;
-                                }
-                                case 415: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_connection);
-                                    break;
-                                }
-                                case 416: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_frequently);
-                                    break;
-                                }
-                                case 500: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
-                                    break;
-                                }
-                                default: {
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onException(Throwable e) {
-                            Log.e(view.getTransitionName(), Log.getStackTraceString(e));
+                            UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback(getBaseContext(), "avatar"));
+                            RoundedImageView imageAvatar = findViewById(R.id.imageAvatar);
+                            UserUtils.setAvatar(imageAvatar, url);
                         }
                     });
                 }
@@ -472,12 +424,6 @@ public class EditProfileFragment extends Fragment {
                 }
             }
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getActivity().findViewById(R.id.navibar).setVisibility(View.VISIBLE);
     }
 
     private void loseFocus(EditText editText) {

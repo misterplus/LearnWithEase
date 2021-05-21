@@ -1,5 +1,6 @@
 package team.one.lwe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,30 +23,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import team.one.lwe.R;
+import team.one.lwe.ui.activity.friend.AddFriendActivity;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
-import team.one.lwe.util.NavigationUtils;
 
 public class FriendFragment extends Fragment {
     private View view;
 
-    private final List<Fragment> fragmentList = new ArrayList<>();
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        getActivity().findViewById(R.id.buttonsFriend).setVisibility(View.GONE);
-    }
+    private List<Fragment> fragmentList;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: finish friend fragment
         view = inflater.inflate(R.layout.fragment_friend, container, false);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend, false);
-        ((UI) getActivity()).setToolBar(R.id.toolbar, options);
-        RelativeLayout buttonsFriend = getActivity().findViewById(R.id.buttonsFriend);
-        buttonsFriend.setVisibility(View.VISIBLE);
+        ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
+        RelativeLayout buttonsFriend = view.findViewById(R.id.buttonsFriend);
         TabLayout tabFriend = view.findViewById(R.id.tabFriend);
         ViewPager2 pagerFriend = view.findViewById(R.id.pagerFriend);
+        fragmentList = new ArrayList<>();
         fragmentList.add(new RecentContactsFragment());
         fragmentList.add(new ContactsFragment());
         pagerFriend.setAdapter(new FragmentStateAdapter(this) {
@@ -60,9 +55,10 @@ public class FriendFragment extends Fragment {
                 return fragmentList.size();
             }
         });
-        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position]));
+        new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
-        buttonFriendAdd.setOnClickListener(v -> NavigationUtils.navigateTo(this, new AddFriendFragment(), true));
+        //TODO: rework this icon
+        buttonFriendAdd.setOnClickListener(v -> startActivity(new Intent(getContext(), AddFriendActivity.class)));
         return view;
     }
 }

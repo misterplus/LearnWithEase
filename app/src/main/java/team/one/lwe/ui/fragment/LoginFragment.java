@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
-import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.MainActivity;
 import team.one.lwe.util.APIUtils;
@@ -118,8 +117,8 @@ public class LoginFragment extends Fragment {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
                 startActivity(new Intent(getContext(), MainActivity.class));
-                Preferences.saveUserAccount(getContext(), info.getAccount());
-                Preferences.saveUserToken(getContext(), info.getToken());
+                //Preferences.saveUserAccount(getContext(), info.getAccount());
+                //Preferences.saveUserToken(getContext(), info.getToken());
             }
 
             @Override

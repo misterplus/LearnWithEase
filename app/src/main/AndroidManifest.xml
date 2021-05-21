@@ -53,10 +53,17 @@
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.friend.AddFriendActivity" />
+        <activity android:name=".ui.activity.friend.AddVerifyActivity" />
+        <activity android:name=".ui.activity.mine.EditPrefActivity" />
+        <activity android:name=".ui.activity.mine.EditProfileActivity" />
+        <activity android:name=".ui.activity.mine.SettingActivity" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".crash.CrashActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"/>
 
     <!-- 云信后台服务，请使用独立进程。 -->
     <service
@@ -112,7 +119,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider"/>
+                android:resource="@xml/provider_paths"/>
         </provider>
     </application>
 
