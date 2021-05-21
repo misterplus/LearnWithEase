@@ -33,7 +33,7 @@
                     android:layout_marginEnd="10dp"
                     android:background="@color/transparent"
                     android:contentDescription="@string/empty"
-                    android:src="@drawable/ysf_ic_input_bottom_add" />
+                    android:src="@drawable/lwe_icon_friend_add" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
