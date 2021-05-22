@@ -297,6 +297,7 @@
                 android:src="@drawable/lwe_icon_city" />
 
             <TextView
+                android:id="@+id/textCityPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
