@@ -83,7 +83,6 @@
             android:src="@drawable/lwe_icon_preference" />
 
         <TextView
-            android:id="@+id/textPreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -121,7 +120,6 @@
             android:src="@drawable/lwe_icon_history" />
 
         <TextView
-            android:id="@+id/textHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -159,7 +157,6 @@
             android:src="@drawable/lwe_icon_setting" />
 
         <TextView
-            android:id="@+id/textSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -197,7 +194,6 @@
             android:src="@drawable/lwe_icon_about" />
 
         <TextView
-            android:id="@+id/textAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

@@ -39,7 +39,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textUserSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -57,7 +56,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/lwe_text_update_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -89,10 +87,8 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textSys"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_system_setting"
                 android:textColor="@color/text_grey"
@@ -106,7 +102,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textdefaultImageQuality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -160,7 +155,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textdefaultVideoQuality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -220,10 +214,8 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textMessageRemending"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_message_reminder"
                 android:textColor="@color/black"
@@ -248,10 +240,8 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textGravityInduction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_gravity"
                 android:textColor="@color/black"
@@ -276,7 +266,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textPermissionSetting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -304,10 +293,8 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textClearCache"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_clear_cache"
                 android:textColor="@color/black"
@@ -332,7 +319,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textUserAgreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
