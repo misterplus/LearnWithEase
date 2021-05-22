@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_grey"
@@ -39,7 +38,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textAvatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -81,7 +79,6 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -128,11 +125,11 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/textSignature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginStart="20dp"
+                android:layout_marginBottom="11dp"
                 android:text="@string/lwe_text_signature"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -186,7 +183,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@id/imageGender"
                 android:text="@string/lwe_text_gender"
@@ -301,7 +297,6 @@
                 android:src="@drawable/lwe_icon_city" />
 
             <TextView
-                android:id="@+id/textCityPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -350,7 +345,6 @@
                 android:src="@drawable/lwe_icon_edu" />
 
             <TextView
-                android:id="@+id/textEduPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -388,7 +382,6 @@
                 android:src="@drawable/lwe_icon_grade" />
 
             <TextView
-                android:id="@+id/textGradePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
