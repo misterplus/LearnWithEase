@@ -54,10 +54,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@id/buttonAvatar"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/lwe_placeholder_avatar"
-                app:riv_border_color="@color/primary"
-                app:riv_border_width="2dp"
-                app:riv_oval="true" />
+                android:src="@drawable/lwe_placeholder_avatar" />
 
             <ImageButton
                 android:id="@+id/buttonAvatar"
