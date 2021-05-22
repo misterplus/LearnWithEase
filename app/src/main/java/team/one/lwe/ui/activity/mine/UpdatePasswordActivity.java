@@ -78,23 +78,11 @@ public class UpdatePasswordActivity extends LWEUI {
 
             @Override
             public void onFailed(int code, String desc) {
-                switch (code) {
-                    case 302: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_old_password);
-                        break;
-                    }
-                    case 408: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_timeout);
-                        break;
-                    }
-                    case 415: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confail);
-                        break;
-                    }
-                    default: {
-                        ToastHelper.showToast(getBaseContext(), R.string.lwe_error_unknown);
-                    }
+                if (code == 302) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_old_password);
+                    return;
                 }
+                super.onFailed(code, desc);
             }
         }.start();
     }

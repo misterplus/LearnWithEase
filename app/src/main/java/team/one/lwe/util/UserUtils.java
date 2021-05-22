@@ -1,30 +1,21 @@
 package team.one.lwe.util;
 
 import android.content.res.Resources;
-import android.net.Uri;
-import android.os.Build;
 import android.widget.TextView;
 
-import androidx.core.content.FileProvider;
-
 import com.google.gson.Gson;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nimlib.sdk.InvocationFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.LoginInfo;
-import com.netease.nimlib.sdk.nos.NosService;
-import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.hutool.json.JSONObject;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
-import team.one.lwe.ui.callback.RegularCallback;
 
 public class UserUtils {
 
@@ -67,7 +58,7 @@ public class UserUtils {
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    @Deprecated
+    /*@Deprecated
     public static void setAvatar(RoundedImageView view, String url) {
         File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("%s.png", url));
         NosThumbParam nosThumbParam = new NosThumbParam();
@@ -93,7 +84,7 @@ public class UserUtils {
                 }
             });
         }
-    }
+    }*/
 
     public static boolean isNameInvalid(String name) {
         return name.isEmpty() || name.length() > 16;

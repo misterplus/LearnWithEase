@@ -28,7 +28,6 @@ import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
@@ -66,7 +65,6 @@ public class EditProfileActivity extends LWEUI {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO: finish this fragment
         setContentView(R.layout.activity_edit_profile);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_profile, true);
         setToolBar(R.id.toolbar, options);
@@ -414,10 +412,9 @@ public class EditProfileActivity extends LWEUI {
                         public void onSuccess(String url) {
                             UserUtils.updateUserAvatar(url).setCallback(new UpdateCallback(getBaseContext(), "avatar"));
                             HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
-                            HeadImageView imageView_mineFragment = MainActivity.getFragmentList().get(2).getView().findViewById(R.id.imageAvatar);
+                            HeadImageView imageAvatar2 = MainActivity.getFragmentList().get(2).getView().findViewById(R.id.imageAvatar);
                             imageAvatar.loadAvatar(url);
-                            imageView_mineFragment.loadAvatar(url);
-                            RoundedImageView imageView = findViewById(R.id.imageAvatar);
+                            imageAvatar2.loadAvatar(url);
                         }
                     });
                 }

@@ -3,11 +3,14 @@ package team.one.lwe.network;
 import android.util.Log;
 import android.view.View;
 
+import com.netease.nim.uikit.common.ToastHelper;
+
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpException;
+import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 
 public abstract class NetworkThread extends Thread {
@@ -22,7 +25,21 @@ public abstract class NetworkThread extends Thread {
 
     public abstract void onSuccess(ASResponse asp);
 
-    public abstract void onFailed(int code, String desc);
+    public void onFailed(int code, String desc) {
+        switch (code) {
+            case 408: {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
+                return;
+            }
+            case 415: {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confail);
+                return;
+            }
+            default: {
+                ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+            }
+        }
+    }
 
     public void onException(Exception e) {
         Log.e(view.getTransitionName(), Log.getStackTraceString(e));
