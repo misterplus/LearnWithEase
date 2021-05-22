@@ -3,7 +3,6 @@ package team.one.lwe.util;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.core.content.FileProvider;

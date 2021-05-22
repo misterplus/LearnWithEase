@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.AuthInfo;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.MainActivity;
@@ -82,7 +83,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                doLogin(asp.getInfo().toBean(LoginInfo.class));
+                doLogin(asp.getInfo().toBean(AuthInfo.class).toLoginInfo());
             }
 
             @Override

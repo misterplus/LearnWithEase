@@ -1,7 +1,6 @@
 package team.one.lwe.ui.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,8 +20,8 @@ import team.one.lwe.ui.fragment.MineFragment;
 
 public class MainActivity extends LWEUI {
 
-    private final List<Integer> idList = Arrays.asList(R.id.naviHome, R.id.naviFriend, R.id.naviMine);
     private static List<Fragment> fragmentList;
+    private final List<Integer> idList = Arrays.asList(R.id.naviHome, R.id.naviFriend, R.id.naviMine);
 
     public static List<Fragment> getFragmentList() {
         return fragmentList;

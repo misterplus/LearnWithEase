@@ -8,12 +8,12 @@ import android.widget.EditText;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
-import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.AuthInfo;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
@@ -22,6 +22,10 @@ import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 
 public class UpdatePasswordActivity extends LWEUI {
+
+    private static boolean isPasswordValid(@NotNull String password) {
+        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +62,6 @@ public class UpdatePasswordActivity extends LWEUI {
         });
     }
 
-    private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
-    }
-
     private void doUpdate(String username, String oldPassword, String newPassword) {
         new NetworkThread(findViewById(R.id.toolbar)) {
             @Override
@@ -71,7 +71,7 @@ public class UpdatePasswordActivity extends LWEUI {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                Preferences.saveUserToken(getApplicationContext(), asp.getInfo().toBean(LoginInfo.class).getToken());
+                Preferences.saveUserToken(getApplicationContext(), asp.getInfo().toBean(AuthInfo.class).getToken());
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
                 finish();
             }

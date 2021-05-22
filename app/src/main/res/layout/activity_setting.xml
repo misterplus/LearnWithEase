@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_grey"
@@ -60,8 +60,8 @@
                 android:id="@+id/lwe_text_update_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
                 android:text="@string/lwe_text_update_password"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -129,8 +129,6 @@
                     android:id="@+id/radioImageQualityHigh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:checked="true"
                     android:text="@string/lwe_radio_high"
                     android:textColor="@color/black"
@@ -140,8 +138,6 @@
                     android:id="@+id/radioImageQualityMiddle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:text="@string/lwe_radio_mid"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -150,8 +146,6 @@
                     android:id="@+id/radioImageQualityLow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:text="@string/lwe_radio_low"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -367,7 +361,7 @@
 
             <Button
                 android:id="@+id/buttonLogout"
-                android:layout_width="200dp"
+                android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
@@ -376,7 +370,7 @@
                 android:contentDescription="@string/empty"
                 android:text="@string/lwe_button_log_out"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
 
         </RelativeLayout>
 
