@@ -110,7 +110,6 @@
     <string name="lwe_text_old_password">当前密码</string>
     <string name="lwe_text_new_password">新密码</string>
     <string name="lwe_text_confirm_password">确认密码</string>
-    <string name="lwe_nickname">昵称</string>
     <string name="lwe_text_personal_info">个人信息</string>
     <string name="lwe_text_avatar">头像</string>
     <string name="lwe_text_preference">自习偏好</string>

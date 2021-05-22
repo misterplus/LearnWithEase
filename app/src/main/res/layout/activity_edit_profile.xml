@@ -96,7 +96,7 @@
                 android:background="@color/transparent"
                 android:focusable="false"
                 android:gravity="end"
-                android:hint="@string/lwe_nickname"
+                android:hint="@string/lwe_placeholder_name"
                 android:imeOptions="actionNext"
                 android:inputType="textNoSuggestions"
                 android:singleLine="true"
