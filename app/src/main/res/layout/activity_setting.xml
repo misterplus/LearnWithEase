@@ -45,7 +45,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_user_setting"
-                android:textColor="@color/black"
+                android:textColor="@color/text_grey"
                 android:textSize="20sp" />
 
         </RelativeLayout>
@@ -95,7 +95,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_system_setting"
-                android:textColor="@color/black"
+                android:textColor="@color/text_grey"
                 android:textSize="20sp" />
 
         </RelativeLayout>

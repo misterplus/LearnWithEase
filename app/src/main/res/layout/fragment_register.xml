@@ -40,11 +40,11 @@
             <TextView
                 android:id="@+id/textUserInfo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="28dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_personal_info"
-                android:textColor="@color/black"
+                android:textColor="@color/text_grey"
                 android:textSize="20sp" />
 
         </RelativeLayout>
@@ -472,7 +472,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_preference"
-                android:textColor="@color/black"
+                android:textColor="@color/text_grey"
                 android:textSize="20sp" />
 
         </RelativeLayout>
