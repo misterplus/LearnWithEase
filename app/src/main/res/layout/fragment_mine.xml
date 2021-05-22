@@ -33,7 +33,7 @@
         android:layout_height="100dp"
         android:background="@color/white">
 
-        <com.makeramen.roundedimageview.RoundedImageView
+        <com.netease.nim.uikit.common.ui.imageview.HeadImageView
             android:id="@+id/imageAvatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -99,7 +99,6 @@
             android:src="@drawable/lwe_icon_preference" />
 
         <TextView
-            android:id="@+id/textPreference"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -137,7 +136,6 @@
             android:src="@drawable/lwe_icon_history" />
 
         <TextView
-            android:id="@+id/textHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -175,7 +173,6 @@
             android:src="@drawable/lwe_icon_setting" />
 
         <TextView
-            android:id="@+id/textSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -213,7 +210,6 @@
             android:src="@drawable/lwe_icon_about" />
 
         <TextView
-            android:id="@+id/textAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

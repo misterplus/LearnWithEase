@@ -1,7 +1,6 @@
 package team.one.lwe.ui.activity;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,8 +20,12 @@ import team.one.lwe.ui.fragment.MineFragment;
 
 public class MainActivity extends LWEUI {
 
+    private static List<Fragment> fragmentList;
     private final List<Integer> idList = Arrays.asList(R.id.naviHome, R.id.naviFriend, R.id.naviMine);
-    private List<Fragment> fragmentList;
+
+    public static List<Fragment> getFragmentList() {
+        return fragmentList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +37,8 @@ public class MainActivity extends LWEUI {
         fragmentList.add(new FriendFragment());
         fragmentList.add(new MineFragment());
 
-        ViewPager2 pagerMain = findViewById(R.id.pagerMain);
         BottomNavigationView navibar = findViewById(R.id.navibar);
+        ViewPager2 pagerMain = findViewById(R.id.pagerMain);
         pagerMain.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
@@ -56,12 +59,9 @@ public class MainActivity extends LWEUI {
             }
         });
         pagerMain.setUserInputEnabled(false);
-        navibar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                pagerMain.setCurrentItem(idList.indexOf(item.getItemId()));
-                return true;
-            }
+        navibar.setOnNavigationItemSelectedListener(item -> {
+            pagerMain.setCurrentItem(idList.indexOf(item.getItemId()));
+            return true;
         });
     }
 }

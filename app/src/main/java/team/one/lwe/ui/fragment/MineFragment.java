@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
@@ -21,7 +21,6 @@ import team.one.lwe.R;
 import team.one.lwe.ui.activity.mine.EditPrefActivity;
 import team.one.lwe.ui.activity.mine.EditProfileActivity;
 import team.one.lwe.ui.activity.mine.SettingActivity;
-import team.one.lwe.util.UserUtils;
 
 public class MineFragment extends Fragment {
 
@@ -39,11 +38,11 @@ public class MineFragment extends Fragment {
         buttonPreference.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditPrefActivity.class)));
         buttonSetting.setOnClickListener(view1 -> startActivity(new Intent(getContext(), SettingActivity.class)));
         String account = NimUIKit.getAccount();
-        RoundedImageView imageAvatar = view.findViewById(R.id.imageAvatar);
+        HeadImageView imageAvatar = view.findViewById(R.id.imageAvatar);
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         String signature = user.getSignature();
-
-        UserUtils.setAvatar(imageAvatar, user.getAvatar());
+        //TODO: 更换头像后返回，本页面头像不更新
+        imageAvatar.loadBuddyAvatar(account);
         textUsername.setText(account);
         textPersonalSignature.setText(signature);
         return view;

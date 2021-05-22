@@ -23,6 +23,13 @@ public class Preferences {
         return getString(context, KEY_USER_TOKEN);
     }
 
+    public static void cleanCache(Context context) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.remove(KEY_USER_ACCOUNT);
+        editor.remove(KEY_USER_TOKEN);
+        editor.commit();
+    }
+
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences("lwe_pref", Context.MODE_PRIVATE);
     }

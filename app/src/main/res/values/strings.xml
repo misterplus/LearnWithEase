@@ -4,6 +4,7 @@
     <!--    提示类-->
     <string name="lwe_hint_username">请输入用户名</string>
     <string name="lwe_hint_password">请输入密码</string>
+    <string name="lwe_hint_old_password">请输入当前密码</string>
     <string name="lwe_hint_new_password">请输入新密码</string>
     <string name="lwe_hint_confirm_password">请再次输入密码</string>
     <string name="lwe_hint_name">请输入昵称</string>
@@ -20,11 +21,13 @@
     <string name="lwe_button_register">新用户注册</string>
     <string name="lwe_button_register_real">注册</string>
     <string name="lwe_button_done">完成</string>
+    <string name="lwe_button_confirm">确定</string>
     <string name="lwe_button_login">→</string>
     <string name="lwe_button_cancel">取消</string>
     <string name="lwe_button_friend_add">添加</string>
     <string name="lwe_button_accept">同意</string>
     <string name="lwe_button_decline">拒绝</string>
+    <string name="lwe_button_log_out">退出登录</string>
 
     <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
@@ -38,6 +41,7 @@
     <string name="lwe_error_timeout">连接超时，请稍后再试</string>
     <string name="lwe_error_unknown">出现未知错误，请稍后再试</string>
     <string name="lwe_error_login_info">用户名或密码错误</string>
+    <string name="lwe_error_old_password">当前密码错误，请确认后重新输入</string>
     <string name="lwe_error_confirm_password">两次密码输入不一致</string>
     <string name="lwe_error_password">密码为数字、字母、-+=_,.且长度大于等于6小于等于16且至少含两种字符</string>
     <string name="lwe_error_name">昵称不能为空且长度不大于16位</string>
@@ -65,6 +69,7 @@
     <string name="lwe_title_register">注册账号</string>
     <string name="lwe_title_mine">我的页面</string>
     <string name="lwe_title_setting">软件设置</string>
+    <string name="lwe_title_update_password">更改密码</string>
     <string name="lwe_title_perm">权限设置</string>
     <string name="lwe_title_clear_cache">清理空间</string>
     <string name="lwe_title_edit_profile">编辑资料</string>
@@ -102,6 +107,9 @@
     <string name="lwe_text_signature">个性签名</string>
     <string name="lwe_text_nickname">昵称</string>
     <string name="lwe_text_update_password">更改密码</string>
+    <string name="lwe_text_old_password">当前密码</string>
+    <string name="lwe_text_new_password">新密码</string>
+    <string name="lwe_text_confirm_password">确认密码</string>
     <string name="lwe_nickname">昵称</string>
     <string name="lwe_text_personal_info">个人信息</string>
     <string name="lwe_text_avatar">头像</string>
@@ -119,6 +127,9 @@
     <string name="lwe_text_reason">验证信息：</string>
     <string name="lwe_text_empty_signature">暂无签名</string>
     <string name="lwe_text_age">年龄</string>
+    <string name="lwe_text_logout">退出登录</string>
+    <string name="lwe_text_user_setting">用户设置</string>
+    <string name="lwe_text_system_setting">系统设置</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>

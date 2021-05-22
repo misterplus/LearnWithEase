@@ -1,404 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/background_grey"
-    android:divider="@drawable/lwe_background_grey"
-    android:orientation="vertical"
-    android:showDividers="middle">
+    android:layout_height="wrap_content">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:elevation="0dp">
+        android:background="@color/background_grey"
+        android:divider="@drawable/lwe_background_grey"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
-            app:titleTextAppearance="@style/Toolbar.TitleText" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
-    <RelativeLayout
-        android:id="@+id/fragment_setting_update_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/lwe_text_update_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_update_password"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/buttonUpdatePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/passwordLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/imagePassword"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_icon_password" />
-
-        <EditText
-            android:id="@+id/editTextPassword"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/imagePassword"
-            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
-            android:hint="@string/lwe_hint_new_password"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
 
-    </RelativeLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
 
-    <RelativeLayout
-        android:id="@+id/confirmPasswordLayout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:visibility="gone">
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
-            android:id="@+id/imageconfirmPassword"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_icon_password" />
-
-        <EditText
-            android:id="@+id/editTextConfirmPassword"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_toEndOf="@+id/imageconfirmPassword"
-            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_,.+-="
-            android:hint="@string/lwe_hint_confirm_password"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="10dp" />
 
-        <ImageButton
-            android:id="@+id/buttonConfirmPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/textdefaultImageQuality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_quality_image"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <RadioGroup
-            android:id="@+id/radioDefaultImageQuality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioImageQualityHigh"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:checked="true"
-                android:text="@string/lwe_radio_high"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_user_setting"
+                android:textColor="@color/text_grey"
+                android:textSize="20sp" />
 
-            <RadioButton
-                android:id="@+id/radioImageQualityMiddle"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_setting_update_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
                 android:layout_centerVertical="true"
-                android:text="@string/lwe_radio_mid"
+                android:text="@string/lwe_text_update_password"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
-            <RadioButton
-                android:id="@+id/radioImageQualityLow"
+            <ImageButton
+                android:id="@+id/buttonUpdatePassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="@string/lwe_radio_low"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginEnd="20dp"
+                android:background="@color/white"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/nim_arrow_right" />
 
-        </RadioGroup>
+        </RelativeLayout>
 
-    </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/textdefaultVideoQuality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_quality_video"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <RadioGroup
-            android:id="@+id/radioDefaultVideoQuality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioVideoQualityHigh"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:checked="true"
-                android:text="@string/lwe_radio_high"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_system_setting"
+                android:textColor="@color/text_grey"
+                android:textSize="20sp" />
 
-            <RadioButton
-                android:id="@+id/radioVideoQualityMiddle"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="@string/lwe_radio_mid"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_quality_image"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
-            <RadioButton
-                android:id="@+id/radioVideoQualityLow"
+            <RadioGroup
+                android:id="@+id/radioDefaultImageQuality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:text="@string/lwe_radio_low"
+                android:layout_marginEnd="20dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioImageQualityHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/lwe_radio_high"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/radioImageQualityMiddle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lwe_radio_mid"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <RadioButton
+                    android:id="@+id/radioImageQualityLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lwe_radio_low"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_quality_video"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
-        </RadioGroup>
+            <RadioGroup
+                android:id="@+id/radioDefaultVideoQuality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:gravity="end"
+                android:orientation="horizontal">
 
-    </RelativeLayout>
+                <RadioButton
+                    android:id="@+id/radioVideoQualityHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:checked="true"
+                    android:text="@string/lwe_radio_high"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+                <RadioButton
+                    android:id="@+id/radioVideoQualityMiddle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/lwe_radio_mid"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/textMessageRemending"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_message_reminder"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+                <RadioButton
+                    android:id="@+id/radioVideoQualityLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/lwe_radio_low"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchMessageRemending"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:gravity="end">
+            </RadioGroup>
 
-        </com.google.android.material.switchmaterial.SwitchMaterial>
+        </RelativeLayout>
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_message_reminder"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textGravityInduction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_gravity"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchMessageRemending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:gravity="end">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switchGravityInduction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:gravity="end">
+            </com.google.android.material.switchmaterial.SwitchMaterial>
 
-        </com.google.android.material.switchmaterial.SwitchMaterial>
+        </RelativeLayout>
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_gravity"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textPermissionSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_permission"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchGravityInduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:gravity="end">
 
-        <ImageButton
-            android:id="@+id/buttonPermissionSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
+            </com.google.android.material.switchmaterial.SwitchMaterial>
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/textClearCache"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_clear_cache"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_permission"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/buttonClearCache"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
+            <ImageButton
+                android:id="@+id/buttonPermissionSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:background="@color/white"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/nim_arrow_right" />
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
 
-        <TextView
-            android:id="@+id/textUserAgreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_user_agreement"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_clear_cache"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/buttonUserAgreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
+            <ImageButton
+                android:id="@+id/buttonClearCache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:background="@color/white"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/nim_arrow_right" />
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_user_agreement"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/buttonUserAgreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:background="@color/white"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/nim_arrow_right" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/white">
+
+            <Button
+                android:id="@+id/buttonLogout"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/lwe_button_round_red"
+                android:contentDescription="@string/empty"
+                android:text="@string/lwe_button_log_out"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
