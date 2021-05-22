@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.netease.nimlib.sdk.InvocationFuture;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.nos.NosService;
 import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
@@ -20,11 +21,16 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.hutool.json.JSONObject;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.callback.RegularCallback;
 
 public class UserUtils {
+
+    public static LoginInfo getLoginInfo(JSONObject info) {
+        return new LoginInfo(info.getStr("accid"), info.getStr("token"));
+    }
 
     public static InvocationFuture<Void> updateUserNickName(String nickname) {
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);

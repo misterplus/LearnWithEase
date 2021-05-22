@@ -13,13 +13,13 @@ import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
-import team.one.lwe.bean.AuthInfo;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
+import team.one.lwe.util.UserUtils;
 
 public class UpdatePasswordActivity extends LWEUI {
 
@@ -71,7 +71,7 @@ public class UpdatePasswordActivity extends LWEUI {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                Preferences.saveUserToken(getApplicationContext(), asp.getInfo().toBean(AuthInfo.class).getToken());
+                Preferences.saveUserToken(getApplicationContext(), UserUtils.getLoginInfo(asp.getInfo()).getToken());
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
                 finish();
             }
