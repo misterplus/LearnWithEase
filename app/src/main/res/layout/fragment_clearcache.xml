@@ -51,7 +51,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/lwe_button_comfirm_compact_58x33"
             android:contentDescription="@string/empty" />
 
     </RelativeLayout>
@@ -78,7 +77,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/lwe_button_comfirm_compact_58x33"
             android:contentDescription="@string/empty" />
 
     </RelativeLayout>

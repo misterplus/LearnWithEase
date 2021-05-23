@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import team.one.lwe.LWECache;
 import team.one.lwe.R;
+import team.one.lwe.ui.activity.auth.LoginActivity;
 
 public class WelcomeActivity extends LWEUI {
 

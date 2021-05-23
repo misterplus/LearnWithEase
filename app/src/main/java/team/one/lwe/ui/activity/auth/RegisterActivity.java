@@ -1,9 +1,7 @@
-package team.one.lwe.ui.fragment;
+package team.one.lwe.ui.activity.auth;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,9 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.lljjcoder.Interface.OnCityItemClickListener;
 import com.lljjcoder.bean.CityBean;
@@ -26,12 +21,9 @@ import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
-
-import org.jetbrains.annotations.NotNull;
 
 import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
@@ -40,71 +32,60 @@ import team.one.lwe.bean.Preference;
 import team.one.lwe.bean.User;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.network.NetworkThread;
+import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 import team.one.lwe.util.UserUtils;
 
-public class RegisterFragment extends Fragment {
+public class RegisterActivity extends LWEUI {
 
     private final CityPickerView cPicker = new CityPickerView();
     private final String[] cPickerNames = new String[3];
-    private View view;
-
-    private static boolean isUsernameValid(@NotNull String username) {
-        return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
-    }
-
-    private static boolean isPasswordValid(@NotNull String password) {
-        return TextUtils.isLegalPassword(password) && TextUtils.getPasswordComplexity(password) > 1 && password.length() >= 6 && password.length() <= 16;
-    }
-
-    private void onBackPressed() {
-        getActivity().onBackPressed();
-    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_register, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_register, true);
-        ((UI) getActivity()).setToolBar(view, R.id.toolbar, options);
+        setToolBar(R.id.toolbar, options);
         CityConfig cityConfig = new CityConfig.Builder()
                 .confirTextColor("#0887FD")
                 .build();
         cPicker.setConfig(cityConfig);
-        cPicker.init(this.getContext());
-        TextView textCityPicker = view.findViewById(R.id.textCityPicker);
-        TextView textCity = view.findViewById(R.id.textCity);
-        TextView textSchool = view.findViewById(R.id.textSchool);
-        TextView textSchoolPicker = view.findViewById(R.id.textSchoolPicker);
-        EditText editTextUsername = view.findViewById(R.id.editTextUsername);
-        EditText editTextPassword = view.findViewById(R.id.editTextPassword);
-        EditText editTextConfirmPassword = view.findViewById(R.id.editTextConfirmPassword);
-        EditText editTextName = view.findViewById(R.id.editTextName);
-        EditText editTextAge = view.findViewById(R.id.editTextAge);
-        RadioGroup groupGender = view.findViewById(R.id.groupGender);
-        ImageButton buttonCity = view.findViewById(R.id.buttonCity);
-        Spinner spinnerEdu = view.findViewById(R.id.spinnerEdu);
-        SearchableSpinner spinnerSchool = view.findViewById(R.id.spinnerSchool);
-        Spinner spinnerGrade = view.findViewById(R.id.spinnerGrade);
-        RelativeLayout rowSchool = view.findViewById(R.id.rowSchool);
-        Button buttonRegister = view.findViewById(R.id.buttonRegister);
-        Spinner spinnerTimeStudy = view.findViewById(R.id.spinnerTimeStudy);
-        Spinner spinnerTimeRest = view.findViewById(R.id.spinnerTimeRest);
-        Spinner spinnerContentStudy = view.findViewById(R.id.spinnerContentStudy);
-        SwitchMaterial switchSameCity = view.findViewById(R.id.switchSameCity);
-        SwitchMaterial switchSameSchool = view.findViewById(R.id.switchSameSchool);
-        SwitchMaterial switchSameGender = view.findViewById(R.id.switchSameGender);
-        SwitchMaterial switchNewRoomFirst = view.findViewById(R.id.switchNewRoomFirst);
+        cPicker.init(this);
+        TextView textCityPicker = findViewById(R.id.textCityPicker);
+        TextView textCity = findViewById(R.id.textCity);
+        TextView textSchool = findViewById(R.id.textSchool);
+        TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
+        EditText editTextUsername = findViewById(R.id.editTextUsername);
+        EditText editTextPassword = findViewById(R.id.editTextPassword);
+        EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        EditText editTextName = findViewById(R.id.editTextName);
+        EditText editTextAge = findViewById(R.id.editTextAge);
+        RadioGroup groupGender = findViewById(R.id.groupGender);
+        ImageButton buttonCity = findViewById(R.id.buttonCity);
+        Spinner spinnerEdu = findViewById(R.id.spinnerEdu);
+        SearchableSpinner spinnerSchool = findViewById(R.id.spinnerSchool);
+        Spinner spinnerGrade = findViewById(R.id.spinnerGrade);
+        RelativeLayout rowSchool = findViewById(R.id.rowSchool);
+        Button buttonRegister = findViewById(R.id.buttonRegister);
+        Spinner spinnerTimeStudy = findViewById(R.id.spinnerTimeStudy);
+        Spinner spinnerTimeRest = findViewById(R.id.spinnerTimeRest);
+        Spinner spinnerContentStudy = findViewById(R.id.spinnerContentStudy);
+        SwitchMaterial switchSameCity = findViewById(R.id.switchSameCity);
+        SwitchMaterial switchSameSchool = findViewById(R.id.switchSameSchool);
+        SwitchMaterial switchSameGender = findViewById(R.id.switchSameGender);
+        SwitchMaterial switchNewRoomFirst = findViewById(R.id.switchNewRoomFirst);
 
         String[] eduValues = getResources().getStringArray(R.array.lwe_spinner_edu);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, eduValues);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, eduValues);
         adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerEdu.setAdapter(adapter);
 
 
         String[] schoolValues = getResources().getStringArray(R.array.lwe_spinner_school);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item_invisible, schoolValues);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item_invisible, schoolValues);
         adapter2.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerSchool.setAdapter(adapter2);
         spinnerSchool.setTitle(getString(R.string.lwe_placeholder_school));
@@ -131,7 +112,7 @@ public class RegisterFragment extends Fragment {
         });
 
         String[] gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, gradeValues);
         adapter3.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerGrade.setAdapter(adapter3);
 
@@ -176,7 +157,7 @@ public class RegisterFragment extends Fragment {
                         values = getResources().getStringArray(R.array.lwe_spinner_grade_0);
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(view.getContext(), R.layout.lwe_spinner_item, values);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
 
@@ -190,7 +171,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 String[] gradeValues = getResources().getStringArray(R.array.lwe_spinner_grade_0);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, gradeValues);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.lwe_spinner_item, gradeValues);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
             }
@@ -198,17 +179,17 @@ public class RegisterFragment extends Fragment {
 
 
         String[] timeValues = getResources().getStringArray(R.array.lwe_spinner_time_study);
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, timeValues);
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, timeValues);
         adapter4.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerTimeStudy.setAdapter(adapter4);
 
         String[] restValues = getResources().getStringArray(R.array.lwe_spinner_time_rest);
-        ArrayAdapter<String> adapter5 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, restValues);
+        ArrayAdapter<String> adapter5 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, restValues);
         adapter5.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerTimeRest.setAdapter(adapter5);
 
         String[] contentValues = getResources().getStringArray(R.array.lwe_spinner_content_study);
-        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getContext(), R.layout.lwe_spinner_item, contentValues);
+        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, contentValues);
         adapter6.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerContentStudy.setAdapter(adapter6);
 
@@ -247,22 +228,22 @@ public class RegisterFragment extends Fragment {
             int age = Integer.parseInt(editTextAge.getText().toString());
             int bak = spinnerEdu.getSelectedItemPosition();
             int grade = spinnerGrade.getSelectedItemPosition();
-            if (!isUsernameValid(username) || !isPasswordValid(password)) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_login_format);
+            if (!UserUtils.isUsernameValid(username) || !UserUtils.isPasswordValid(password)) {
+                ToastHelper.showToast(this, R.string.lwe_error_login_format);
             } else if (!password.equals(confirmPassword)) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_confirm_password);
+                ToastHelper.showToast(this, R.string.lwe_error_confirm_password);
             } else if (UserUtils.isNameInvalid(name)) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_name);
+                ToastHelper.showToast(this, R.string.lwe_error_name);
             } else if (UserUtils.isAgeInvalid(age)) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_age);
+                ToastHelper.showToast(this, R.string.lwe_error_age);
             } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_city);
-            } else if (!NetworkUtil.isNetAvailable(getActivity())) {
-                ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                ToastHelper.showToast(this, R.string.lwe_error_city);
+            } else if (!NetworkUtil.isNetAvailable(this)) {
+                ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
             } else {
-                DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_register));
+                DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_register));
                 try {
-                    switch (((RadioButton) view.findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
+                    switch (((RadioButton) findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
                         case "女": {
                             gender = 2;
                             break;
@@ -278,7 +259,7 @@ public class RegisterFragment extends Fragment {
                     String school = bak > 3 ? (String) spinnerSchool.getSelectedItem() : "";
                     Preference pref = new Preference(spinnerTimeStudy.getSelectedItemPosition(), spinnerTimeRest.getSelectedItemPosition(), spinnerContentStudy.getSelectedItemPosition(), switchSameCity.isChecked(), switchSameSchool.isChecked(), switchSameGender.isChecked(), switchNewRoomFirst.isChecked());
                     User user = new User(username, password, name, gender, new UserInfo(age, grade, bak, cPickerNames[0], cPickerNames[1], cPickerNames[2], school, pref), LWEConstants.DEFAULT_AVATAR, getString(R.string.lwe_text_empty_signature));
-                    new NetworkThread(view) {
+                    new NetworkThread(editTextName) {
                         @Override
                         public ASResponse doRequest() {
                             return APIUtils.register(user);
@@ -287,8 +268,8 @@ public class RegisterFragment extends Fragment {
                         @Override
                         public void onSuccess(ASResponse asp) {
                             DialogMaker.dismissProgressDialog();
-                            ToastHelper.showToast(getContext(), getString(R.string.lwe_success_register));
-                            onBackPressed();
+                            setResult(1);
+                            finish();
                         }
 
                         @Override
@@ -296,9 +277,9 @@ public class RegisterFragment extends Fragment {
                             DialogMaker.dismissProgressDialog();
                             if (code == 414) {
                                 if (desc.equals("already register"))
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_register);
+                                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_register);
                                 else
-                                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_unknown);
+                                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_unknown);
                                 return;
                             }
                             super.onFailed(code, desc);
@@ -313,10 +294,9 @@ public class RegisterFragment extends Fragment {
                     }.start();
                 } catch (NumberFormatException e) {
                     DialogMaker.dismissProgressDialog();
-                    ToastHelper.showToast(getContext(), getString(R.string.lwe_error_age_format));
+                    ToastHelper.showToast(this, R.string.lwe_error_age_format);
                 }
             }
         });
-        return view;
     }
 }

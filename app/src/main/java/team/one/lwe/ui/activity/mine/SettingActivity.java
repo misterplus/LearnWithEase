@@ -12,7 +12,7 @@ import team.one.lwe.LWECache;
 import team.one.lwe.R;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.ui.activity.LWEUI;
-import team.one.lwe.ui.activity.LoginActivity;
+import team.one.lwe.ui.activity.auth.LoginActivity;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
 public class SettingActivity extends LWEUI {

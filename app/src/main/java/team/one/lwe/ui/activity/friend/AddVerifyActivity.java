@@ -47,14 +47,14 @@ public class AddVerifyActivity extends LWEUI {
         buttonAdd.setOnClickListener(v -> {
             String reason = editTextReason.getText().toString();
             if (reason.isEmpty() || reason.length() > 60)
-                ToastHelper.showToast(this, getString(R.string.lwe_error_reason));
+                ToastHelper.showToast(this, R.string.lwe_error_reason);
             else {
                 NIMClient.getService(FriendService.class).addFriend(new AddFriendData(account, VerifyType.VERIFY_REQUEST, reason)).setCallback(new RegularCallback<Void>(this) {
                     @Override
                     public void onSuccess(Void param) {
-                        ToastHelper.showToast(getBaseContext(), getString(R.string.lwe_success_add));
-                        AddVerifyActivity.this.setResult(1);
-                        AddVerifyActivity.this.finish();
+                        ToastHelper.showToast(getBaseContext(), R.string.lwe_success_add);
+                        setResult(1);
+                        finish();
                     }
                 });
             }

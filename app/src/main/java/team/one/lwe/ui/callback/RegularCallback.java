@@ -21,19 +21,19 @@ public abstract class RegularCallback<T> implements RequestCallback<T> {
         switch (code) {
             case 408: {
                 ToastHelper.showToast(context, R.string.lwe_error_timeout);
-                break;
+                return;
             }
             case 415: {
                 ToastHelper.showToast(context, R.string.lwe_error_connection);
-                break;
+                return;
             }
             case 416: {
                 ToastHelper.showToast(context, R.string.lwe_error_frequently);
-                break;
+                return;
             }
             case 500: {
                 ToastHelper.showToast(context, R.string.lwe_error_confail);
-                break;
+                return;
             }
             default: {
                 ToastHelper.showToast(context, R.string.lwe_error_unknown);

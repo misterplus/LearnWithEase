@@ -54,7 +54,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@id/buttonAvatar"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/lwe_placeholder_avatar" />
+                android:src="@drawable/nim_avatar_default" />
 
             <ImageButton
                 android:id="@+id/buttonAvatar"

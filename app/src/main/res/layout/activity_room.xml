@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/app_bar_layout" />
+
+    <RelativeLayout
+        android:id="@+id/layoutSelf"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/divider"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp" >
+
+        <VideoView
+            android:id="@+id/videoSelf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/lwe_icon_video"
+            android:contentDescription="@string/empty" />
+
+        <com.netease.nim.uikit.common.ui.imageview.HeadImageView
+            android:id="@+id/imageAvatarSelf"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/nim_avatar_default"/>
+
+
+        <ImageButton
+            android:id="@+id/buttonMicSelf"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/lwe_icon_mic"
+            android:contentDescription="@string/empty" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/layoutSelf" />
+
+    <LinearLayout
+        android:id="@+id/layoutUsers"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/divider2"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:baselineAligned="false">
+
+        <RelativeLayout
+            android:id="@+id/layoutUser1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1">
+
+            <VideoView
+                android:id="@+id/videoUser1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/lwe_icon_video"
+                android:contentDescription="@string/empty" />
+
+            <com.netease.nim.uikit.common.ui.imageview.HeadImageView
+                android:id="@+id/imageAvatarUser1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/nim_avatar_default"/>
+
+            <ImageView
+                android:id="@+id/buttonMicUser1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/lwe_icon_mic_muted"
+                android:contentDescription="@string/empty" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutUser2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1">
+
+            <VideoView
+                android:id="@+id/videoUser2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/lwe_icon_video"
+                android:contentDescription="@string/empty" />
+
+            <com.netease.nim.uikit.common.ui.imageview.HeadImageView
+                android:id="@+id/imageAvatarUser2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/nim_avatar_default"/>
+
+            <ImageView
+                android:id="@+id/buttonMicUser2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/lwe_icon_mic_muted"
+                android:contentDescription="@string/empty" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutUser3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <VideoView
+                android:id="@+id/videoUser3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/lwe_icon_video"
+                android:contentDescription="@string/empty" />
+
+            <com.netease.nim.uikit.common.ui.imageview.HeadImageView
+                android:id="@+id/imageAvatarUser3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/nim_avatar_default"/>
+
+            <ImageView
+                android:id="@+id/buttonMicUser3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/lwe_icon_mic_muted"
+                android:contentDescription="@string/empty" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@+id/layoutUsers" />
+
+</RelativeLayout>

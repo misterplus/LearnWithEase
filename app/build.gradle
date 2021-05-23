@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
     implementation 'com.github.yalantis:ucrop:2.2.6-native'
     implementation 'org.greenrobot:greendao:3.3.0'
+    implementation 'com.netease.yunxin:report:2.0.3'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation project(path: ':uikit')
@@ -54,17 +55,16 @@ dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     // 添加依赖，版本号必须一致。
 
-    // 基础功能 (必需)
+    // 基础功能
     implementation rootProject.ext.imSdk
-
-    // 聊天室需要
+    // 聊天室
     implementation rootProject.ext.chatroomSdk
-
-    // 超大群需要
+    // 超大群
     implementation rootProject.ext.superteamSdk
-
-    // 全文检索插件
+    // 全文检索
     implementation rootProject.ext.luceneSdk
+    // 音视频通话
+    implementation rootProject.ext.nertcSdk
 }
 
 greendao {
