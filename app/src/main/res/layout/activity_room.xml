@@ -32,7 +32,7 @@
         android:layout_height="150dp"
         android:layout_below="@+id/divider"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp" >
+        android:layout_marginEnd="10dp">
 
         <VideoView
             android:id="@+id/videoSelf"
@@ -53,19 +53,19 @@
             android:id="@+id/imageAvatarSelf"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/nim_avatar_default"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/nim_avatar_default" />
 
 
         <ImageButton
             android:id="@+id/buttonMicSelf"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/lwe_icon_mic"
             android:contentDescription="@string/empty" />
 
@@ -112,16 +112,16 @@
                 android:id="@+id/imageAvatarUser1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/nim_avatar_default"/>
+                android:layout_centerVertical="true"
+                android:src="@drawable/nim_avatar_default" />
 
             <ImageView
                 android:id="@+id/buttonMicUser1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
                 android:background="@drawable/lwe_icon_mic_muted"
@@ -155,16 +155,16 @@
                 android:id="@+id/imageAvatarUser2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/nim_avatar_default"/>
+                android:layout_centerVertical="true"
+                android:src="@drawable/nim_avatar_default" />
 
             <ImageView
                 android:id="@+id/buttonMicUser2"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
                 android:background="@drawable/lwe_icon_mic_muted"
@@ -197,16 +197,16 @@
                 android:id="@+id/imageAvatarUser3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/nim_avatar_default"/>
+                android:layout_centerVertical="true"
+                android:src="@drawable/nim_avatar_default" />
 
             <ImageView
                 android:id="@+id/buttonMicUser3"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_marginEnd="3dp"
                 android:layout_marginBottom="3dp"
                 android:background="@drawable/lwe_icon_mic_muted"

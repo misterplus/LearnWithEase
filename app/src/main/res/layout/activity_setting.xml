@@ -58,8 +58,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
                 android:text="@string/lwe_text_update_password"
                 android:textColor="@color/black"
                 android:textSize="20sp" />

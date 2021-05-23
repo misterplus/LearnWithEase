@@ -132,9 +132,9 @@ public class LoginActivity extends LWEUI {
             @Override
             public void onFailed(int code) {
                 DialogMaker.dismissProgressDialog();
-                super.onFailed(code);
                 if (code == 302)
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_login_info);
+                super.onFailed(code);
             }
 
             @Override

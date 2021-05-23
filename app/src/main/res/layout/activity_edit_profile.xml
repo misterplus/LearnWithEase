@@ -99,6 +99,7 @@
                 android:hint="@string/lwe_placeholder_name"
                 android:imeOptions="actionNext"
                 android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -144,6 +145,7 @@
                 android:hint="@string/lwe_placeholder_signature"
                 android:imeOptions="actionDone"
                 android:inputType="textNoSuggestions"
+                android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -180,6 +182,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@id/imageGender"
                 android:text="@string/lwe_text_gender"
@@ -256,11 +259,13 @@
                 android:layout_toStartOf="@id/buttonAge"
                 android:background="@color/transparent"
                 android:focusable="false"
+                android:gravity="end"
                 android:hint="@string/lwe_placeholder_age"
                 android:imeOptions="actionDone"
                 android:importantForAutofill="no"
                 android:inputType="number"
                 android:maxLength="3"
+                android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -294,6 +299,7 @@
                 android:src="@drawable/lwe_icon_city" />
 
             <TextView
+                android:id="@+id/textCityPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
