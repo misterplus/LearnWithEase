@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.netease.lava.nertc.sdk.NERtcCallback;
+import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
@@ -14,6 +16,7 @@ import java.io.File;
 
 import team.one.lwe.config.Preferences;
 import team.one.lwe.crash.CrashHandler;
+import team.one.lwe.ui.callback.LWENERtcCallback;
 
 public class LWEApplication extends Application {
 
@@ -49,6 +52,10 @@ public class LWEApplication extends Application {
         //NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
     }
 
+    private void initializeSDK() throws Exception {
+        NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(),null);
+    }
+
     private LoginInfo loginInfo(Context context) {
         String account = Preferences.getUserAccount(context);
         String token = Preferences.getUserToken(context);
@@ -63,7 +70,7 @@ public class LWEApplication extends Application {
 
     private SDKOptions options() {
         SDKOptions options = new SDKOptions();
-        options.appKey = "57b4c463e5a9cca9ca364a8d0d8c9f39";
+        options.appKey = LWEConstants.APP_KEY;
         options.checkManifestConfig = true;
         options.sdkStorageRootPath = getApplicationContext().getExternalCacheDir().getAbsolutePath();
         return options;
