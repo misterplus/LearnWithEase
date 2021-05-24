@@ -7,11 +7,11 @@ import team.one.lwe.bean.ASResponse;
 
 public class PostUtils {
 
-    private static final boolean DEV_ENV = true;
+    private static final boolean DEV_ENV = false;
     private static final String API_DOMAIN_NAME = DEV_ENV ? "http://10.0.2.2:8080" : "https://lwe.misterplus.plus:8443";
 
     // 10.0.2.2 is for localhost in emulator
-    // real server not deployed yet
+    // real server deployed
     public static ASResponse doPostEncoded(@NonNull String url, int timeout, @NonNull String name, @NonNull Object value, @NonNull Object... parameters) {
         return doPostForm("application/x-www-form-urlencoded;charset=utf-8", url, timeout, name, value, parameters);
     }
