@@ -29,7 +29,7 @@ public class EditPrefActivity extends LWEUI {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_pref);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_prefernce, true);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_edit_preference, true);
         setToolBar(R.id.toolbar, options);
 
         Spinner spinnerTimeStudy = findViewById(R.id.spinnerTimeStudy);

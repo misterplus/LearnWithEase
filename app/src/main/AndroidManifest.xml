@@ -51,8 +51,10 @@
         <activity android:name=".ui.activity.mine.EditPrefActivity" />
         <activity android:name=".ui.activity.mine.EditProfileActivity" />
         <activity android:name=".ui.activity.mine.SettingActivity" />
-        <activity android:name=".ui.activity.mine.UpdatePasswordActivity" />
         <activity android:name=".ui.activity.auth.RegisterActivity" />
+        <activity android:name=".ui.activity.setting.SystemSettingActivity" />
+        <activity android:name=".ui.activity.setting.UserSettingActivity" />
+        <activity android:name=".ui.activity.setting.UpdatePasswordActivity" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"

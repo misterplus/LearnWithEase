@@ -1,4 +1,4 @@
-package team.one.lwe.ui.activity.mine;
+package team.one.lwe.ui.activity.setting;
 
 import android.os.Bundle;
 import android.view.inputmethod.EditorInfo;

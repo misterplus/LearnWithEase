@@ -22,7 +22,6 @@
             android:background="?attr/colorPrimary"
             app:subtitleTextAppearance="@style/Toolbar.SubTitleText"
             app:titleTextAppearance="@style/Toolbar.TitleText" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <View
@@ -30,6 +29,7 @@
         android:layout_height="10dp" />
 
     <RelativeLayout
+        android:id="@+id/fragment_setting_update_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white">
@@ -39,12 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_user_setting"
+            android:text="@string/lwe_text_update_password"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/buttonUserSetting"
+            android:id="@+id/buttonUpdatePassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -53,57 +53,6 @@
             android:background="@color/white"
             android:contentDescription="@string/empty"
             android:src="@drawable/nim_arrow_right" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:text="@string/lwe_text_system_setting"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/buttonSystemSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:background="@color/white"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/nim_arrow_right" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@color/white" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/white">
-
-        <Button
-            android:id="@+id/buttonLogout"
-            android:layout_width="160dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lwe_button_round_red"
-            android:contentDescription="@string/empty"
-            android:text="@string/lwe_button_log_out"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
 
     </RelativeLayout>
-
 </LinearLayout>
