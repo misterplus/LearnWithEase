@@ -102,6 +102,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/ReasonLayout"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="7dp"
@@ -114,7 +115,8 @@
                 android:layout_marginStart="10dp"
                 android:background="@color/transparent"
                 android:hint="@string/lwe_hint_reason"
-                android:inputType="textNoSuggestions"
+                android:inputType="textMultiLine"
+                android:focusableInTouchMode="true"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </RelativeLayout>

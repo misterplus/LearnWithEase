@@ -1,8 +1,11 @@
 package team.one.lwe.ui.activity.friend;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -39,11 +42,17 @@ public class AddVerifyActivity extends LWEUI {
         TextView textInfo = findViewById(R.id.textInfo);
         Button buttonAdd = findViewById(R.id.buttonAdd);
         EditText editTextReason = findViewById(R.id.editTextReason);
+        RelativeLayout ReasonLayout = findViewById(R.id.ReasonLayout);
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(account);
         imageAvatar.loadBuddyAvatar(account);
         textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));
+        ReasonLayout.setOnClickListener(view -> {
+            editTextReason.requestFocus();
+            InputMethodManager imm = (InputMethodManager)editTextReason.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+        });
         buttonAdd.setOnClickListener(v -> {
             String reason = editTextReason.getText().toString();
             if (reason.isEmpty() || reason.length() > 60)
