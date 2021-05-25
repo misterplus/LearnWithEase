@@ -10,7 +10,7 @@ import team.one.lwe.bean.User;
 public class APIUtils {
 
     public static ASResponse convert(@NonNull String username, @NonNull String password) throws IORuntimeException {
-        return PostUtils.doPostEncoded(
+        return PostUtils.doPostEncoded(false,
                 "/user/convert", 5000,
                 "username", username,
                 "password", password);
@@ -23,10 +23,16 @@ public class APIUtils {
     }
 
     public static ASResponse update(@NonNull String username, @NonNull String oldPassword, @NonNull String newPassword) throws IORuntimeException {
-        return PostUtils.doPostEncoded(
+        return PostUtils.doPostEncoded(false,
                 "/user/update", 5000,
                 "username", username,
                 "oldPassword", oldPassword,
                 "newPassword", newPassword);
+    }
+
+    public static ASResponse getRoomToken(@NonNull String channelName) {
+        return PostUtils.doPostEncoded(true,
+                "/room/getToken", 5000,
+                "channelName", channelName);
     }
 }

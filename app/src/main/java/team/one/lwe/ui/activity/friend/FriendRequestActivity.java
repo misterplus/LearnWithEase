@@ -1,21 +1,13 @@
- package team.one.lwe.ui.activity.friend;
+package team.one.lwe.ui.activity.friend;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
-import com.netease.nimlib.sdk.friend.constant.VerifyType;
-import com.netease.nimlib.sdk.friend.model.AddFriendData;
 import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.model.SystemMessage;
 import com.netease.nimlib.sdk.uinfo.UserService;
@@ -26,7 +18,6 @@ import java.util.List;
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.activity.LWEUI;
-import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.callback.VoidSuccessCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
@@ -41,6 +32,7 @@ public class FriendRequestActivity extends LWEUI {
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend_request, true);
         setToolBar(R.id.toolbar, options);
 
+        SystemMessage requestMsg = (SystemMessage) getIntent().getSerializableExtra("requestMsg");
         HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
         TextView textName = findViewById(R.id.textName);
         TextView textInfo = findViewById(R.id.textInfo);
@@ -54,21 +46,15 @@ public class FriendRequestActivity extends LWEUI {
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));
         textReason.setText(getIntent().getStringExtra("reason"));
 
-        buttonAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NIMClient.getService(FriendService.class).ackAddFriendRequest(account, true).setCallback(new VoidSuccessCallback(view.getContext()));
-                NIMClient.getService(SystemMessageService.class).setSystemMessageRead(Long.parseLong(getIntent().getStringExtra("msgId")));
-                finish();
-            }
+        buttonAccept.setOnClickListener(view -> {
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(account, true).setCallback(new VoidSuccessCallback(view.getContext()));
+            NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+            finish();
         });
-        buttonDecline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NIMClient.getService(FriendService.class).ackAddFriendRequest(account, false).setCallback(new VoidSuccessCallback(view.getContext()));
-                NIMClient.getService(SystemMessageService.class).setSystemMessageRead(Long.parseLong(getIntent().getStringExtra("msgId")));
-                finish();
-            }
+        buttonDecline.setOnClickListener(view -> {
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(account, false).setCallback(new VoidSuccessCallback(view.getContext()));
+            NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+            finish();
         });
     }
 }

@@ -125,8 +125,8 @@ public class LoginActivity extends LWEUI {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
                 startActivity(new Intent(getBaseContext(), MainActivity.class));
-                Preferences.saveUserAccount(getApplicationContext(), info.getAccount());
-                Preferences.saveUserToken(getApplicationContext(), info.getToken());
+                Preferences.saveUserAccount(info.getAccount());
+                Preferences.saveUserToken(info.getToken());
             }
 
             @Override

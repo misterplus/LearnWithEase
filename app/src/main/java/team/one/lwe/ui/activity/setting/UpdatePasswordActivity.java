@@ -71,7 +71,7 @@ public class UpdatePasswordActivity extends LWEUI {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                Preferences.saveUserToken(getApplicationContext(), UserUtils.getLoginInfo(asp.getInfo()).getToken());
+                Preferences.saveUserToken(UserUtils.getLoginInfo(asp.getInfo()).getToken());
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_success_update);
                 finish();
             }

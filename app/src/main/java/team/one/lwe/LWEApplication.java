@@ -1,10 +1,8 @@
 package team.one.lwe;
 
 import android.app.Application;
-import android.content.Context;
 import android.text.TextUtils;
 
-import com.netease.lava.nertc.sdk.NERtcCallback;
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
@@ -29,12 +27,12 @@ public class LWEApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        NIMClient.init(this, loginInfo(getApplicationContext()), options());
+        instance = this;
+        NIMClient.init(this, loginInfo(), options());
         if (NIMUtil.isMainProcess(this)) {
             initUiKit();
         }
         initCacheDir();
-        instance = this;
         CrashHandler crashHandler = CrashHandler.getCrashHandler();
         crashHandler.init();
     }
@@ -53,12 +51,12 @@ public class LWEApplication extends Application {
     }
 
     private void initializeSDK() throws Exception {
-        NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(),null);
+        NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(), null);
     }
 
-    private LoginInfo loginInfo(Context context) {
-        String account = Preferences.getUserAccount(context);
-        String token = Preferences.getUserToken(context);
+    private LoginInfo loginInfo() {
+        String account = Preferences.getUserAccount();
+        String token = Preferences.getUserToken();
 
         if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(token)) {
             LWECache.setAccount(account.toLowerCase());

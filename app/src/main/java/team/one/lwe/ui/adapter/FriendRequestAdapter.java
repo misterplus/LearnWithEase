@@ -52,9 +52,9 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FriendRequestActivity.class);
-                intent.putExtra("account",account);
-                intent.putExtra("reason",request.getMsg());
-                intent.putExtra("msgId",requestMsg.getMessageId());
+                intent.putExtra("account", account);
+                intent.putExtra("requestMsg", requestMsg);
+                intent.putExtra("reason", request.getMsg());
                 view.getContext().startActivity(intent);
             }
         });

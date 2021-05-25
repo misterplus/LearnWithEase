@@ -8,6 +8,8 @@ import com.netease.nim.uikit.common.ToastHelper;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
+import javax.net.ssl.SSLHandshakeException;
+
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpException;
 import team.one.lwe.R;
@@ -63,6 +65,8 @@ public abstract class NetworkThread extends Thread {
                     onFailed(415, "connection failed");
                 } else if (e.causeInstanceOf(SocketTimeoutException.class)) {
                     onFailed(408, "connection timeout");
+                } else if (e.causeInstanceOf(SSLHandshakeException.class)) {
+                    onFailed(415, "ssl handshake failed");
                 } else {
                     onException(e);
                 }
