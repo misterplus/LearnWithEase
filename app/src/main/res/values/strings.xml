@@ -78,6 +78,7 @@
     <string name="lwe_title_edit_preference">修改偏好</string>
     <string name="lwe_title_friend">好友</string>
     <string name="lwe_title_friend_add">添加好友</string>
+    <string name="lwe_title_friend_request">好友申请</string>
 
     <!--    文本-->
     <string name="lwe_text_gender">性别</string>

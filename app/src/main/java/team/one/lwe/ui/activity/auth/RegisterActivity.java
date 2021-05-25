@@ -54,7 +54,6 @@ public class RegisterActivity extends LWEUI {
                 .build();
         cPicker.setConfig(cityConfig);
         cPicker.init(this);
-        TextView textCityPicker = findViewById(R.id.textCityPicker);
         TextView textCity = findViewById(R.id.textCity);
         TextView textSchool = findViewById(R.id.textSchool);
         TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
@@ -208,13 +207,12 @@ public class RegisterActivity extends LWEUI {
                     text = String.format(getString(R.string.lwe_placeholder_cityformat3), province.getName(), city.getName(), district.getName());
                 //scales horizontally
                 if (text.length() >= 16) {
-                    textCityPicker.setVisibility(View.INVISIBLE);
                     textCity.setTextScaleX((float) (16.0 / text.length()));
                 } else {
-                    textCityPicker.setVisibility(View.VISIBLE);
                     textCity.setTextScaleX((float) 1.0);
                 }
                 textCity.setText(text);
+                textCity.setSelected(true);
             }
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());

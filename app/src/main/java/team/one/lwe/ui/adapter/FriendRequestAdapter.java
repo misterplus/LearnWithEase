@@ -1,9 +1,11 @@
 package team.one.lwe.ui.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import team.one.lwe.R;
+import team.one.lwe.ui.activity.friend.FriendRequestActivity;
 import team.one.lwe.ui.callback.VoidSuccessCallback;
 
 @AllArgsConstructor
@@ -45,6 +48,16 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.imageAvatar.loadBuddyAvatar(account);
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
+        holder.FriendRequestLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), FriendRequestActivity.class);
+                intent.putExtra("account",account);
+                intent.putExtra("reason",request.getMsg());
+                intent.putExtra("msgId",requestMsg.getMessageId());
+                view.getContext().startActivity(intent);
+            }
+        });
         holder.buttonAccept.setOnClickListener(v -> {
             NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new VoidSuccessCallback(holder.view.getContext()));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
@@ -72,6 +85,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         private final HeadImageView imageAvatar;
         private final TextView textName, textReason, textAccept, textDecline;
         private final Button buttonAccept, buttonDecline;
+        private final RelativeLayout FriendRequestLayout;
 
 
         public ViewHolder(View view) {
@@ -84,6 +98,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             textDecline = view.findViewById(R.id.textDecline);
             buttonAccept = view.findViewById(R.id.buttonAccept);
             buttonDecline = view.findViewById(R.id.buttonDecline);
+            FriendRequestLayout = view.findViewById(R.id.FriendRequestLayout);
         }
     }
 }

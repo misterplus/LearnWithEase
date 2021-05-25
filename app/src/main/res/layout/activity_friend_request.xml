@@ -69,20 +69,6 @@
                 android:text="@string/lwe_placeholder_info"
                 android:textColor="@color/text_grey"
                 android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/buttonAdd"
-                android:layout_width="50dp"
-                android:layout_height="35dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/lwe_button_round_blue"
-                android:contentDescription="@string/empty"
-                android:text="@string/lwe_button_friend_add"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -108,19 +94,48 @@
             android:layout_margin="7dp"
             android:background="@drawable/nim_message_input_edittext_box">
 
-            <EditText
-                android:id="@+id/editTextReason"
+            <TextView
+                android:id="@+id/textReason"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginStart="10dp"
                 android:background="@color/transparent"
-                android:hint="@string/lwe_hint_reason"
-                android:gravity="top"
-                android:inputType="textMultiLine"
                 android:focusableInTouchMode="true"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/buttonAccept"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="100dp"
+                android:layout_toStartOf="@+id/buttonDecline"
+                android:background="@drawable/lwe_button_round_blue"
+                android:contentDescription="@string/empty"
+                android:text="@string/lwe_button_accept"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonDecline"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/lwe_button_round_darkred"
+                android:contentDescription="@string/empty"
+                android:text="@string/lwe_button_decline"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>
