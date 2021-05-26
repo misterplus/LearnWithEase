@@ -43,6 +43,8 @@ import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD
 public class AddFriendActivity extends LWEUI {
 
     private String searchedAccount;
+    private RecyclerView listRequest;
+    private LinearLayoutManager mRecyclerViewLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class AddFriendActivity extends LWEUI {
         TextView textAdd = findViewById(R.id.textAdd);
         LinearLayout searchResult = findViewById(R.id.searchResult);
         LinearLayout noResult = findViewById(R.id.noResult);
+        listRequest = findViewById(R.id.listRequest);
+        mRecyclerViewLayoutManager = new LinearLayoutManager(getBaseContext());
         final boolean[] isBeingAdded = {false};
         List<SystemMessage> listBeingAdded = new ArrayList<>();
 
@@ -144,9 +148,8 @@ public class AddFriendActivity extends LWEUI {
                 NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new MissingInfoCallback(getBaseContext()) {
                     @Override
                     public void onSuccess(List<NimUserInfo> infoList) {
-                        RecyclerView listRequest = findViewById(R.id.listRequest);
                         FriendRequestAdapter adapter = new FriendRequestAdapter(requests);
-                        listRequest.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                        listRequest.setLayoutManager(mRecyclerViewLayoutManager);
                         listRequest.setAdapter(adapter);
                     }
                 });
@@ -159,6 +162,25 @@ public class AddFriendActivity extends LWEUI {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1) {
             finish();
+        } else if (requestCode == 1 && resultCode == 2) {
+            int first = mRecyclerViewLayoutManager.findFirstVisibleItemPosition();
+            int position = Integer.parseInt(data.getStringExtra("position"));
+            String request = data.getStringExtra("request");
+            View view = listRequest.getChildAt(position - first);
+            if (listRequest.getChildViewHolder(view) instanceof FriendRequestAdapter.ViewHolder) {
+                //修改数据
+                Button buttonAccept = view.findViewById(R.id.buttonAccept);
+                Button buttonDecline = view.findViewById(R.id.buttonDecline);
+                TextView textAccept = view.findViewById(R.id.textAccept);
+                TextView textDecline = view.findViewById(R.id.textDecline);
+                buttonAccept.setVisibility(View.GONE);
+                buttonDecline.setVisibility(View.GONE);
+                if (request.equals("accept")) {
+                    textAccept.setVisibility(View.VISIBLE);
+                } else if (request.equals("decline")) {
+                    textDecline.setVisibility(View.VISIBLE);
+                }
+            }
         }
     }
 }

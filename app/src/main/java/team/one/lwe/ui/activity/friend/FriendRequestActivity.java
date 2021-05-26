@@ -1,5 +1,6 @@
 package team.one.lwe.ui.activity.friend;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +13,6 @@ import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.model.SystemMessage;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
-
-import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
@@ -49,11 +48,19 @@ public class FriendRequestActivity extends LWEUI {
         buttonAccept.setOnClickListener(view -> {
             NIMClient.getService(FriendService.class).ackAddFriendRequest(account, true).setCallback(new VoidSuccessCallback(view.getContext()));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+            Intent intent = new Intent();
+            intent.putExtra("position", getIntent().getStringExtra("position"));
+            intent.putExtra("request", "accept");
+            setResult(2, intent);
             finish();
         });
         buttonDecline.setOnClickListener(view -> {
             NIMClient.getService(FriendService.class).ackAddFriendRequest(account, false).setCallback(new VoidSuccessCallback(view.getContext()));
             NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+            Intent intent = new Intent();
+            intent.putExtra("position", getIntent().getStringExtra("position"));
+            intent.putExtra("request", "decline");
+            setResult(2, intent);
             finish();
         });
     }

@@ -1,5 +1,6 @@
 package team.one.lwe.ui.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import team.one.lwe.R;
 import team.one.lwe.ui.activity.friend.FriendRequestActivity;
-import team.one.lwe.ui.callback.VoidSuccessCallback;
+import team.one.lwe.ui.callback.RegularCallback;
 
 @AllArgsConstructor
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.ViewHolder> {
@@ -48,29 +49,37 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.imageAvatar.loadBuddyAvatar(account);
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
-        holder.FriendRequestLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.FriendRequestLayout.setOnClickListener(view -> {
+            if (holder.buttonAccept.getVisibility() == View.VISIBLE) {
                 Intent intent = new Intent(view.getContext(), FriendRequestActivity.class);
                 intent.putExtra("account", account);
                 intent.putExtra("requestMsg", requestMsg);
                 intent.putExtra("reason", request.getMsg());
-                view.getContext().startActivity(intent);
+                intent.putExtra("position", String.valueOf(position));
+                ((Activity) view.getContext()).startActivityForResult(intent, 1);
             }
         });
         holder.buttonAccept.setOnClickListener(v -> {
-            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new VoidSuccessCallback(holder.view.getContext()));
-            NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-            holder.textAccept.setVisibility(View.VISIBLE);
-            holder.buttonAccept.setVisibility(View.GONE);
-            holder.buttonDecline.setVisibility(View.GONE);
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new RegularCallback<Void>(holder.view.getContext()) {
+                @Override
+                public void onSuccess(Void param) {
+                    NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+                    holder.textAccept.setVisibility(View.VISIBLE);
+                    holder.buttonAccept.setVisibility(View.GONE);
+                    holder.buttonDecline.setVisibility(View.GONE);
+                }
+            });
         });
         holder.buttonDecline.setOnClickListener(v -> {
-            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new VoidSuccessCallback(holder.view.getContext()));
-            NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-            holder.textDecline.setVisibility(View.VISIBLE);
-            holder.buttonAccept.setVisibility(View.GONE);
-            holder.buttonDecline.setVisibility(View.GONE);
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new RegularCallback<Void>(holder.view.getContext()) {
+                @Override
+                public void onSuccess(Void param) {
+                    NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+                    holder.textDecline.setVisibility(View.VISIBLE);
+                    holder.buttonAccept.setVisibility(View.GONE);
+                    holder.buttonDecline.setVisibility(View.GONE);
+                }
+            });
         });
     }
 
@@ -79,7 +88,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         return requests.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final View view;
         private final HeadImageView imageAvatar;
