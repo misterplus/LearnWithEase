@@ -43,7 +43,7 @@ public class FriendRequestActivity extends LWEUI {
         textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
         textInfo.setText(String.format("%s %s岁 %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), ex.getProvince()));
-        textReason.setText(getIntent().getStringExtra("reason"));
+        textReason.setText(request.getMsg());
 
         buttonAccept.setOnClickListener(view -> {
             NIMClient.getService(FriendService.class).ackAddFriendRequest(account, true).setCallback(new RegularCallback<Void>(view.getContext()) {
