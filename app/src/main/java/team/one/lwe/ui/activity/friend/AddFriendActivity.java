@@ -170,12 +170,15 @@ public class AddFriendActivity extends LWEUI {
                 Button buttonDecline = view.findViewById(R.id.buttonDecline);
                 TextView textAccept = view.findViewById(R.id.textAccept);
                 TextView textDecline = view.findViewById(R.id.textDecline);
-                buttonAccept.setVisibility(View.GONE);
-                buttonDecline.setVisibility(View.GONE);
-                if (resultCode == 0)
+                if (resultCode == 1) {
+                    buttonAccept.setVisibility(View.GONE);
+                    buttonDecline.setVisibility(View.GONE);
                     textAccept.setVisibility(View.VISIBLE);
-                else
+                } else if (resultCode == 2) {
+                    buttonAccept.setVisibility(View.GONE);
+                    buttonDecline.setVisibility(View.GONE);
                     textDecline.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

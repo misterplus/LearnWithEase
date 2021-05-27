@@ -50,7 +50,7 @@ public class FriendRequestActivity extends LWEUI {
                 @Override
                 public void onSuccess(Void param) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-                    setResult(0);
+                    setResult(1);
                     finish();
                 }
             });
@@ -60,7 +60,7 @@ public class FriendRequestActivity extends LWEUI {
                 @Override
                 public void onSuccess(Void param) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-                    setResult(1);
+                    setResult(2);
                     finish();
                 }
             });
