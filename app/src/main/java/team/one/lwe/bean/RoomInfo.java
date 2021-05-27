@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class RoomInfo {
     private int maxUsers, timeStudy, timeRest, contentStudy;
     private boolean friendsOnly;
+    private String coverUrl;
 }

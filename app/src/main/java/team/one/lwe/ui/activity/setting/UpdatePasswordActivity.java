@@ -47,8 +47,6 @@ public class UpdatePasswordActivity extends LWEUI {
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_error_password);
             } else if (!newPassword.equals(confirmPassword)) {
                 ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confirm_password);
-            } else if (!NetworkUtil.isNetAvailable(getBaseContext())) {
-                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
             } else {
                 doUpdate(NimUIKit.getAccount(), oldPassword, newPassword);
             }

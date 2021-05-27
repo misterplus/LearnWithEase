@@ -238,8 +238,6 @@ public class RegisterActivity extends LWEUI {
                 ToastHelper.showToast(this, R.string.lwe_error_age);
             } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
                 ToastHelper.showToast(this, R.string.lwe_error_city);
-            } else if (!NetworkUtil.isNetAvailable(this)) {
-                ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_register));
                 try {

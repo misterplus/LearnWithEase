@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -48,6 +50,13 @@ public abstract class NetworkThread extends Thread {
     @Override
     public void run() {
         try {
+            if (!NetworkUtil.isNetAvailable(view.getContext())) {
+                view.post(() -> {
+                    DialogMaker.dismissProgressDialog();
+                    ToastHelper.showToast(view.getContext(), R.string.lwe_error_nonetwork);
+                });
+                return;
+            }
             ASResponse asp = doRequest();
             // All methods other than request run on ui thread
             view.post(() -> {

@@ -61,11 +61,14 @@
     <string name="lwe_error_perm">易学习需要一定的权限才能运行，请同意权限请求</string>
     <string name="lwe_error_fetch_info">无法获取用户信息，请稍后再试</string>
     <string name="lwe_error_fetch_friend_request">无法获取好友请求，请稍后再试</string>
+    <string name="lwe_error_room_cover">请设置房间封面</string>
+    <string name="lwe_error_room_name">房间名称不能为空或超过10个字符</string>
 
     <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
     <string name="lwe_progress_register">注册中…</string>
     <string name="lwe_progress_search">搜索中…</string>
+    <string name="lwe_progress_room_create">创建中…</string>
 
     <!--    工具栏标题-->
     <string name="lwe_title_register">注册账号</string>
@@ -137,6 +140,7 @@
     <string name="lwe_text_room_name">房间名称</string>
     <string name="lwe_text_room_max_users">房间人数</string>
     <string name="lwe_text_room_friends_only">仅允许好友加入</string>
+    <string name="lwe_text_room_cover">房间封面</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>

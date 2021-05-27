@@ -49,8 +49,6 @@ public class LoginActivity extends LWEUI {
             String password = editTextPassword.getText().toString();
             if (!UserUtils.isUsernameValid(username) || !UserUtils.isPasswordValid(password)) {
                 ToastHelper.showToast(this, R.string.lwe_error_login_format);
-            } else if (!NetworkUtil.isNetAvailable(this)) {
-                ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
             } else {
                 DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_login), false);
                 doConvert(username, password);

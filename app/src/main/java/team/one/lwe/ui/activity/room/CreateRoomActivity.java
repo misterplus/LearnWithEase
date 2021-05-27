@@ -1,25 +1,51 @@
 package team.one.lwe.ui.activity.room;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
-import com.netease.nim.uikit.common.util.sys.NetworkUtil;
+import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
+import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
+import com.netease.nim.uikit.common.util.C;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.nos.NosService;
+import com.yalantis.ucrop.UCrop;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.RoomInfo;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
+import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
-import team.one.lwe.util.APIUtils;
+import team.one.lwe.util.TextUtils;
 
 public class CreateRoomActivity extends LWEUI {
+
+    private Uri uri;
+    private String coverUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +80,41 @@ public class CreateRoomActivity extends LWEUI {
         SwitchMaterial switchFriendsOnly = findViewById(R.id.switchFriendsOnly);
 
         EditText editTextRoomName = findViewById(R.id.editTextRoomName);
+
+        ImageButton buttonCover = findViewById(R.id.buttonCover);
+        List<PopupMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new PopupMenuItem(0, "拍照"));
+        menuItems.add(new PopupMenuItem(1, "从相册选择"));
+        NIMPopupMenu menu = new NIMPopupMenu(this, menuItems, item -> {
+            switch (item.getTag()) {
+                case 0: {
+                    File caption = new File(this.getExternalCacheDir(), "caption_cover.jpg");
+                    try {
+                        if (caption.exists())
+                            caption.delete();
+                        caption.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (Build.VERSION.SDK_INT >= 24)
+                        uri = FileProvider.getUriForFile(this, "team.one.lwe.ipc.provider.file", caption);
+                    else
+                        uri = Uri.fromFile(caption);
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                    startActivityForResult(intent, 0);
+                    break;
+                }
+                case 1: {
+                    Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                    intent.setType("image/*");
+                    startActivityForResult(intent, 1);
+                }
+            }
+        });
+        buttonCover.setOnClickListener(v -> menu.show(buttonCover));
+
         Button buttonCreate = findViewById(R.id.buttonCreate);
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,34 +125,103 @@ public class CreateRoomActivity extends LWEUI {
                 int timeRest = spinnerTimeRest.getSelectedItemPosition();
                 int contentStudy = spinnerContentStudy.getSelectedItemPosition();
                 boolean friendsOnly = switchFriendsOnly.isChecked();
-                RoomInfo ext = new RoomInfo(maxUsers, timeStudy, timeRest, contentStudy, friendsOnly);
-                //TODO: send request
-                new NetworkThread(editTextRoomName) {
-                    @Override
-                    public ASResponse doRequest() {
-                        //TODO: APIUtils
-                        return null;
-                    }
+                if (name.length() > 10 || name.length() < 1) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_room_name);
+                } else if (TextUtils.isEmpty(coverUrl)) {
+                    ToastHelper.showToast(getBaseContext(), R.string.lwe_error_room_cover);
+                } else {
+                    RoomInfo ext = new RoomInfo(maxUsers, timeStudy, timeRest, contentStudy, friendsOnly, coverUrl);
+                    DialogMaker.showProgressDialog(getBaseContext(), getString(R.string.lwe_progress_room_create));
+                    new NetworkThread(editTextRoomName) {
+                        @Override
+                        public ASResponse doRequest() {
+                            //TODO: APIUtils
+                            return null;
+                        }
 
-                    @Override
-                    public void onSuccess(ASResponse asp) {
-                        //TODO: go into room
-                    }
+                        @Override
+                        public void onSuccess(ASResponse asp) {
+                            setResult(0);
+                            finish();
+                        }
 
-                    @Override
-                    public void onFailed(int code, String desc) {
-                        DialogMaker.dismissProgressDialog();
-                        //TODO: other on failed checks
-                        super.onFailed(code, desc);
-                    }
+                        @Override
+                        public void onFailed(int code, String desc) {
+                            DialogMaker.dismissProgressDialog();
+                            //TODO: other on failed checks
+                            super.onFailed(code, desc);
+                        }
 
-                    @Override
-                    public void onException(Exception e) {
-                        DialogMaker.dismissProgressDialog();
-                        super.onException(e);
-                    }
-                }.start();
+                        @Override
+                        public void onException(Exception e) {
+                            DialogMaker.dismissProgressDialog();
+                            super.onException(e);
+                        }
+                    }.start();
+                }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case 0: {
+                    File cropped = new File(this.getExternalCacheDir(), "cover_cropped.png");
+                    try {
+                        if (cropped.exists())
+                            cropped.delete();
+                        cropped.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Uri uriCropped = Uri.fromFile(cropped);
+                    UCrop.of(uri, uriCropped)
+                            .withAspectRatio(4, 3)
+                            .withMaxResultSize(1200, 900)
+                            .start(this);
+                    break;
+                }
+                case 1: {
+                    uri = data.getData();
+                    File cropped = new File(this.getExternalCacheDir(), "cover_cropped.png");
+                    try {
+                        if (cropped.exists())
+                            cropped.delete();
+                        cropped.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Uri uriCropped = Uri.fromFile(cropped);
+                    UCrop.of(uri, uriCropped)
+                            .withAspectRatio(4, 3)
+                            .withMaxResultSize(1200, 900)
+                            .start(this);
+                    break;
+                }
+                case UCrop.REQUEST_CROP: {
+                    Uri uriResult = UCrop.getOutput(data);
+                    File result = new File(uriResult.getPath());
+                    NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RegularCallback<String>(this) {
+                        @Override
+                        public void onSuccess(String url) {
+                            //TODO: set field, update image
+                            coverUrl = url;
+                            ImageView imageCover = findViewById(R.id.imageCover);
+                            imageCover.setImageURI(uriResult);
+                        }
+                    });
+                }
+                case UCrop.RESULT_ERROR: {
+                    try {
+                        throw UCrop.getError(data);
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }

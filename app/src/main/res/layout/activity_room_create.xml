@@ -66,6 +66,43 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/lwe_text_room_cover"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imageCover"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@id/buttonCover"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/nim_avatar_default" />
+
+            <ImageButton
+                android:id="@+id/buttonCover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:background="@color/white"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/nim_arrow_right" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white">
 
