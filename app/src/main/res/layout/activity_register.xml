@@ -309,6 +309,7 @@
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:gravity="right"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
