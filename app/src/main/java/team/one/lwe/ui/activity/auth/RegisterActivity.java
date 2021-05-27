@@ -56,7 +56,6 @@ public class RegisterActivity extends LWEUI {
         cPicker.init(this);
         TextView textCity = findViewById(R.id.textCity);
         TextView textSchool = findViewById(R.id.textSchool);
-        TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
         EditText editTextUsername = findViewById(R.id.editTextUsername);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
         EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
@@ -95,17 +94,15 @@ public class RegisterActivity extends LWEUI {
                 String school = (String) spinnerSchool.getSelectedItem();
                 textSchool.setText(school);
                 if (school.length() >= 16) {
-                    textSchoolPicker.setVisibility(View.INVISIBLE);
                     textSchool.setTextScaleX((float) (16.0 / school.length()));
                 } else {
-                    textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
+                textSchool.setSelected(true);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                textSchoolPicker.setVisibility(View.VISIBLE);
                 textSchool.setText(getString(R.string.lwe_placeholder_school));
             }
         });

@@ -87,7 +87,6 @@ public class EditProfileActivity extends LWEUI {
         RadioButton radioUnknown = findViewById(R.id.radioUnknown);
         TextView textCity = findViewById(R.id.textCity);
         TextView textSchool = findViewById(R.id.textSchool);
-        TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
         HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
         Spinner spinnerEdu = findViewById(R.id.spinnerEdu);
         Spinner spinnerGrade = findViewById(R.id.spinnerGrade);
@@ -214,12 +213,11 @@ public class EditProfileActivity extends LWEUI {
                 String school = (String) spinnerSchool.getSelectedItem();
                 textSchool.setText(school);
                 if (school.length() >= 16) {
-                    textSchoolPicker.setVisibility(View.INVISIBLE);
                     textSchool.setTextScaleX((float) (16.0 / school.length()));
                 } else {
-                    textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
+                textSchool.setSelected(true);
                 if (!NetworkUtil.isNetAvailable(getBaseContext())) {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
                 } else {
@@ -230,8 +228,8 @@ public class EditProfileActivity extends LWEUI {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                textSchoolPicker.setVisibility(View.VISIBLE);
                 textSchool.setText(getString(R.string.lwe_placeholder_school));
+                textSchool.setSelected(true);
             }
         });
 
