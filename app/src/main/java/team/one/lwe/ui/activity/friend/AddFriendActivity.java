@@ -126,7 +126,7 @@ public class AddFriendActivity extends LWEUI {
             } else {
                 Intent intent = new Intent(this, AddVerifyActivity.class);
                 intent.putExtra("account", searchedAccount);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, -1);
             }
         });
         NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new FetchFriendRequestCallback(this) {
@@ -160,12 +160,11 @@ public class AddFriendActivity extends LWEUI {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0 && resultCode == 1) {
+        if (requestCode == -1 && resultCode == 1) {
             finish();
-        } else if (requestCode > 0) {
+        } else if (requestCode >= 0) {
             int first = mRecyclerViewLayoutManager.findFirstVisibleItemPosition();
-            int position = requestCode - 1;
-            View view = listRequest.getChildAt(position - first);
+            View view = listRequest.getChildAt(requestCode - first);
             if (listRequest.getChildViewHolder(view) instanceof FriendRequestAdapter.ViewHolder) {
                 Button buttonAccept = view.findViewById(R.id.buttonAccept);
                 Button buttonDecline = view.findViewById(R.id.buttonDecline);

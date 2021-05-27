@@ -52,7 +52,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             if (holder.buttonAccept.getVisibility() == View.VISIBLE) {
                 Intent intent = new Intent(view.getContext(), FriendRequestActivity.class);
                 intent.putExtra("requestMsg", requestMsg);
-                ((Activity) view.getContext()).startActivityForResult(intent, position + 1);
+                ((Activity) view.getContext()).startActivityForResult(intent, position);
             }
         });
         holder.buttonAccept.setOnClickListener(v -> {
