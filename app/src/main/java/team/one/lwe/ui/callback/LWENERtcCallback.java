@@ -3,9 +3,22 @@ package team.one.lwe.ui.callback;
 import com.netease.lava.nertc.sdk.NERtcCallbackEx;
 import com.netease.lava.nertc.sdk.stats.NERtcAudioVolumeInfo;
 
+import lombok.AllArgsConstructor;
+import team.one.lwe.ui.activity.LWEUI;
+
+@AllArgsConstructor
 public class LWENERtcCallback implements NERtcCallbackEx {
+
+    private LWEUI activity;
+
+    /**
+     * user joins room
+     * @param result 0 if success
+     * @param channelId room id
+     * @param elapsed not really useful
+     */
     @Override
-    public void onJoinChannel(int i, long l, long l1) {
+    public void onJoinChannel(int result, long channelId, long elapsed) {
 
     }
 

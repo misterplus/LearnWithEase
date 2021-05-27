@@ -53,7 +53,7 @@ public class LWEApplication extends Application {
     }
 
     private void initializeSDK() throws Exception {
-        NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(),null);
+        //NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(),null);
     }
 
     private LoginInfo loginInfo(Context context) {

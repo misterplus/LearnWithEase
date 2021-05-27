@@ -221,4 +221,10 @@
         android:layout_height="10dp"
         android:layout_below="@+id/layoutUsers" />
 
+    <FrameLayout
+        android:id="@+id/chatroom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider3" />
+
 </RelativeLayout>

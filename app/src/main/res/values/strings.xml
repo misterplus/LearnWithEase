@@ -14,6 +14,7 @@
     <string name="lwe_hint_register_username">在此处填写用户名</string>
     <string name="lwe_hint_friend_add">请输入你要添加的好友名称</string>
     <string name="lwe_hint_reason">请填写验证信息</string>
+    <string name="lwe_hint_room_name">请输入房间名称</string>
 
     <!--    按钮文字-->
     <string name="lwe_button_phone_login">手机号登录</string>
@@ -28,6 +29,7 @@
     <string name="lwe_button_accept">同意</string>
     <string name="lwe_button_decline">拒绝</string>
     <string name="lwe_button_log_out">退出登录</string>
+    <string name="lwe_button_create">创建</string>
 
     <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
@@ -78,6 +80,7 @@
     <string name="lwe_title_edit_preference">修改偏好</string>
     <string name="lwe_title_friend">好友</string>
     <string name="lwe_title_friend_add">添加好友</string>
+    <string name="lwe_title_room_create">创建房间</string>
 
     <!--    文本-->
     <string name="lwe_text_gender">性别</string>
@@ -131,6 +134,9 @@
     <string name="lwe_text_logout">退出登录</string>
     <string name="lwe_text_user_setting">用户设置</string>
     <string name="lwe_text_system_setting">系统设置</string>
+    <string name="lwe_text_room_name">房间名称</string>
+    <string name="lwe_text_room_max_users">房间人数</string>
+    <string name="lwe_text_room_friends_only">仅允许好友加入</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
@@ -151,6 +157,12 @@
     <string name="lwe_placeholder_username">ID</string>
     <string name="lwe_placeholder_signature">签名</string>
     <string name="lwe_placeholder_age">年龄</string>
+
+    <string-array name="lwe_spinner_max_users">
+        <item>2人</item>
+        <item>3人</item>
+        <item>4人</item>
+    </string-array>
 
     <string-array name="lwe_spinner_time_study">
         <item>不限时</item>
