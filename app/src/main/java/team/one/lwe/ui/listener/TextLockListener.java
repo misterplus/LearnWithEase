@@ -21,7 +21,7 @@ public class TextLockListener implements View.OnClickListener {
         editText.requestFocus();
         editText.findFocus();
         editText.setTextColor(Color.GRAY);
-        InputMethodManager imm = (InputMethodManager)editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
     }
 }

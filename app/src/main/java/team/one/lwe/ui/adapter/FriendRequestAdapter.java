@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,14 +48,11 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.imageAvatar.loadBuddyAvatar(account);
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
-        holder.FriendRequestLayout.setOnClickListener(view -> {
+        holder.view.setOnClickListener(view -> {
             if (holder.buttonAccept.getVisibility() == View.VISIBLE) {
                 Intent intent = new Intent(view.getContext(), FriendRequestActivity.class);
-                intent.putExtra("account", account);
                 intent.putExtra("requestMsg", requestMsg);
-                intent.putExtra("reason", request.getMsg());
-                intent.putExtra("position", String.valueOf(position));
-                ((Activity) view.getContext()).startActivityForResult(intent, 1);
+                ((Activity) view.getContext()).startActivityForResult(intent, position + 1);
             }
         });
         holder.buttonAccept.setOnClickListener(v -> {
@@ -94,7 +90,6 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         private final HeadImageView imageAvatar;
         private final TextView textName, textReason, textAccept, textDecline;
         private final Button buttonAccept, buttonDecline;
-        private final RelativeLayout FriendRequestLayout;
 
 
         public ViewHolder(View view) {
@@ -107,7 +102,6 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             textDecline = view.findViewById(R.id.textDecline);
             buttonAccept = view.findViewById(R.id.buttonAccept);
             buttonDecline = view.findViewById(R.id.buttonDecline);
-            FriendRequestLayout = view.findViewById(R.id.FriendRequestLayout);
         }
     }
 }

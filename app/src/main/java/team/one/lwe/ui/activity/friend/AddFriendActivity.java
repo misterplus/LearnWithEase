@@ -160,26 +160,23 @@ public class AddFriendActivity extends LWEUI {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 1) {
+        if (requestCode == 0 && resultCode == 1) {
             finish();
-        } else if (requestCode == 1 && resultCode == 2) {
+        } else if (requestCode > 0) {
             int first = mRecyclerViewLayoutManager.findFirstVisibleItemPosition();
-            int position = Integer.parseInt(data.getStringExtra("position"));
-            String request = data.getStringExtra("request");
+            int position = requestCode - 1;
             View view = listRequest.getChildAt(position - first);
             if (listRequest.getChildViewHolder(view) instanceof FriendRequestAdapter.ViewHolder) {
-                //修改数据
                 Button buttonAccept = view.findViewById(R.id.buttonAccept);
                 Button buttonDecline = view.findViewById(R.id.buttonDecline);
                 TextView textAccept = view.findViewById(R.id.textAccept);
                 TextView textDecline = view.findViewById(R.id.textDecline);
                 buttonAccept.setVisibility(View.GONE);
                 buttonDecline.setVisibility(View.GONE);
-                if (request.equals("accept")) {
+                if (resultCode == 0)
                     textAccept.setVisibility(View.VISIBLE);
-                } else if (request.equals("decline")) {
+                else
                     textDecline.setVisibility(View.VISIBLE);
-                }
             }
         }
     }

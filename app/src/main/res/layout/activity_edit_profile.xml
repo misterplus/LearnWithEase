@@ -318,8 +318,6 @@
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
-                android:focusableInTouchMode="true"
-                android:focusable="true"
                 android:scrollHorizontally="true"
                 android:layout_toStartOf="@id/buttonCity"
                 android:textColor="@color/black"
