@@ -60,7 +60,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                 @Override
                 public void onSuccess(Void param) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-                    holder.textAccept.setVisibility(View.VISIBLE);
+                    holder.textReason.setText(R.string.lwe_text_friend_accept);
                     holder.buttonAccept.setVisibility(View.GONE);
                     holder.buttonDecline.setVisibility(View.GONE);
                 }
@@ -71,7 +71,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                 @Override
                 public void onSuccess(Void param) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-                    holder.textDecline.setVisibility(View.VISIBLE);
+                    holder.textReason.setText(R.string.lwe_text_friend_decline);
                     holder.buttonAccept.setVisibility(View.GONE);
                     holder.buttonDecline.setVisibility(View.GONE);
                 }
@@ -88,7 +88,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
 
         private final View view;
         private final HeadImageView imageAvatar;
-        private final TextView textName, textReason, textAccept, textDecline;
+        private final TextView textName, textReason, textResult;
         private final Button buttonAccept, buttonDecline;
 
 
@@ -98,8 +98,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             imageAvatar = view.findViewById(R.id.imageAvatar);
             textName = view.findViewById(R.id.textName);
             textReason = view.findViewById(R.id.textReason);
-            textAccept = view.findViewById(R.id.textAccept);
-            textDecline = view.findViewById(R.id.textDecline);
+            textResult = view.findViewById(R.id.textResult);
             buttonAccept = view.findViewById(R.id.buttonAccept);
             buttonDecline = view.findViewById(R.id.buttonDecline);
         }

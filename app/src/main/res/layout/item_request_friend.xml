@@ -82,30 +82,16 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textAccept"
+            android:id="@+id/textResult"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/empty"
-            android:text="@string/lwe_text_friend_accept"
+            android:text="@string/empty"
             android:textColor="@color/text_grey"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/textDecline"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/empty"
-            android:text="@string/lwe_text_friend_decline"
-            android:textColor="@color/text_grey"
-            android:textSize="20sp"
-            android:visibility="gone" />
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <View
