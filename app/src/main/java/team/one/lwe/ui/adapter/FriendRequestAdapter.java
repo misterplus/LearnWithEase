@@ -1,5 +1,7 @@
 package team.one.lwe.ui.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,8 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import team.one.lwe.R;
-import team.one.lwe.ui.callback.VoidSuccessCallback;
+import team.one.lwe.ui.activity.friend.FriendRequestActivity;
+import team.one.lwe.ui.callback.RegularCallback;
 
 @AllArgsConstructor
 public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdapter.ViewHolder> {
@@ -45,19 +48,34 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         holder.imageAvatar.loadBuddyAvatar(account);
         holder.textName.setText(String.format("%s(%s)", info.getName(), account));
         holder.textReason.setText(request.getMsg());
+        holder.view.setOnClickListener(view -> {
+            if (holder.buttonAccept.getVisibility() == View.VISIBLE) {
+                Intent intent = new Intent(view.getContext(), FriendRequestActivity.class);
+                intent.putExtra("requestMsg", requestMsg);
+                ((Activity) view.getContext()).startActivityForResult(intent, position);
+            }
+        });
         holder.buttonAccept.setOnClickListener(v -> {
-            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new VoidSuccessCallback(holder.view.getContext()));
-            NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-            holder.textAccept.setVisibility(View.VISIBLE);
-            holder.buttonAccept.setVisibility(View.GONE);
-            holder.buttonDecline.setVisibility(View.GONE);
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), true).setCallback(new RegularCallback<Void>(holder.view.getContext()) {
+                @Override
+                public void onSuccess(Void param) {
+                    NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+                    holder.textReason.setText(R.string.lwe_text_friend_accept);
+                    holder.buttonAccept.setVisibility(View.GONE);
+                    holder.buttonDecline.setVisibility(View.GONE);
+                }
+            });
         });
         holder.buttonDecline.setOnClickListener(v -> {
-            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new VoidSuccessCallback(holder.view.getContext()));
-            NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-            holder.textDecline.setVisibility(View.VISIBLE);
-            holder.buttonAccept.setVisibility(View.GONE);
-            holder.buttonDecline.setVisibility(View.GONE);
+            NIMClient.getService(FriendService.class).ackAddFriendRequest(request.getAccount(), false).setCallback(new RegularCallback<Void>(holder.view.getContext()) {
+                @Override
+                public void onSuccess(Void param) {
+                    NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
+                    holder.textReason.setText(R.string.lwe_text_friend_decline);
+                    holder.buttonAccept.setVisibility(View.GONE);
+                    holder.buttonDecline.setVisibility(View.GONE);
+                }
+            });
         });
     }
 
@@ -66,11 +84,11 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         return requests.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final View view;
         private final HeadImageView imageAvatar;
-        private final TextView textName, textReason, textAccept, textDecline;
+        private final TextView textName, textReason, textResult;
         private final Button buttonAccept, buttonDecline;
 
 
@@ -80,8 +98,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
             imageAvatar = view.findViewById(R.id.imageAvatar);
             textName = view.findViewById(R.id.textName);
             textReason = view.findViewById(R.id.textReason);
-            textAccept = view.findViewById(R.id.textAccept);
-            textDecline = view.findViewById(R.id.textDecline);
+            textResult = view.findViewById(R.id.textResult);
             buttonAccept = view.findViewById(R.id.buttonAccept);
             buttonDecline = view.findViewById(R.id.buttonDecline);
         }

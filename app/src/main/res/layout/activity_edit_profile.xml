@@ -311,10 +311,15 @@
 
             <TextView
                 android:id="@+id/textCity"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:gravity="right"
                 android:layout_marginEnd="5dp"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
                 android:layout_toStartOf="@id/buttonCity"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -424,7 +429,6 @@
                 android:src="@drawable/lwe_icon_school" />
 
             <TextView
-                android:id="@+id/textSchoolPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -436,12 +440,17 @@
 
             <TextView
                 android:id="@+id/textSchool"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="40dp"
                 android:text="@string/lwe_placeholder_school"
+                android:gravity="right"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

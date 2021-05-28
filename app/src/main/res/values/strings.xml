@@ -83,6 +83,7 @@
     <string name="lwe_title_edit_preference">修改偏好</string>
     <string name="lwe_title_friend">好友</string>
     <string name="lwe_title_friend_add">添加好友</string>
+    <string name="lwe_title_friend_request">好友申请</string>
     <string name="lwe_title_room_create">创建房间</string>
 
     <!--    文本-->

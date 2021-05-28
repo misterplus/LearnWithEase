@@ -43,6 +43,8 @@ import static com.netease.nimlib.sdk.friend.model.AddFriendNotify.Event.RECV_ADD
 public class AddFriendActivity extends LWEUI {
 
     private String searchedAccount;
+    private RecyclerView listRequest;
+    private LinearLayoutManager mRecyclerViewLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class AddFriendActivity extends LWEUI {
         TextView textAdd = findViewById(R.id.textAdd);
         LinearLayout searchResult = findViewById(R.id.searchResult);
         LinearLayout noResult = findViewById(R.id.noResult);
+        listRequest = findViewById(R.id.listRequest);
+        mRecyclerViewLayoutManager = new LinearLayoutManager(getBaseContext());
         final boolean[] isBeingAdded = {false};
         List<SystemMessage> listBeingAdded = new ArrayList<>();
 
@@ -122,7 +126,7 @@ public class AddFriendActivity extends LWEUI {
             } else {
                 Intent intent = new Intent(this, AddVerifyActivity.class);
                 intent.putExtra("account", searchedAccount);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, -1);
             }
         });
         NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new FetchFriendRequestCallback(this) {
@@ -144,9 +148,8 @@ public class AddFriendActivity extends LWEUI {
                 NIMClient.getService(UserService.class).fetchUserInfo(accounts).setCallback(new MissingInfoCallback(getBaseContext()) {
                     @Override
                     public void onSuccess(List<NimUserInfo> infoList) {
-                        RecyclerView listRequest = findViewById(R.id.listRequest);
                         FriendRequestAdapter adapter = new FriendRequestAdapter(requests);
-                        listRequest.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                        listRequest.setLayoutManager(mRecyclerViewLayoutManager);
                         listRequest.setAdapter(adapter);
                     }
                 });
@@ -157,8 +160,22 @@ public class AddFriendActivity extends LWEUI {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 1) {
+        if (requestCode == -1 && resultCode == 1) {
             finish();
+        } else if (requestCode >= 0 && resultCode > 0) {
+            int first = mRecyclerViewLayoutManager.findFirstVisibleItemPosition();
+            View view = listRequest.getChildAt(requestCode - first);
+            if (listRequest.getChildViewHolder(view) instanceof FriendRequestAdapter.ViewHolder) {
+                Button buttonAccept = view.findViewById(R.id.buttonAccept);
+                Button buttonDecline = view.findViewById(R.id.buttonDecline);
+                TextView textResult = view.findViewById(R.id.textResult);
+                buttonAccept.setVisibility(View.GONE);
+                buttonDecline.setVisibility(View.GONE);
+                if (resultCode == 1)
+                    textResult.setText(R.string.lwe_text_friend_accept);
+                else
+                    textResult.setText(R.string.lwe_text_friend_decline);
+            }
         }
     }
 }

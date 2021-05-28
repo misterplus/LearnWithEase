@@ -54,10 +54,8 @@ public class RegisterActivity extends LWEUI {
                 .build();
         cPicker.setConfig(cityConfig);
         cPicker.init(this);
-        TextView textCityPicker = findViewById(R.id.textCityPicker);
         TextView textCity = findViewById(R.id.textCity);
         TextView textSchool = findViewById(R.id.textSchool);
-        TextView textSchoolPicker = findViewById(R.id.textSchoolPicker);
         EditText editTextUsername = findViewById(R.id.editTextUsername);
         EditText editTextPassword = findViewById(R.id.editTextPassword);
         EditText editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
@@ -96,17 +94,15 @@ public class RegisterActivity extends LWEUI {
                 String school = (String) spinnerSchool.getSelectedItem();
                 textSchool.setText(school);
                 if (school.length() >= 16) {
-                    textSchoolPicker.setVisibility(View.INVISIBLE);
                     textSchool.setTextScaleX((float) (16.0 / school.length()));
                 } else {
-                    textSchoolPicker.setVisibility(View.VISIBLE);
                     textSchool.setTextScaleX((float) 1.0);
                 }
+                textSchool.setSelected(true);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                textSchoolPicker.setVisibility(View.VISIBLE);
                 textSchool.setText(getString(R.string.lwe_placeholder_school));
             }
         });
@@ -208,13 +204,12 @@ public class RegisterActivity extends LWEUI {
                     text = String.format(getString(R.string.lwe_placeholder_cityformat3), province.getName(), city.getName(), district.getName());
                 //scales horizontally
                 if (text.length() >= 16) {
-                    textCityPicker.setVisibility(View.INVISIBLE);
                     textCity.setTextScaleX((float) (16.0 / text.length()));
                 } else {
-                    textCityPicker.setVisibility(View.VISIBLE);
                     textCity.setTextScaleX((float) 1.0);
                 }
                 textCity.setText(text);
+                textCity.setSelected(true);
             }
         });
         buttonCity.setOnClickListener(view -> cPicker.showCityPicker());

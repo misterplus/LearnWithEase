@@ -36,10 +36,9 @@ public class SettingActivity extends LWEUI {
         buttonLogout.setOnClickListener(view -> {
             NIMClient.getService(AuthService.class).logout();
             LWECache.clear();
-            Preferences.cleanCache(this);
-            Intent intent = new Intent();
-            intent.setClass(SettingActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Preferences.cleanCache();
+            Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
     }
