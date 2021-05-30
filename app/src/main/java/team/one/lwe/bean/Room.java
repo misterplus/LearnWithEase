@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Room {
     private RoomInfo ext;
-    private int roomid;
-    private boolean valid;
-    private String announcement, name, broadcasturl, creator;
+    private String roomId;
+    private String name;
 }

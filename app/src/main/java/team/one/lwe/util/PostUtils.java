@@ -14,9 +14,8 @@ public class PostUtils {
     // 10.0.2.2 is for localhost in emulator
     // real server deployed
 
-    private static HttpRequest withAuth(HttpRequest request) {
-        return request
-                .header("accid", Preferences.getUserAccount())
+    private static void withAuth(HttpRequest request) {
+        request.header("accid", Preferences.getUserAccount())
                 .header("token", Preferences.getUserToken());
     }
 
@@ -24,8 +23,8 @@ public class PostUtils {
         return doPostForm(withAuth, "application/x-www-form-urlencoded;charset=utf-8", url, timeout, name, value, parameters);
     }
 
-    public static ASResponse doPostJson(@NonNull String url, int timeout, @NonNull String body) {
-        return doPostBody("application/json;charset=utf-8", url, timeout, body);
+    public static ASResponse doPostJson(boolean withAuth, @NonNull String url, int timeout, @NonNull String body) {
+        return doPostBody(withAuth, "application/json;charset=utf-8", url, timeout, body);
     }
 
     private static ASResponse doPostForm(boolean withAuth, String content, @NonNull String url, int timeout, @NonNull String name, @NonNull Object value, @NonNull Object... parameters) {
@@ -34,17 +33,19 @@ public class PostUtils {
                 .form(name, value, parameters)
                 .timeout(timeout);
         if (withAuth)
-            req = withAuth(req);
+            withAuth(req);
         HttpResponse resp = req.execute();
         return new ASResponse(resp.body());
     }
 
-    private static ASResponse doPostBody(String content, @NonNull String url, int timeout, @NonNull String body) {
-        HttpResponse resp = HttpRequest.post(API_DOMAIN_NAME + url)
+    private static ASResponse doPostBody(boolean withAuth, String content, @NonNull String url, int timeout, @NonNull String body) {
+        HttpRequest req = HttpRequest.post(API_DOMAIN_NAME + url)
                 .header("Content-Type", content)
                 .body(body)
-                .timeout(timeout)
-                .execute();
+                .timeout(timeout);
+        if (withAuth)
+            withAuth(req);
+        HttpResponse resp = req.execute();
         return new ASResponse(resp.body());
     }
 }

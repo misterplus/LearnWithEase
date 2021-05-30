@@ -34,7 +34,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp">
 
-        <VideoView
+        <com.netease.lava.nertc.sdk.video.NERtcVideoView
             android:id="@+id/videoSelf"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -93,7 +93,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1">
 
-            <VideoView
+            <com.netease.lava.nertc.sdk.video.NERtcVideoView
                 android:id="@+id/videoUser1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -136,7 +136,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1">
 
-            <VideoView
+            <com.netease.lava.nertc.sdk.video.NERtcVideoView
                 android:id="@+id/videoUser2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -178,7 +178,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <VideoView
+            <com.netease.lava.nertc.sdk.video.NERtcVideoView
                 android:id="@+id/videoUser3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

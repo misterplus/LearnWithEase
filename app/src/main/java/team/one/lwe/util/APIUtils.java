@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import cn.hutool.core.io.IORuntimeException;
 import lombok.NonNull;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.Room;
 import team.one.lwe.bean.User;
 
 public class APIUtils {
@@ -17,7 +18,7 @@ public class APIUtils {
     }
 
     public static ASResponse register(@NonNull User user) throws IORuntimeException {
-        return PostUtils.doPostJson(
+        return PostUtils.doPostJson(false,
                 "/user/register", 5000,
                 new Gson().toJson(user));
     }
@@ -30,9 +31,15 @@ public class APIUtils {
                 "newPassword", newPassword);
     }
 
-    public static ASResponse getRoomToken(@NonNull String channelName) {
+    public static ASResponse getRoomToken(@NonNull String roomId) throws IORuntimeException {
         return PostUtils.doPostEncoded(true,
                 "/room/getToken", 5000,
-                "channelName", channelName);
+                "roomId", roomId);
+    }
+
+    public static ASResponse createRoom(@NonNull Room room) throws IORuntimeException {
+        return PostUtils.doPostJson(true,
+                "/room/create", 5000,
+                new Gson().toJson(room));
     }
 }

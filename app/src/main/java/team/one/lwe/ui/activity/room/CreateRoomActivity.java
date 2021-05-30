@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.gson.Gson;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
@@ -34,11 +35,13 @@ import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.Room;
 import team.one.lwe.bean.RoomInfo;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.util.APIUtils;
 import team.one.lwe.util.TextUtils;
 
 public class CreateRoomActivity extends LWEUI {
@@ -131,17 +134,21 @@ public class CreateRoomActivity extends LWEUI {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_room_cover);
                 } else {
                     RoomInfo ext = new RoomInfo(maxUsers, timeStudy, timeRest, contentStudy, friendsOnly, coverUrl);
+                    Room room = new Room();
+                    room.setName(name);
+                    room.setExt(ext);
                     DialogMaker.showProgressDialog(getBaseContext(), getString(R.string.lwe_progress_room_create));
                     new NetworkThread(editTextRoomName) {
                         @Override
                         public ASResponse doRequest() {
-                            //TODO: APIUtils
-                            return null;
+                            return APIUtils.createRoom(room);
                         }
 
                         @Override
                         public void onSuccess(ASResponse asp) {
-                            setResult(0);
+                            setResult(1);
+                            Intent intent = getIntent();
+                            intent.putExtra("asp", new Gson().toJson(asp));
                             finish();
                         }
 
@@ -207,7 +214,6 @@ public class CreateRoomActivity extends LWEUI {
                     NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RegularCallback<String>(this) {
                         @Override
                         public void onSuccess(String url) {
-                            //TODO: set field, update image
                             coverUrl = url;
                             ImageView imageCover = findViewById(R.id.imageCover);
                             imageCover.setImageURI(uriResult);
