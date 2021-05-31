@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Room {
-    private RoomInfo ext;
-    private String roomId;
-    private String name;
+public class EnterRoomData {
+    private String roomid, token;
+    private long uid;
 }

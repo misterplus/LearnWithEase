@@ -66,7 +66,7 @@ public class AddFriendActivity extends LWEUI {
 
         editTextSearchUsername.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
-                DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_search));
+                DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_search), false);
                 NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(editTextSearchUsername.getText().toString())).setCallback(new MissingInfoCallback(this) {
                     @Override
                     public void onSuccess(List<NimUserInfo> list) {

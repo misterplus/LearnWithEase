@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import cn.hutool.core.io.IORuntimeException;
 import lombok.NonNull;
 import team.one.lwe.bean.ASResponse;
-import team.one.lwe.bean.Room;
+import team.one.lwe.bean.RoomBasic;
 import team.one.lwe.bean.User;
 
 public class APIUtils {
@@ -37,7 +37,7 @@ public class APIUtils {
                 "roomId", roomId);
     }
 
-    public static ASResponse createRoom(@NonNull Room room) throws IORuntimeException {
+    public static ASResponse createRoom(@NonNull RoomBasic room) throws IORuntimeException {
         return PostUtils.doPostJson(true,
                 "/room/create", 5000,
                 new Gson().toJson(room));

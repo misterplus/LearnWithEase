@@ -1,6 +1,6 @@
 package team.one.lwe.bean;
 
-import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
+import com.google.gson.Gson;
 
 import cn.hutool.json.JSONObject;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
 public class ASResponse {
     private int code;
     private JSONObject info;
-    private ChatRoomInfo chatroom;
+    private EnterRoomData chatroom;
     //token field is for video room token
     private String desc, token;
 
@@ -18,8 +18,10 @@ public class ASResponse {
         this.code = json.getInt("code");
         this.info = json.getJSONObject("info");
         this.desc = json.getStr("desc");
-        this.chatroom = json.getBean("chatroom", ChatRoomInfo.class);
         this.token = json.getStr("token");
+        if (json.getStr("chatroom") != null) {
+            this.chatroom = new Gson().fromJson(json.getStr("chatroom"), EnterRoomData.class);
+        }
     }
 
     public boolean isSuccess() {

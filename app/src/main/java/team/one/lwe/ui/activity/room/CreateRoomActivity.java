@@ -25,6 +25,7 @@ import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nim.uikit.common.util.C;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.nos.NosService;
 import com.yalantis.ucrop.UCrop;
 
@@ -33,10 +34,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.json.JSONObject;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
-import team.one.lwe.bean.Room;
+import team.one.lwe.bean.EnterRoomData;
+import team.one.lwe.bean.RoomBasic;
 import team.one.lwe.bean.RoomInfo;
+import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;
@@ -134,10 +138,10 @@ public class CreateRoomActivity extends LWEUI {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_room_cover);
                 } else {
                     RoomInfo ext = new RoomInfo(maxUsers, timeStudy, timeRest, contentStudy, friendsOnly, coverUrl);
-                    Room room = new Room();
+                    RoomBasic room = new RoomBasic();
                     room.setName(name);
                     room.setExt(ext);
-                    DialogMaker.showProgressDialog(getBaseContext(), getString(R.string.lwe_progress_room_create));
+                    DialogMaker.showProgressDialog(CreateRoomActivity.this, getString(R.string.lwe_progress_room_create), false);
                     new NetworkThread(editTextRoomName) {
                         @Override
                         public ASResponse doRequest() {
@@ -146,9 +150,10 @@ public class CreateRoomActivity extends LWEUI {
 
                         @Override
                         public void onSuccess(ASResponse asp) {
-                            setResult(1);
-                            Intent intent = getIntent();
-                            intent.putExtra("asp", new Gson().toJson(asp));
+                            EnterRoomData enterRoomData = asp.getChatroom();
+                            Intent intent = new Intent();
+                            intent.putExtra("enterRoomData", new Gson().toJson(enterRoomData));
+                            setResult(1, intent);
                             finish();
                         }
 
@@ -209,6 +214,8 @@ public class CreateRoomActivity extends LWEUI {
                     break;
                 }
                 case UCrop.REQUEST_CROP: {
+                    //TODO: wait till button click to upload?
+                    // to avoid useless uploads
                     Uri uriResult = UCrop.getOutput(data);
                     File result = new File(uriResult.getPath());
                     NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RegularCallback<String>(this) {

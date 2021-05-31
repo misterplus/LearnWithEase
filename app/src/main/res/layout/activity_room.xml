@@ -221,10 +221,11 @@
         android:layout_height="10dp"
         android:layout_below="@+id/layoutUsers" />
 
-    <FrameLayout
-        android:id="@+id/chatroom"
+    <fragment
+        android:name="com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment"
+        android:id="@+id/chat_room_message_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/divider3" />
+        android:layout_below="@id/divider3"/>
 
 </RelativeLayout>

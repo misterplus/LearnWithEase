@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
                 }
                 case 1: {
                     String roomId = testInput.getText().toString();
-                    //TODO: fetch room info
+                    //TODO: rework this
                     NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(getContext()) {
                         @Override
                         public void onSuccess(ChatRoomInfo room) {
@@ -63,9 +63,10 @@ public class HomeFragment extends Fragment {
 
                                 @Override
                                 public void onSuccess(ASResponse asp) {
-                                    asp.setChatroom(room);
                                     Intent intent = new Intent(getContext(), RoomActivity.class);
-                                    intent.putExtra("asp", new Gson().toJson(asp));
+                                    intent.putExtra("chatroom", new Gson().toJson(room));
+                                    intent.putExtra("token", asp.getToken());
+                                    intent.putExtra("uid", asp.getInfo().getLong("uid"));
                                     startActivity(intent);
                                 }
                             }.start();
@@ -82,9 +83,8 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == 1) { //create room and success
-            //TODO: join room with response data
             Intent intent = new Intent(getContext(), RoomActivity.class);
-            intent.putExtra("asp", data.getStringExtra("asp"));
+            intent.putExtra("enterRoomData", data.getStringExtra("enterRoomData"));
             startActivity(intent);
         }
     }

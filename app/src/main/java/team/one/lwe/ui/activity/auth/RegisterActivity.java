@@ -234,7 +234,7 @@ public class RegisterActivity extends LWEUI {
             } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
                 ToastHelper.showToast(this, R.string.lwe_error_city);
             } else {
-                DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_register));
+                DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_register), false);
                 try {
                     switch (((RadioButton) findViewById(groupGender.getCheckedRadioButtonId())).getText().toString()) {
                         case "女": {
