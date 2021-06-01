@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.netease.nim.uikit.common.activity.UI;
 
@@ -44,7 +45,7 @@ public abstract class LWEUI extends UI {
      * 判定是否需要隐藏
      */
     private boolean isHideInput(View v, MotionEvent ev) {
-        if ((v instanceof EditText)) {
+        if ((v instanceof TextView)) {
             int[] l = {0, 0};
             v.getLocationInWindow(l);
             int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();

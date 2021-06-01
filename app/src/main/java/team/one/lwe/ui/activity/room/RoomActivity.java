@@ -2,6 +2,7 @@ package team.one.lwe.ui.activity.room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.gson.Gson;
 import com.netease.nim.uikit.api.NimUIKit;
@@ -25,6 +26,8 @@ public class RoomActivity extends LWEUI {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        View decorView = getWindow().getDecorView();
+//        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_room);
         Intent intent = getIntent();
         EnterRoomData enterRoomData = new Gson().fromJson(intent.getStringExtra("enterRoomData"), EnterRoomData.class);

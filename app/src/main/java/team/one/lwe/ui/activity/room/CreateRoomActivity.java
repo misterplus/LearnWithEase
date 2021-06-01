@@ -150,6 +150,7 @@ public class CreateRoomActivity extends LWEUI {
 
                         @Override
                         public void onSuccess(ASResponse asp) {
+                            DialogMaker.dismissProgressDialog();
                             EnterRoomData enterRoomData = asp.getChatroom();
                             Intent intent = new Intent();
                             intent.putExtra("enterRoomData", new Gson().toJson(enterRoomData));
