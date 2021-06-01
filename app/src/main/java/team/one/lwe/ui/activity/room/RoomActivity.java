@@ -3,6 +3,7 @@ package team.one.lwe.ui.activity.room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -35,8 +36,17 @@ public class RoomActivity extends LWEUI {
         return ev.getY() < inputLoc[1];
     }
 
+    @Override
     protected void hideSoftInput(IBinder token) {
         messageFragment.shouldCollapseInputPanel();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

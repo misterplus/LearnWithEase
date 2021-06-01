@@ -7,7 +7,6 @@ import android.widget.EditText;
 
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 
 import org.jetbrains.annotations.NotNull;
 
