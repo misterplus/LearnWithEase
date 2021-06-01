@@ -24,6 +24,7 @@ import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.room.CreateRoomActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
@@ -51,27 +52,20 @@ public class HomeFragment extends Fragment {
                 case 1: {
                     String roomId = testInput.getText().toString();
                     //TODO: rework this
-                    NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(getContext()) {
+                    new NetworkThread(view) {
                         @Override
-                        public void onSuccess(ChatRoomInfo room) {
-                            String roomId = room.getRoomId();
-                            new NetworkThread(view) {
-                                @Override
-                                public ASResponse doRequest() {
-                                    return APIUtils.getRoomToken(roomId);
-                                }
-
-                                @Override
-                                public void onSuccess(ASResponse asp) {
-                                    Intent intent = new Intent(getContext(), RoomActivity.class);
-                                    intent.putExtra("chatroom", new Gson().toJson(room));
-                                    intent.putExtra("token", asp.getToken());
-                                    intent.putExtra("uid", asp.getInfo().getLong("uid"));
-                                    startActivity(intent);
-                                }
-                            }.start();
+                        public ASResponse doRequest() {
+                            return APIUtils.getRoomToken(roomId);
                         }
-                    });
+
+                        @Override
+                        public void onSuccess(ASResponse asp) {
+                            Intent intent = new Intent(getContext(), RoomActivity.class);
+                            EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
+                            intent.putExtra("enterRoomData", new Gson().toJson(enterRoomData));
+                            startActivity(intent);
+                        }
+                    }.start();
                 }
             }
         });

@@ -28,6 +28,8 @@ public class RoomActivity extends LWEUI {
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
 
+    //TODO: left room confirmation
+
     @Override
     protected boolean isHideInput(View v, MotionEvent ev) {
         RelativeLayout tml = findViewById(R.id.textMessageLayout);
@@ -52,8 +54,6 @@ public class RoomActivity extends LWEUI {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        View decorView = getWindow().getDecorView();
-//        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         setContentView(R.layout.activity_room);
         Intent intent = getIntent();
         EnterRoomData enterRoomData = new Gson().fromJson(intent.getStringExtra("enterRoomData"), EnterRoomData.class);
@@ -72,6 +72,12 @@ public class RoomActivity extends LWEUI {
                 LWEToolBarOptions options = new LWEToolBarOptions(String.format("%s(%s)", info.getName(), roomId), true);
                 setToolBar(R.id.toolbar, options);
                 initMessageFragment(roomId);
+            }
+
+            @Override
+            public void onFailed(int code) {
+                //TODO: failed to enter room
+                super.onFailed(code);
             }
         });
     }

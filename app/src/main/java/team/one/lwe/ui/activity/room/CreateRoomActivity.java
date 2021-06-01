@@ -47,8 +47,7 @@ import team.one.lwe.util.TextUtils;
 
 public class CreateRoomActivity extends LWEUI {
 
-    private Uri uri;
-    private String coverUrl;
+    private Uri uri, uriResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,43 +130,51 @@ public class CreateRoomActivity extends LWEUI {
                 boolean friendsOnly = switchFriendsOnly.isChecked();
                 if (name.length() > 10 || name.length() < 1) {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_room_name);
-                } else if (TextUtils.isEmpty(coverUrl)) {
+                } else if (uriResult == null) {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_room_cover);
                 } else {
-                    RoomInfo ext = new RoomInfo(maxUsers, timeStudy, timeRest, contentStudy, friendsOnly, coverUrl);
-                    RoomBasic room = new RoomBasic();
-                    room.setName(name);
-                    room.setExt(ext);
+                    File result = new File(uriResult.getPath());
                     DialogMaker.showProgressDialog(CreateRoomActivity.this, getString(R.string.lwe_progress_room_create), false);
-                    new NetworkThread(editTextRoomName) {
+                    NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RegularCallback<String>(CreateRoomActivity.this) {
                         @Override
-                        public ASResponse doRequest() {
-                            return APIUtils.createRoom(room);
+                        public void onSuccess(String url) {
+                            RoomInfo ext = new RoomInfo(maxUsers, timeStudy, timeRest, contentStudy, friendsOnly, url);
+                            RoomBasic room = new RoomBasic();
+                            room.setName(name);
+                            room.setExt(ext);
+                            new NetworkThread(editTextRoomName) {
+                                @Override
+                                public ASResponse doRequest() {
+                                    return APIUtils.createRoom(room);
+                                }
+
+                                @Override
+                                public void onSuccess(ASResponse asp) {
+                                    DialogMaker.dismissProgressDialog();
+                                    EnterRoomData enterRoomData = asp.getChatroom();
+                                    Intent intent = new Intent();
+                                    intent.putExtra("enterRoomData", new Gson().toJson(enterRoomData));
+                                    setResult(1, intent);
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailed(int code, String desc) {
+                                    DialogMaker.dismissProgressDialog();
+                                    //TODO: other on failed checks
+                                    super.onFailed(code, desc);
+                                }
+
+                                @Override
+                                public void onException(Exception e) {
+                                    DialogMaker.dismissProgressDialog();
+                                    super.onException(e);
+                                }
+                            }.start();
                         }
 
-                        @Override
-                        public void onSuccess(ASResponse asp) {
-                            DialogMaker.dismissProgressDialog();
-                            EnterRoomData enterRoomData = asp.getChatroom();
-                            Intent intent = new Intent();
-                            intent.putExtra("enterRoomData", new Gson().toJson(enterRoomData));
-                            setResult(1, intent);
-                            finish();
-                        }
 
-                        @Override
-                        public void onFailed(int code, String desc) {
-                            DialogMaker.dismissProgressDialog();
-                            //TODO: other on failed checks
-                            super.onFailed(code, desc);
-                        }
-
-                        @Override
-                        public void onException(Exception e) {
-                            DialogMaker.dismissProgressDialog();
-                            super.onException(e);
-                        }
-                    }.start();
+                    });
                 }
             }
         });
@@ -212,18 +219,10 @@ public class CreateRoomActivity extends LWEUI {
                     break;
                 }
                 case UCrop.REQUEST_CROP: {
-                    //TODO: wait till button click to upload?
-                    // to avoid useless uploads
-                    Uri uriResult = UCrop.getOutput(data);
-                    File result = new File(uriResult.getPath());
-                    NIMClient.getService(NosService.class).upload(result, C.MimeType.MIME_PNG).setCallback(new RegularCallback<String>(this) {
-                        @Override
-                        public void onSuccess(String url) {
-                            coverUrl = url;
-                            ImageView imageCover = findViewById(R.id.imageCover);
-                            imageCover.setImageURI(uriResult);
-                        }
-                    });
+                    uriResult = UCrop.getOutput(data);
+                    ImageView imageCover = findViewById(R.id.imageCover);
+                    imageCover.setImageURI(uriResult);
+                    break;
                 }
                 case UCrop.RESULT_ERROR: {
                     try {
