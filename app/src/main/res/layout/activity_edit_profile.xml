@@ -311,7 +311,7 @@
 
             <TextView
                 android:id="@+id/textCity"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="right"
@@ -440,7 +440,7 @@
 
             <TextView
                 android:id="@+id/textSchool"
-                android:layout_width="180dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
