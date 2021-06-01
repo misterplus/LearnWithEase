@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
+import com.netease.nim.uikit.impl.provider.DefaultUserInfoProvider;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.friend.constant.VerifyType;
@@ -67,34 +68,32 @@ public class AddFriendActivity extends LWEUI {
         editTextSearchUsername.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 DialogMaker.showProgressDialog(this, getString(R.string.lwe_progress_search), false);
-                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(editTextSearchUsername.getText().toString())).setCallback(new MissingInfoCallback(this) {
-                    @Override
-                    public void onSuccess(List<NimUserInfo> list) {
-                        if (!list.isEmpty()) {
-                            NimUserInfo info = list.get(0);
-                            searchedAccount = info.getAccount();
-                            HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
-                            TextView textName = findViewById(R.id.textName);
-                            TextView textSignature = findViewById(R.id.textSignature);
-                            imageAvatar.loadBuddyAvatar(searchedAccount);
-                            textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
-                            textSignature.setText(info.getSignature());
-                            boolean isMyFriend = NIMClient.getService(FriendService.class).isMyFriend(info.getAccount()) || info.getAccount().equals(NimUIKit.getAccount());
-                            if (isMyFriend) {
-                                textAdd.setVisibility(View.VISIBLE);
-                                buttonAdd.setVisibility(View.GONE);
-                            } else {
-                                textAdd.setVisibility(View.GONE);
-                                buttonAdd.setVisibility(View.VISIBLE);
-                            }
-                            searchResult.setVisibility(View.VISIBLE);
-                            noResult.setVisibility(View.GONE);
-                        } else {
-                            searchResult.setVisibility(View.GONE);
-                            noResult.setVisibility(View.VISIBLE);
-                        }
+                //TODO: does this work????
+                //TODO: this only works the second time, apparently
+                NimUserInfo info = ((DefaultUserInfoProvider) NimUIKit.getUserInfoProvider()).getUserInfo(editTextSearchUsername.getText().toString());
+                if (info != null) {
+                    searchedAccount = info.getAccount();
+                    HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
+                    TextView textName = findViewById(R.id.textName);
+                    TextView textSignature = findViewById(R.id.textSignature);
+                    imageAvatar.loadBuddyAvatar(searchedAccount);
+                    textName.setText(String.format("%s(%s)", info.getName(), info.getAccount()));
+                    textSignature.setText(info.getSignature());
+                    boolean isMyFriend = NIMClient.getService(FriendService.class).isMyFriend(info.getAccount()) || info.getAccount().equals(NimUIKit.getAccount());
+                    if (isMyFriend) {
+                        textAdd.setVisibility(View.VISIBLE);
+                        buttonAdd.setVisibility(View.GONE);
+                    } else {
+                        textAdd.setVisibility(View.GONE);
+                        buttonAdd.setVisibility(View.VISIBLE);
                     }
-                });
+                    searchResult.setVisibility(View.VISIBLE);
+                    noResult.setVisibility(View.GONE);
+                }
+                else {
+                    searchResult.setVisibility(View.GONE);
+                    noResult.setVisibility(View.VISIBLE);
+                }
                 NIMClient.getService(SystemMessageService.class).querySystemMessageUnread().setCallback(new FetchFriendRequestCallback(this) {
                     @Override
                     public void onSuccess(List<SystemMessage> msg) {

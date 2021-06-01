@@ -42,4 +42,10 @@ public class APIUtils {
                 "/room/create", 5000,
                 new Gson().toJson(room));
     }
+
+    public static ASResponse getAccid(long uid) throws IORuntimeException {
+        return PostUtils.doPostEncoded(false,
+                "/user/getAccid",5000,
+                "uid", uid);
+    }
 }

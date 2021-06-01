@@ -1,15 +1,62 @@
 package team.one.lwe.ui.callback;
 
 import com.netease.lava.nertc.sdk.NERtcCallbackEx;
+import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.stats.NERtcAudioVolumeInfo;
+import com.netease.lava.nertc.sdk.video.NERtcVideoView;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 
-import lombok.AllArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+
+import team.one.lwe.R;
+import team.one.lwe.bean.ASResponse;
+import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
+import team.one.lwe.util.APIUtils;
 
-@AllArgsConstructor
 public class LWENERtcCallback implements NERtcCallbackEx {
 
-    private final LWEUI activity;
+    private final LWEUI rootView;
+    private final List<Long> uidOthers = new ArrayList<>();
+    private static final int[] VIDEO_VIEW_IDS = {R.id.videoUser1, R.id.videoUser2, R.id.videoUser3};
+    private static final int[] AVATAR_VIEW_IDS = {R.id.imageAvatarUser1, R.id.imageAvatarUser2, R.id.imageAvatarUser3};
+
+    public LWENERtcCallback(LWEUI rootView) {
+        this.rootView = rootView;
+    }
+
+    private void addUserToRoom(long uid) {
+        //setup video
+        uidOthers.add(uid);
+        int pos = uidOthers.indexOf(uid);
+        NERtcVideoView remoteView = rootView.findViewById(VIDEO_VIEW_IDS[pos]);
+        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
+
+        //setup avatar
+        new NetworkThread(remoteView) {
+
+            @Override
+            public ASResponse doRequest() {
+                return APIUtils.getAccid(uid);
+            }
+
+            @Override
+            public void onSuccess(ASResponse asp) {
+                String accid = asp.getInfo().getStr("accid");
+                HeadImageView avatarView = rootView.findViewById(AVATAR_VIEW_IDS[pos]);
+                avatarView.loadBuddyAvatar(accid);
+            }
+
+            @Override
+            public void onFailed(int code, String desc) {
+                //TODO: on failed
+                super.onFailed(code, desc);
+            }
+        };
+
+
+    }
 
     /**
      * user joins room
@@ -20,7 +67,10 @@ public class LWENERtcCallback implements NERtcCallbackEx {
      */
     @Override
     public void onJoinChannel(int result, long channelId, long elapsed) {
-
+        //TODO: user join channel
+        //success
+        //failed
+        //others
     }
 
     @Override
@@ -28,9 +78,13 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     }
 
+    /**
+     * other user joins room / show existing users in room
+     * @param uid other user's uid
+     */
     @Override
-    public void onUserJoined(long l) {
-
+    public void onUserJoined(long uid) {
+        addUserToRoom(uid);
     }
 
     @Override
