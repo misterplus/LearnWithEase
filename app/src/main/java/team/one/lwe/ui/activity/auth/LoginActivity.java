@@ -15,7 +15,6 @@ import androidx.core.app.ActivityCompat;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
-import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import team.one.lwe.R;

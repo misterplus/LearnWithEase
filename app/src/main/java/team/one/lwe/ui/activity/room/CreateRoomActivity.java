@@ -25,7 +25,6 @@ import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nim.uikit.common.util.C;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.nos.NosService;
 import com.yalantis.ucrop.UCrop;
 
@@ -34,13 +33,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.hutool.json.JSONObject;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.bean.RoomBasic;
 import team.one.lwe.bean.RoomInfo;
-import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;

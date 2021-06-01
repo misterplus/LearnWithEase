@@ -22,7 +22,6 @@ import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
-import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import team.one.lwe.LWEConstants;

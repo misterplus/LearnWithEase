@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.netease.nim.uikit.common.ToastHelper;
 
@@ -52,6 +53,11 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
     protected ChatRoomInputPanel inputPanel;
     protected ChatRoomMsgListPanel messageListPanel;
     protected AitManager aitManager;
+    private RelativeLayout layoutVideo;
+
+    public void setLayoutVideo(RelativeLayout layoutVideo) {
+        this.layoutVideo = layoutVideo;
+    }
 
     public static void setChatRoomSessionCustomization(ChatRoomSessionCustomization roomSessionCustomization) {
         sCustomization = roomSessionCustomization;
@@ -232,11 +238,14 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
 
     @Override
     public void onInputPanelExpand() {
+        layoutVideo.setVisibility(View.GONE);
         messageListPanel.scrollToBottom();
+
     }
 
     @Override
     public void shouldCollapseInputPanel() {
+        layoutVideo.setVisibility(View.VISIBLE);
         inputPanel.collapse(false);
     }
 

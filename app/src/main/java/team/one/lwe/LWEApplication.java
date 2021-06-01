@@ -3,7 +3,6 @@ package team.one.lwe;
 import android.app.Application;
 import android.text.TextUtils;
 
-import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.SDKOptions;
@@ -14,7 +13,6 @@ import java.io.File;
 
 import team.one.lwe.config.Preferences;
 import team.one.lwe.crash.CrashHandler;
-import team.one.lwe.ui.callback.LWENERtcCallback;
 
 public class LWEApplication extends Application {
 

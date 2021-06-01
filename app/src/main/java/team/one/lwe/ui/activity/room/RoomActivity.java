@@ -2,7 +2,10 @@ package team.one.lwe.ui.activity.room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.netease.nim.uikit.api.NimUIKit;
@@ -22,6 +25,19 @@ import team.one.lwe.ui.wedget.LWEToolBarOptions;
 public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
+    private RelativeLayout layoutVideo;
+
+    @Override
+    protected boolean isHideInput(View v, MotionEvent ev) {
+        RelativeLayout tml = findViewById(R.id.textMessageLayout);
+        int[] inputLoc = {0, 0};
+        tml.getLocationInWindow(inputLoc);
+        return ev.getY() < inputLoc[1];
+    }
+
+    protected void hideSoftInput(IBinder token) {
+        messageFragment.shouldCollapseInputPanel();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +51,7 @@ public class RoomActivity extends LWEUI {
         long uid = enterRoomData.getUid();
         String roomid = enterRoomData.getRoomid();
         EnterChatRoomData enterChatRoomData = new EnterChatRoomData(roomid);
+        layoutVideo = findViewById(R.id.layoutVideo);
 
         NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(this) {
             @Override
@@ -54,9 +71,12 @@ public class RoomActivity extends LWEUI {
                 R.id.chat_room_message_fragment);
         if (messageFragment != null) {
             messageFragment.init(roomId);
+            messageFragment.setLayoutVideo(layoutVideo);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
-            getHandler().postDelayed(() -> initMessageFragment(roomId), 50);
+            getHandler().postDelayed(() -> {
+                initMessageFragment(roomId);
+            }, 50);
         }
     }
 }
