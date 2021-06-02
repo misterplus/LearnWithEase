@@ -4,6 +4,7 @@
     android:layout_height="120dp"
     android:layout_marginEnd="10dp"
     android:layout_weight="1"
+    android:visibility="gone"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.netease.lava.nertc.sdk.video.NERtcVideoView
@@ -27,7 +28,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/nim_avatar_default" />
+        android:src="@drawable/nim_avatar_default"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/buttonMicUser"

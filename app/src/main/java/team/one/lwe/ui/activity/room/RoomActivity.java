@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
+import com.netease.lava.nertc.sdk.NERtcConstants;
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.api.NimUIKit;
@@ -100,16 +101,21 @@ public class RoomActivity extends LWEUI {
 
     private void enterVideoRoom(EnterRoomData enterRoomData) {
         try {
-            NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(this),null);
+            NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(this, enterRoomData.getUid()),null);
         } catch (Exception e) {
             //TODO: fail to init sdk, abort
             e.printStackTrace();
         }
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
         imageAvatarSelf.loadBuddyAvatar(Preferences.getUserAccount());
-        NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
+
         NERtcEx.getInstance().enableLocalVideo(true);
+
+        NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
+
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
+        videoSelf.setZOrderMediaOverlay(true);
+        videoSelf.setScalingType(NERtcConstants.VideoScalingType.SCALE_ASPECT_FIT);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
     }
 

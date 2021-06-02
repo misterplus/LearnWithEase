@@ -2,8 +2,11 @@ package team.one.lwe.ui.callback;
 
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.netease.lava.api.IVideoRender;
 import com.netease.lava.nertc.sdk.NERtcCallbackEx;
+import com.netease.lava.nertc.sdk.NERtcConstants;
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.stats.NERtcAudioVolumeInfo;
 import com.netease.lava.nertc.sdk.video.NERtcRemoteVideoStreamType;
@@ -23,48 +26,49 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     private final LWEUI rootView;
     private final LinearLayout layoutUsers;
+    private final long selfUid;
     private final Map<Long, Integer> viewIds = new HashMap<>();
 
-    public LWENERtcCallback(LWEUI rootView) {
+    public LWENERtcCallback(LWEUI rootView, long selfUid) {
         this.rootView = rootView;
         this.layoutUsers = rootView.findViewById(R.id.layoutUsers);
+        this.selfUid = selfUid;
     }
 
     private void removeUserFromRoom(long uid) {
-        viewIds.remove(uid);
         View userView = layoutUsers.findViewById(viewIds.get(uid));
+        viewIds.remove(uid);
         layoutUsers.removeViewInLayout(userView);
     }
 
     private void addUserToRoom(long uid) {
         //setup video
 
-        View userView = rootView.getLayoutInflater().inflate(R.layout.lwe_layout_video, layoutUsers);
-        viewIds.put(uid, userView.getId());
-        NERtcVideoView remoteView = userView.findViewById(R.id.videoUser);
-        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
-
-        //setup avatar
-        new NetworkThread(remoteView) {
-
-            @Override
-            public ASResponse doRequest() {
-                return APIUtils.getAccid(uid);
-            }
-
-            @Override
-            public void onSuccess(ASResponse asp) {
-                String accid = asp.getInfo().getStr("accid");
-                HeadImageView avatarView = userView.findViewById(R.id.imageAvatarUser);
-                avatarView.loadBuddyAvatar(accid);
-            }
-
-            @Override
-            public void onFailed(int code, String desc) {
-                //TODO: on failed
-                super.onFailed(code, desc);
-            }
-        };
+//        View userView = rootView.getLayoutInflater().inflate(R.layout.lwe_layout_video, layoutUsers, false);
+//        layoutUsers.addView(userView);
+//        viewIds.put(uid, userView.getId());
+//
+//        //setup avatar
+//        new NetworkThread(userView) {
+//
+//            @Override
+//            public ASResponse doRequest() {
+//                return APIUtils.getAccid(uid);
+//            }
+//
+//            @Override
+//            public void onSuccess(ASResponse asp) {
+//                String accid = asp.getInfo().getStr("accid");
+//                HeadImageView avatarView = userView.findViewById(R.id.imageAvatarUser);
+//                avatarView.loadBuddyAvatar(accid);
+//            }
+//
+//            @Override
+//            public void onFailed(int code, String desc) {
+//                //TODO: on failed
+//                super.onFailed(code, desc);
+//            }
+//        };
     }
 
     /**
@@ -119,7 +123,17 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     @Override
     public void onUserVideoStart(long uid, int maxProfile) {
         //TODO: profile options
+//        RelativeLayout layoutUser = rootView.findViewById(viewIds.get(uid));
+//        NERtcVideoView remoteView = layoutUser.findViewById(R.id.videoUser);
+//        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
+//        remoteView.setScalingType(NERtcConstants.VideoScalingType.SCALE_ASPECT_FIT);
+//        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
+//
+//        layoutUser.setVisibility(View.VISIBLE);
+        NERtcVideoView remoteView = rootView.findViewById(R.id.videoUser);
         NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
+        remoteView.setScalingType(NERtcConstants.VideoScalingType.SCALE_ASPECT_FIT);
+        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
     }
 
     @Override
@@ -164,7 +178,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     @Override
     public void onFirstVideoFrameDecoded(long l, int i, int i1) {
-
+        System.out.printf("received video frame from %d", l);
     }
 
     @Override
