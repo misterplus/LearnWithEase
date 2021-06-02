@@ -1,13 +1,17 @@
 package team.one.lwe.ui.callback;
 
+import android.view.View;
+import android.widget.LinearLayout;
+
 import com.netease.lava.nertc.sdk.NERtcCallbackEx;
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.stats.NERtcAudioVolumeInfo;
+import com.netease.lava.nertc.sdk.video.NERtcRemoteVideoStreamType;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
@@ -18,19 +22,26 @@ import team.one.lwe.util.APIUtils;
 public class LWENERtcCallback implements NERtcCallbackEx {
 
     private final LWEUI rootView;
-    private final List<Long> uidOthers = new ArrayList<>();
-    private static final int[] VIDEO_VIEW_IDS = {R.id.videoUser1, R.id.videoUser2, R.id.videoUser3};
-    private static final int[] AVATAR_VIEW_IDS = {R.id.imageAvatarUser1, R.id.imageAvatarUser2, R.id.imageAvatarUser3};
+    private final LinearLayout layoutUsers;
+    private final Map<Long, Integer> viewIds = new HashMap<>();
 
     public LWENERtcCallback(LWEUI rootView) {
         this.rootView = rootView;
+        this.layoutUsers = rootView.findViewById(R.id.layoutUsers);
+    }
+
+    private void removeUserFromRoom(long uid) {
+        viewIds.remove(uid);
+        View userView = layoutUsers.findViewById(viewIds.get(uid));
+        layoutUsers.removeViewInLayout(userView);
     }
 
     private void addUserToRoom(long uid) {
         //setup video
-        uidOthers.add(uid);
-        int pos = uidOthers.indexOf(uid);
-        NERtcVideoView remoteView = rootView.findViewById(VIDEO_VIEW_IDS[pos]);
+
+        View userView = rootView.getLayoutInflater().inflate(R.layout.lwe_layout_video, layoutUsers);
+        viewIds.put(uid, userView.getId());
+        NERtcVideoView remoteView = userView.findViewById(R.id.videoUser);
         NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
 
         //setup avatar
@@ -44,7 +55,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
             @Override
             public void onSuccess(ASResponse asp) {
                 String accid = asp.getInfo().getStr("accid");
-                HeadImageView avatarView = rootView.findViewById(AVATAR_VIEW_IDS[pos]);
+                HeadImageView avatarView = userView.findViewById(R.id.imageAvatarUser);
                 avatarView.loadBuddyAvatar(accid);
             }
 
@@ -54,8 +65,6 @@ public class LWENERtcCallback implements NERtcCallbackEx {
                 super.onFailed(code, desc);
             }
         };
-
-
     }
 
     /**
@@ -87,9 +96,14 @@ public class LWENERtcCallback implements NERtcCallbackEx {
         addUserToRoom(uid);
     }
 
+    /**
+     * other user leaves room
+     * @param uid left user uid
+     * @param reason timeout / normal
+     */
     @Override
-    public void onUserLeave(long l, int i) {
-
+    public void onUserLeave(long uid, int reason) {
+        removeUserFromRoom(uid);
     }
 
     @Override
@@ -103,13 +117,14 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     }
 
     @Override
-    public void onUserVideoStart(long l, int i) {
-
+    public void onUserVideoStart(long uid, int maxProfile) {
+        //TODO: profile options
+        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
     }
 
     @Override
-    public void onUserVideoStop(long l) {
-
+    public void onUserVideoStop(long uid) {
+        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
     }
 
     @Override

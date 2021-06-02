@@ -13,6 +13,7 @@ import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
@@ -22,6 +23,7 @@ import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
 import team.one.lwe.bean.EnterRoomData;
+import team.one.lwe.config.Preferences;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
@@ -72,9 +74,10 @@ public class RoomActivity extends LWEUI {
             @Override
             public void onSuccess(EnterChatRoomResultData data) {
                 //TODO: maxUsers check
-                int maxUsers = Integer.parseInt((String) data.getRoomInfo().getExtension().get("maxUsers"));
+                int maxUsers = (Integer) data.getRoomInfo().getExtension().get("maxUsers");
                 if (data.getRoomInfo().getOnlineUserCount() > maxUsers) {
                     NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                    //TODO: room full notify
                     finish();
                     return;
                 }
@@ -84,7 +87,7 @@ public class RoomActivity extends LWEUI {
                 LWEToolBarOptions options = new LWEToolBarOptions(String.format("%s(%s)", info.getName(), roomId), true);
                 setToolBar(R.id.toolbar, options);
                 initMessageFragment(roomId);
-                //enterVideoRoom(enterRoomData);
+                enterVideoRoom(enterRoomData);
             }
 
             @Override
@@ -102,10 +105,12 @@ public class RoomActivity extends LWEUI {
             //TODO: fail to init sdk, abort
             e.printStackTrace();
         }
+        HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
+        imageAvatarSelf.loadBuddyAvatar(Preferences.getUserAccount());
+        NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
         NERtcEx.getInstance().enableLocalVideo(true);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
-        NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
     }
 
     private void initMessageFragment(String roomId) {
