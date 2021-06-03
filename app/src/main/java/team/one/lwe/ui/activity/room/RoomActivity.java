@@ -111,6 +111,7 @@ public class RoomActivity extends LWEUI {
         NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
 
         NERtcEx.getInstance().enableLocalVideo(true);
+        NERtcEx.getInstance().enableLocalAudio(true);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
     }

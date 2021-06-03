@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.netease.lava.api.IVideoRender;
+import com.netease.lava.nertc.sdk.NERtc;
 import com.netease.lava.nertc.sdk.NERtcCallbackEx;
 import com.netease.lava.nertc.sdk.NERtcConstants;
 import com.netease.lava.nertc.sdk.NERtcEx;
@@ -114,8 +115,8 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     }
 
     @Override
-    public void onUserAudioStart(long l) {
-
+    public void onUserAudioStart(long uid) {
+        NERtcEx.getInstance().subscribeRemoteAudioStream(uid, true);
     }
 
     @Override
