@@ -12,6 +12,7 @@
         android:layout_height="match_parent" />
 
     <ImageButton
+        android:id="@+id/buttonVideoUser"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignParentStart="true"
@@ -30,15 +31,15 @@
         android:src="@drawable/nim_avatar_default"
         android:visibility="gone"/>
 
-    <ImageView
-        android:id="@+id/buttonMicUser"
+    <ImageButton
+        android:id="@+id/buttonAudioUser"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="3dp"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/lwe_icon_mic_muted"
+        android:background="@drawable/lwe_icon_mic"
         android:contentDescription="@string/empty" />
 
 </RelativeLayout>

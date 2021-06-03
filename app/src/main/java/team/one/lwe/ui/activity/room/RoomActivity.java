@@ -6,11 +6,14 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.netease.lava.nertc.sdk.NERtcConstants;
 import com.netease.lava.nertc.sdk.NERtcEx;
+import com.netease.lava.nertc.sdk.NERtcOption;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment;
@@ -34,6 +37,8 @@ public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
+    private boolean enterVideo = false, enterChat = false;
+    private boolean videoMuted = false, audioMuted = false;
 
     //TODO: left room confirmation
 
@@ -47,7 +52,8 @@ public class RoomActivity extends LWEUI {
 
     @Override
     protected void hideSoftInput(IBinder token) {
-        messageFragment.shouldCollapseInputPanel();
+        if (messageFragment != null)
+            messageFragment.shouldCollapseInputPanel();
     }
 
     @Override
@@ -67,10 +73,45 @@ public class RoomActivity extends LWEUI {
         String roomid = enterRoomData.getRoomid();
         EnterChatRoomData enterChatRoomData = new EnterChatRoomData(roomid);
         layoutVideo = findViewById(R.id.layoutVideo);
-        enterChatRoom(enterChatRoomData, enterRoomData);
+        ImageButton buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
+        ImageButton buttonAudioSelf = findViewById(R.id.buttonAudioSelf);
+        HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
+        //TODO: local video & audio muting
+        //TODO: rework muting, should come with notification
+        buttonVideoSelf.setOnClickListener(view -> {
+            if (videoMuted) {
+                //unmute, change icon
+                NERtcEx.getInstance().muteLocalVideoStream(false);
+                buttonVideoSelf.setBackgroundResource(R.drawable.lwe_icon_video);
+            }
+            else {
+                //mute, change icon
+                NERtcEx.getInstance().muteLocalVideoStream(true);
+                buttonVideoSelf.setBackgroundResource(R.drawable.lwe_icon_video_disabled);
+            }
+            videoMuted = !videoMuted;
+        });
+        buttonAudioSelf.setOnClickListener(view -> {
+            if (audioMuted) {
+                //unmute, change icon
+                NERtcEx.getInstance().muteLocalAudioStream(false);
+                buttonAudioSelf.setBackgroundResource(R.drawable.lwe_icon_mic);
+            }
+            else {
+                //mute, change icon
+                NERtcEx.getInstance().muteLocalAudioStream(true);
+                buttonAudioSelf.setBackgroundResource(R.drawable.lwe_icon_mic_muted);
+            }
+            audioMuted = !audioMuted;
+        });
+        imageAvatarSelf.loadBuddyAvatar(Preferences.getUserAccount());
+        if (!enterChat)
+            enterChatRoom(enterChatRoomData);
+        if (!enterVideo)
+            enterVideoRoom(enterRoomData);
     }
 
-    private void enterChatRoom(EnterChatRoomData enterChatRoomData, EnterRoomData enterRoomData) {
+    private void enterChatRoom(EnterChatRoomData enterChatRoomData) {
         NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(this) {
             @Override
             public void onSuccess(EnterChatRoomResultData data) {
@@ -88,7 +129,7 @@ public class RoomActivity extends LWEUI {
                 LWEToolBarOptions options = new LWEToolBarOptions(String.format("%s(%s)", info.getName(), roomId), true);
                 setToolBar(R.id.toolbar, options);
                 initMessageFragment(roomId);
-                enterVideoRoom(enterRoomData);
+                enterChat = true;
             }
 
             @Override
@@ -101,19 +142,18 @@ public class RoomActivity extends LWEUI {
 
     private void enterVideoRoom(EnterRoomData enterRoomData) {
         try {
-            NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(this, enterRoomData.getUid()),null);
+            NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(this), null);
         } catch (Exception e) {
             //TODO: fail to init sdk, abort
             e.printStackTrace();
         }
-        HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
-        imageAvatarSelf.loadBuddyAvatar(Preferences.getUserAccount());
         NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
 
         NERtcEx.getInstance().enableLocalVideo(true);
         NERtcEx.getInstance().enableLocalAudio(true);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
+        enterVideo = true;
     }
 
     private void initMessageFragment(String roomId) {

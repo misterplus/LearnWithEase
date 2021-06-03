@@ -37,6 +37,7 @@ public class LoginActivity extends LWEUI {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //TODO: rework permission
         if (ActivityCompat.checkSelfPermission(this, "android.permission.CAMERA") == PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
@@ -76,6 +77,7 @@ public class LoginActivity extends LWEUI {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //TODO: rework permission
         switch (requestCode) {
             case 0: {
                 if (grantResults[0] == PERMISSION_DENIED) {
