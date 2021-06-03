@@ -4,7 +4,6 @@
     android:layout_height="120dp"
     android:layout_marginEnd="10dp"
     android:layout_weight="1"
-    android:visibility="gone"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.netease.lava.nertc.sdk.video.NERtcVideoView

@@ -44,31 +44,34 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     private void addUserToRoom(long uid) {
         //setup video
 
-//        View userView = rootView.getLayoutInflater().inflate(R.layout.lwe_layout_video, layoutUsers, false);
-//        layoutUsers.addView(userView);
-//        viewIds.put(uid, userView.getId());
-//
-//        //setup avatar
-//        new NetworkThread(userView) {
-//
-//            @Override
-//            public ASResponse doRequest() {
-//                return APIUtils.getAccid(uid);
-//            }
-//
-//            @Override
-//            public void onSuccess(ASResponse asp) {
-//                String accid = asp.getInfo().getStr("accid");
-//                HeadImageView avatarView = userView.findViewById(R.id.imageAvatarUser);
-//                avatarView.loadBuddyAvatar(accid);
-//            }
-//
-//            @Override
-//            public void onFailed(int code, String desc) {
-//                //TODO: on failed
-//                super.onFailed(code, desc);
-//            }
-//        };
+        View userView = rootView.getLayoutInflater().inflate(R.layout.lwe_layout_video, layoutUsers, false);
+        layoutUsers.addView(userView);
+        viewIds.put(uid, userView.getId());
+
+        NERtcVideoView remoteView = userView.findViewById(R.id.videoUser);
+        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
+
+        //setup avatar
+        new NetworkThread(userView) {
+
+            @Override
+            public ASResponse doRequest() {
+                return APIUtils.getAccid(uid);
+            }
+
+            @Override
+            public void onSuccess(ASResponse asp) {
+                String accid = asp.getInfo().getStr("accid");
+                HeadImageView avatarView = userView.findViewById(R.id.imageAvatarUser);
+                avatarView.loadBuddyAvatar(accid);
+            }
+
+            @Override
+            public void onFailed(int code, String desc) {
+                //TODO: on failed
+                super.onFailed(code, desc);
+            }
+        };
     }
 
     /**
@@ -123,22 +126,12 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     @Override
     public void onUserVideoStart(long uid, int maxProfile) {
         //TODO: profile options
-//        RelativeLayout layoutUser = rootView.findViewById(viewIds.get(uid));
-//        NERtcVideoView remoteView = layoutUser.findViewById(R.id.videoUser);
-//        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
-//        remoteView.setScalingType(NERtcConstants.VideoScalingType.SCALE_ASPECT_FIT);
-//        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
-//
-//        layoutUser.setVisibility(View.VISIBLE);
-        NERtcVideoView remoteView = rootView.findViewById(R.id.videoUser);
         NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
-        remoteView.setScalingType(NERtcConstants.VideoScalingType.SCALE_ASPECT_FIT);
-        NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
     }
 
     @Override
     public void onUserVideoStop(long uid) {
-        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
+        //NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
     }
 
     @Override

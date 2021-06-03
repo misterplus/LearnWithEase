@@ -108,14 +108,10 @@ public class RoomActivity extends LWEUI {
         }
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
         imageAvatarSelf.loadBuddyAvatar(Preferences.getUserAccount());
-
-        NERtcEx.getInstance().enableLocalVideo(true);
-
         NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
 
+        NERtcEx.getInstance().enableLocalVideo(true);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
-        videoSelf.setZOrderMediaOverlay(true);
-        videoSelf.setScalingType(NERtcConstants.VideoScalingType.SCALE_ASPECT_FIT);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
     }
 
