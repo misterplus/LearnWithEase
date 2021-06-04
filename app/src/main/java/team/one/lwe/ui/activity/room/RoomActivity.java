@@ -17,6 +17,7 @@ import com.netease.lava.nertc.sdk.NERtcOption;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
@@ -77,17 +78,19 @@ public class RoomActivity extends LWEUI {
         ImageButton buttonAudioSelf = findViewById(R.id.buttonAudioSelf);
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
         //TODO: local video & audio muting
-        //TODO: rework muting, should come with notification
+        //TODO: rework icon, muted icons should be red
         buttonVideoSelf.setOnClickListener(view -> {
             if (videoMuted) {
                 //unmute, change icon
                 NERtcEx.getInstance().muteLocalVideoStream(false);
                 buttonVideoSelf.setBackgroundResource(R.drawable.lwe_icon_video);
+                ToastHelper.showToast(this, R.string.lwe_text_video_unmute);
             }
             else {
                 //mute, change icon
                 NERtcEx.getInstance().muteLocalVideoStream(true);
                 buttonVideoSelf.setBackgroundResource(R.drawable.lwe_icon_video_disabled);
+                ToastHelper.showToast(this, R.string.lwe_text_video_mute);
             }
             videoMuted = !videoMuted;
         });
@@ -96,11 +99,13 @@ public class RoomActivity extends LWEUI {
                 //unmute, change icon
                 NERtcEx.getInstance().muteLocalAudioStream(false);
                 buttonAudioSelf.setBackgroundResource(R.drawable.lwe_icon_mic);
+                ToastHelper.showToast(this, R.string.lwe_text_audio_unmute);
             }
             else {
                 //mute, change icon
                 NERtcEx.getInstance().muteLocalAudioStream(true);
                 buttonAudioSelf.setBackgroundResource(R.drawable.lwe_icon_mic_muted);
+                ToastHelper.showToast(this, R.string.lwe_text_audio_mute);
             }
             audioMuted = !audioMuted;
         });

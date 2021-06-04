@@ -2,9 +2,15 @@
 <RelativeLayout android:id="@+id/layoutUser"
     android:layout_width="0dp"
     android:layout_height="120dp"
-    android:layout_marginEnd="10dp"
     android:layout_weight="1"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/videoPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
 
     <com.netease.lava.nertc.sdk.video.NERtcVideoView
         android:id="@+id/videoUser"

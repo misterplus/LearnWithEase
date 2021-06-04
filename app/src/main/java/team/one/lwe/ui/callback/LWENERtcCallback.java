@@ -1,6 +1,7 @@
 package team.one.lwe.ui.callback;
 
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -9,6 +10,7 @@ import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.stats.NERtcAudioVolumeInfo;
 import com.netease.lava.nertc.sdk.video.NERtcRemoteVideoStreamType;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 
 import java.util.HashMap;
@@ -35,6 +37,8 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     private void removeUserFromRoom(long uid) {
         View userView = layoutUsers.findViewById(viewIds.get(uid));
+        NERtcEx.getInstance().subscribeRemoteAudioStream(uid, false);
+        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
         viewIds.remove(uid);
         layoutUsers.removeViewInLayout(userView);
     }
@@ -46,23 +50,31 @@ public class LWENERtcCallback implements NERtcCallbackEx {
         View userView = rootView.getLayoutInflater().inflate(R.layout.lwe_layout_video, layoutUsers, false);
         //TODO: set listeners
         ImageButton buttonVideoUser = userView.findViewById(R.id.buttonVideoUser);
+        NERtcVideoView remoteView = userView.findViewById(R.id.videoUser);
         ImageButton buttonAudioUser = userView.findViewById(R.id.buttonAudioUser);
         HeadImageView imageAvatarUser = userView.findViewById(R.id.imageAvatarUser);
+        FrameLayout videoPlaceholder = userView.findViewById(R.id.videoPlaceholder);
         //TODO: rework remote muting, should come with notification
         //TODO: avatar not showing up, should be put on top(?)
         buttonVideoUser.setOnClickListener(view -> {
             boolean subbed = videoSub.get(uid);
             if (subbed) {
                 //unsub, show avatar, change icon
-                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
                 imageAvatarUser.setVisibility(View.VISIBLE);
+                videoPlaceholder.setVisibility(View.VISIBLE);
+                remoteView.setVisibility(View.GONE);
                 buttonVideoUser.setBackgroundResource(R.drawable.lwe_icon_video_disabled);
+                ToastHelper.showToast(rootView, R.string.lwe_text_video_mute_remote);
+                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
             }
             else {
                 //resub, hide avatar, change icon
-                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
                 imageAvatarUser.setVisibility(View.GONE);
+                videoPlaceholder.setVisibility(View.GONE);
+                remoteView.setVisibility(View.VISIBLE);
                 buttonVideoUser.setBackgroundResource(R.drawable.lwe_icon_video);
+                ToastHelper.showToast(rootView, R.string.lwe_text_video_unmute_remote);
+                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
             }
             videoSub.put(uid, !subbed);
         });
@@ -72,11 +84,13 @@ public class LWENERtcCallback implements NERtcCallbackEx {
                 //unsub, change icon
                 NERtcEx.getInstance().subscribeRemoteAudioStream(uid, false);
                 buttonAudioUser.setBackgroundResource(R.drawable.lwe_icon_mic_muted);
+                ToastHelper.showToast(rootView, R.string.lwe_text_audio_mute_remote);
             }
             else {
                 //resub, change icon
                 NERtcEx.getInstance().subscribeRemoteAudioStream(uid, true);
                 buttonAudioUser.setBackgroundResource(R.drawable.lwe_icon_mic);
+                ToastHelper.showToast(rootView, R.string.lwe_text_audio_unmute_remote);
             }
             audioSub.put(uid, !subbed);
         });
@@ -84,7 +98,6 @@ public class LWENERtcCallback implements NERtcCallbackEx {
         layoutUsers.addView(userView);
         viewIds.put(uid, userView.getId());
 
-        NERtcVideoView remoteView = userView.findViewById(R.id.videoUser);
         NERtcEx.getInstance().setupRemoteVideoCanvas(remoteView, uid);
 
         //setup avatar
@@ -179,13 +192,35 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     }
 
     @Override
-    public void onUserAudioMute(long l, boolean b) {
-
+    public void onUserAudioMute(long uid, boolean muted) {
+        //TODO: remote audio mute
+        View userView = layoutUsers.findViewById(viewIds.get(uid));
+        ImageButton buttonAudioUser = userView.findViewById(R.id.buttonAudioUser);
+        boolean subbed = audioSub.get(uid);
+        if (subbed && muted) {
+            //already subbed, but user muted, we unsub him
+            buttonAudioUser.callOnClick();
+        }
+        else if (!subbed && !muted) {
+            //not subbed, user unmuted, we sub him
+            buttonAudioUser.callOnClick();
+        }
     }
 
     @Override
-    public void onUserVideoMute(long l, boolean b) {
-
+    public void onUserVideoMute(long uid, boolean muted) {
+        //TODO: remote video mute
+        View userView = layoutUsers.findViewById(viewIds.get(uid));
+        ImageButton buttonVideoUser = userView.findViewById(R.id.buttonVideoUser);
+        boolean subbed = videoSub.get(uid);
+        if (subbed && muted) {
+            //already subbed, but user muted, we unsub him
+            buttonVideoUser.callOnClick();
+        }
+        else if (!subbed && !muted) {
+            //not subbed, user unmuted, we sub him
+            buttonVideoUser.callOnClick();
+        }
     }
 
     @Override
@@ -210,7 +245,6 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     @Override
     public void onFirstVideoFrameDecoded(long l, int i, int i1) {
-        System.out.printf("received video frame from %d", l);
     }
 
     @Override

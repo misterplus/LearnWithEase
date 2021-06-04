@@ -34,7 +34,7 @@
         <RelativeLayout
             android:id="@+id/layoutSelf"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="140dp"
             android:layout_below="@+id/divider"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp">
