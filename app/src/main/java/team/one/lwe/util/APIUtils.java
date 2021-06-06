@@ -45,7 +45,7 @@ public class APIUtils {
 
     public static ASResponse getAccid(long uid) throws IORuntimeException {
         return PostUtils.doPostEncoded(false,
-                "/user/getAccid",5000,
+                "/user/getAccid", 5000,
                 "uid", uid);
     }
 }

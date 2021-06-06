@@ -43,7 +43,6 @@ import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
-import team.one.lwe.util.TextUtils;
 
 public class CreateRoomActivity extends LWEUI {
 
