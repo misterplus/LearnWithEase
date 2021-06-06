@@ -8,6 +8,15 @@ import team.one.lwe.LWEApplication;
 public class Preferences {
     private static final String KEY_USER_ACCOUNT = "account";
     private static final String KEY_USER_TOKEN = "token";
+    private static final String KEY_VIDEO_QUALITY = "quality_video";
+
+    public static void setVideoQuality(int quality) {
+        saveInt(KEY_VIDEO_QUALITY, quality);
+    }
+
+    public static int getVideoQuality() {
+        return getInt(KEY_VIDEO_QUALITY, 0);
+    }
 
     public static void saveUserAccount(String account) {
         saveString(KEY_USER_ACCOUNT, account);
@@ -34,6 +43,16 @@ public class Preferences {
 
     private static SharedPreferences getSharedPreferences() {
         return LWEApplication.getInstance().getApplicationContext().getSharedPreferences("lwe_pref", Context.MODE_PRIVATE);
+    }
+
+    private static int getInt(String key, int def) {
+        return getSharedPreferences().getInt(key, def);
+    }
+
+    private static void saveInt(String key, int value) {
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putInt(key, value);
+        editor.commit();
     }
 
     private static void saveString(String key, String value) {
