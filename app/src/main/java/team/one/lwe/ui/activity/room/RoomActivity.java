@@ -15,6 +15,7 @@ import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment;
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
@@ -30,8 +31,6 @@ public class RoomActivity extends LWEUI {
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
     private boolean videoMuted = false, audioMuted = false;
-
-    //TODO: left room confirmation
 
     @Override
     protected boolean isHideInput(View v, MotionEvent ev) {
@@ -55,22 +54,33 @@ public class RoomActivity extends LWEUI {
         return super.onKeyDown(keyCode, event);
     }
 
-//    @Override
-//    public void onNavigateUpClicked() {
-//        EasyAlertDialogHelper.createOkCancelDiolag(this, "确认退出房间吗?", "您真的要退出房间吗?", "确认", "取消", false, new EasyAlertDialogHelper.OnDialogActionListener() {
-//            @Override
-//            public void doCancelAction() {
-//                //TODO: do nothing
-//            }
-//
-//            @Override
-//            public void doOkAction() {
-//                NERtcEx.getInstance().leaveChannel();
-//                NERtcEx.getInstance().release();
-//                RoomActivity.super.onNavigateUpClicked();
-//            }
-//        });
-//    }
+    public void onJoinChannelFailed() {
+        ToastHelper.showToast(this, R.string.lwe_error_join_room);
+        finish();
+    }
+
+    public void onDisconnect() {
+        ToastHelper.showToast(this, R.string.lwe_error_room_disconnect);
+        finish();
+    }
+
+    //TODO: left room confirmation
+    @Override
+    public void onNavigateUpClicked() {
+        EasyAlertDialogHelper.createOkCancelDiolag(this, "确认退出房间吗?", "您真的要退出房间吗?", "确认", "取消", false, new EasyAlertDialogHelper.OnDialogActionListener() {
+            @Override
+            public void doCancelAction() {
+                //do nothing
+            }
+
+            @Override
+            public void doOkAction() {
+                NERtcEx.getInstance().leaveChannel();
+                NERtcEx.getInstance().release();
+                RoomActivity.super.onNavigateUpClicked();
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +95,6 @@ public class RoomActivity extends LWEUI {
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         FrameLayout videoPlaceholderSelf = findViewById(R.id.videoPlaceholderSelf);
-        //TODO: local video & audio muting
         buttonVideoSelf.setOnClickListener(view -> {
             if (videoMuted) {
                 //unmute, change icon

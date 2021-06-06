@@ -156,23 +156,8 @@ public class CreateRoomActivity extends LWEUI {
                                     setResult(1, intent);
                                     finish();
                                 }
-
-                                @Override
-                                public void onFailed(int code, String desc) {
-                                    DialogMaker.dismissProgressDialog();
-                                    //TODO: other on failed checks
-                                    super.onFailed(code, desc);
-                                }
-
-                                @Override
-                                public void onException(Exception e) {
-                                    DialogMaker.dismissProgressDialog();
-                                    super.onException(e);
-                                }
                             }.start();
                         }
-
-
                     });
                 }
             }

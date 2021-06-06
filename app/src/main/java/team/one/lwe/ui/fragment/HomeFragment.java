@@ -2,6 +2,7 @@ package team.one.lwe.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.netease.lava.nertc.sdk.NERtcEx;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nimlib.sdk.NIMClient;
@@ -91,19 +93,18 @@ public class HomeFragment extends Fragment {
         NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(getContext()) {
             @Override
             public void onSuccess(EnterChatRoomResultData data) {
-                //TODO: maxUsers check
                 int maxUsers = (Integer) data.getRoomInfo().getExtension().get("maxUsers");
                 if (data.getRoomInfo().getOnlineUserCount() > maxUsers) {
                     NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
-                    //TODO: room full notify
+                    ToastHelper.showToast(getContext(), R.string.lwe_error_room_full);
                     return;
                 }
                 try {
                     NERtcEx.getInstance().init(getActivity().getApplicationContext(), LWEConstants.APP_KEY, LWENERtcCallback.getInstance(), null);
                 } catch (Exception e) {
-                    //TODO: fail to init sdk, abort
-                    e.printStackTrace();
+                    Log.e(HomeFragment.this.getClass().getSimpleName(), Log.getStackTraceString(e));
                     NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                    ToastHelper.showToast(getContext(), R.string.lwe_error_init_nertc);
                     return;
                 }
                 NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
@@ -114,8 +115,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailed(int code) {
-                //TODO: failed to enter room
-                super.onFailed(code);
+                ToastHelper.showToast(getContext(), R.string.lwe_error_join_room);
             }
         });
     }

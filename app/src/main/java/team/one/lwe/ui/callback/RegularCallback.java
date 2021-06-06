@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.RequestCallback;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public abstract class RegularCallback<T> implements RequestCallback<T> {
 
     @Override
     public void onFailed(int code) {
+        DialogMaker.dismissProgressDialog();
         switch (code) {
             case 408: {
                 ToastHelper.showToast(context, R.string.lwe_error_timeout);
@@ -43,6 +45,7 @@ public abstract class RegularCallback<T> implements RequestCallback<T> {
 
     @Override
     public void onException(Throwable e) {
+        DialogMaker.dismissProgressDialog();
         Log.e(context.getPackageName(), Log.getStackTraceString(e));
     }
 }

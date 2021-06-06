@@ -30,6 +30,7 @@ public abstract class NetworkThread extends Thread {
     public abstract void onSuccess(ASResponse asp);
 
     public void onFailed(int code, String desc) {
+        DialogMaker.dismissProgressDialog();
         switch (code) {
             case 408: {
                 ToastHelper.showToast(view.getContext(), R.string.lwe_error_timeout);
@@ -46,6 +47,7 @@ public abstract class NetworkThread extends Thread {
     }
 
     public void onException(Exception e) {
+        DialogMaker.dismissProgressDialog();
         Log.e(view.getTransitionName(), Log.getStackTraceString(e));
     }
 

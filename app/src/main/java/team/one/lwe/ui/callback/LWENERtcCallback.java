@@ -1,5 +1,6 @@
 package team.one.lwe.ui.callback;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -23,17 +24,19 @@ import java.util.Map;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
+import team.one.lwe.ui.activity.room.RoomActivity;
 import team.one.lwe.util.APIUtils;
 
 public class LWENERtcCallback implements NERtcCallbackEx {
-
+    
     private static final LWENERtcCallback instance = new LWENERtcCallback();
     private final Map<Long, Integer> viewIds = new HashMap<>();
     private final Map<Long, Boolean> videoSub = new HashMap<>();
     private final Map<Long, Boolean> audioSub = new HashMap<>();
-    private LWEUI rootView;
+    private RoomActivity rootView;
 
     public static LWENERtcCallback getInstance() {
         return instance;
@@ -46,8 +49,10 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     private void removeUserFromRoom(long uid) {
         View userView = getLayoutUsers().findViewById(viewIds.get(uid));
         NERtcEx.getInstance().subscribeRemoteAudioStream(uid, false);
-        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
+        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, getVideoQuality(), false);
         viewIds.remove(uid);
+        videoSub.remove(uid);
+        audioSub.remove(uid);
         getLayoutUsers().removeViewInLayout(userView);
     }
 
@@ -69,14 +74,14 @@ public class LWENERtcCallback implements NERtcCallbackEx {
                 videoPlaceholder.setVisibility(View.VISIBLE);
                 remoteView.setVisibility(View.GONE);
                 buttonVideoUser.setBackgroundResource(R.drawable.lwe_icon_video_disabled);
-                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, false);
+                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, getVideoQuality(), false);
             } else {
                 //resub, hide avatar, change icon
                 imageAvatarUser.setVisibility(View.GONE);
                 videoPlaceholder.setVisibility(View.GONE);
                 remoteView.setVisibility(View.VISIBLE);
                 buttonVideoUser.setBackgroundResource(R.drawable.lwe_icon_video);
-                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
+                NERtcEx.getInstance().subscribeRemoteVideoStream(uid, getVideoQuality(), true);
             }
             videoSub.put(uid, !subbed);
         });
@@ -111,7 +116,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
             @Override
             public void onSuccess(ASResponse asp) {
                 String accid = asp.getInfo().getStr("accid");
-                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(accid)).setCallback(new RegularCallback<List<NimUserInfo>>(rootView) {
+                NIMClient.getService(UserService.class).fetchUserInfo(Collections.singletonList(accid)).setCallback(new MissingInfoCallback(rootView) {
                     @Override
                     public void onSuccess(List<NimUserInfo> param) {
                         imageAvatarUser.loadBuddyAvatar(accid);
@@ -121,8 +126,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
             @Override
             public void onFailed(int code, String desc) {
-                //TODO: on failed
-                super.onFailed(code, desc);
+                ToastHelper.showToast(rootView, R.string.lwe_error_avatar);
             }
         }.start();
     }
@@ -136,15 +140,18 @@ public class LWENERtcCallback implements NERtcCallbackEx {
      */
     @Override
     public void onJoinChannel(int result, long channelId, long elapsed) {
-        //TODO: user join channel
-        //success
-        //failed
-        //others
+        // not success
+        if (result != 0 && rootView != null) {
+            rootView.onJoinChannelFailed();
+        }
     }
 
     @Override
     public void onLeaveChannel(int i) {
-
+        rootView = null;
+        viewIds.clear();
+        videoSub.clear();
+        audioSub.clear();
     }
 
     /**
@@ -175,25 +182,29 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     }
 
     @Override
-    public void onUserAudioStop(long l) {
-
+    public void onUserAudioStop(long uid) {
+        onUserAudioMute(uid, true);
+    }
+    
+    private NERtcRemoteVideoStreamType getVideoQuality() {
+       return NERtcRemoteVideoStreamType.values()[Preferences.getVideoQuality()];
     }
 
     @Override
     public void onUserVideoStart(long uid, int maxProfile) {
-        //TODO: profile options
-        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, NERtcRemoteVideoStreamType.kNERtcRemoteVideoStreamTypeHigh, true);
+        NERtcEx.getInstance().subscribeRemoteVideoStream(uid, getVideoQuality(), true);
         videoSub.put(uid, true);
     }
 
     @Override
     public void onUserVideoStop(long uid) {
-
+        onUserVideoMute(uid, true);
     }
 
     @Override
-    public void onDisconnect(int i) {
-
+    public void onDisconnect(int reason) {
+        Log.e(getClass().getSimpleName(), "disconnected from video room: reason " + reason);
+        rootView.onDisconnect();
     }
 
     @Override
@@ -323,7 +334,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     }
 
-    public void setRootView(LWEUI rootView) {
+    public void setRootView(RoomActivity rootView) {
         this.rootView = rootView;
     }
 }
