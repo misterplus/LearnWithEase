@@ -139,7 +139,7 @@ public class EditProfileActivity extends LWEUI {
                 loseFocus(editTextAge);
                 int age = Integer.parseInt(editTextAge.getText().toString());
                 if (UserUtils.isAgeInvalid(age)) {
-                    ToastHelper.showToast(this, R.string.lwe_error_age);
+                    ToastHelper.showToast(this, R.string.lwe_error_age_format);
                 } else if (!NetworkUtil.isNetAvailable(this)) {
                     ToastHelper.showToast(this, R.string.lwe_error_nonetwork);
                 } else {

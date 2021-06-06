@@ -223,14 +223,16 @@ public class RegisterActivity extends LWEUI {
             int age = Integer.parseInt(editTextAge.getText().toString());
             int bak = spinnerEdu.getSelectedItemPosition();
             int grade = spinnerGrade.getSelectedItemPosition();
-            if (!UserUtils.isUsernameValid(username) || !UserUtils.isPasswordValid(password)) {
-                ToastHelper.showToast(this, R.string.lwe_error_login_format);
+            if (!UserUtils.isUsernameValid(username) ){
+                ToastHelper.showToast(this, R.string.lwe_error_login_format_username);
+            } else if (!UserUtils.isPasswordValid(password)) {
+                ToastHelper.showToast(this, R.string.lwe_error_login_format_password);
             } else if (!password.equals(confirmPassword)) {
                 ToastHelper.showToast(this, R.string.lwe_error_confirm_password);
             } else if (UserUtils.isNameInvalid(name)) {
                 ToastHelper.showToast(this, R.string.lwe_error_name);
             } else if (UserUtils.isAgeInvalid(age)) {
-                ToastHelper.showToast(this, R.string.lwe_error_age);
+                ToastHelper.showToast(this, R.string.lwe_error_age_format);
             } else if (TextUtils.isEmpty(cPickerNames[0]) || TextUtils.isEmpty(cPickerNames[1]) || TextUtils.isEmpty(cPickerNames[2])) {
                 ToastHelper.showToast(this, R.string.lwe_error_city);
             } else if (!NetworkUtil.isNetAvailable(this)) {
