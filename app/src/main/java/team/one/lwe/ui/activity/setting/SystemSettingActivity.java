@@ -6,15 +6,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.util.sys.NetworkUtil;
 
 import team.one.lwe.R;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.ui.activity.LWEUI;
-import team.one.lwe.ui.callback.UpdateCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
-import team.one.lwe.util.UserUtils;
 
 public class SystemSettingActivity extends LWEUI {
 
