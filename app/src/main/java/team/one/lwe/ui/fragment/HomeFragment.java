@@ -13,21 +13,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
+import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
 import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
-import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
+import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
+import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.room.CreateRoomActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
+import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.APIUtils;
 
@@ -60,10 +65,8 @@ public class HomeFragment extends Fragment {
 
                         @Override
                         public void onSuccess(ASResponse asp) {
-                            Intent intent = new Intent(getContext(), RoomActivity.class);
                             EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
-                            intent.putExtra("enterRoomData", new Gson().toJson(enterRoomData));
-                            startActivity(intent);
+                            enterRoom(enterRoomData);
                         }
                     }.start();
                 }
@@ -77,9 +80,43 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == 1) { //create room and success
-            Intent intent = new Intent(getContext(), RoomActivity.class);
-            intent.putExtra("enterRoomData", data.getStringExtra("enterRoomData"));
-            startActivity(intent);
+            EnterRoomData enterRoomData = new Gson().fromJson(data.getStringExtra("enterRoomData"), EnterRoomData.class);
+            enterRoom(enterRoomData);
         }
+    }
+
+    private void enterRoom(EnterRoomData enterRoomData) {
+        String roomid = enterRoomData.getRoomid();
+        EnterChatRoomData enterChatRoomData = new EnterChatRoomData(roomid);
+        NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(getContext()) {
+            @Override
+            public void onSuccess(EnterChatRoomResultData data) {
+                //TODO: maxUsers check
+                int maxUsers = (Integer) data.getRoomInfo().getExtension().get("maxUsers");
+                if (data.getRoomInfo().getOnlineUserCount() > maxUsers) {
+                    NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                    //TODO: room full notify
+                    return;
+                }
+                try {
+                    NERtcEx.getInstance().init(getActivity().getApplicationContext(), LWEConstants.APP_KEY, LWENERtcCallback.getInstance(), null);
+                } catch (Exception e) {
+                    //TODO: fail to init sdk, abort
+                    e.printStackTrace();
+                    NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                    return;
+                }
+                NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
+                Intent intent = new Intent(getActivity(), RoomActivity.class);
+                intent.putExtra("data", (Serializable) data);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailed(int code) {
+                //TODO: failed to enter room
+                super.onFailed(code);
+            }
+        });
     }
 }

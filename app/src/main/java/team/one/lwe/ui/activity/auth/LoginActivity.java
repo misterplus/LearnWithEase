@@ -17,6 +17,9 @@ import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.config.Preferences;
@@ -33,14 +36,22 @@ public class LoginActivity extends LWEUI {
 
     private EditText editTextUsername, editTextPassword;
 
+    private static final String[] REQUIRED_PERMS = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    private void requestMissingPermissions() {
+        List<String> missing = new ArrayList<>();
+        for (String perm : REQUIRED_PERMS) {
+            if (ActivityCompat.checkSelfPermission(this, perm) == PERMISSION_DENIED)
+                missing.add(perm);
+        }
+        ActivityCompat.requestPermissions(this, missing.toArray(new String[]{}), 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //TODO: rework permission
-        if (ActivityCompat.checkSelfPermission(this, "android.permission.CAMERA") == PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }
+        requestMissingPermissions();
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         Button buttonLogin = findViewById(R.id.buttonLogin);
@@ -75,19 +86,22 @@ public class LoginActivity extends LWEUI {
         }
     }
 
+    private String[] getRejectedGrants(String[] permissions, int[] grantResults) {
+        List<String> rejected = new ArrayList<>();
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults[i] == PERMISSION_DENIED) {
+                rejected.add(permissions[i]);
+            }
+        }
+        return rejected.toArray(new String[]{});
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //TODO: rework permission
-        switch (requestCode) {
-            case 0: {
-                if (grantResults[0] == PERMISSION_DENIED) {
-                    ToastHelper.showToast(this, R.string.lwe_error_perm);
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
-                }
-                break;
-            }
-            default:
-                break;
+        if (requestCode == 0) {
+            String[] rejected = getRejectedGrants(permissions, grantResults);
+            ToastHelper.showToast(this, R.string.lwe_error_perm);
+            ActivityCompat.requestPermissions(this, rejected, 0);
         }
     }
 

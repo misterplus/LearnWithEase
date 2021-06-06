@@ -6,39 +6,29 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
-import com.netease.lava.nertc.sdk.NERtcConstants;
 import com.netease.lava.nertc.sdk.NERtcEx;
-import com.netease.lava.nertc.sdk.NERtcOption;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
-import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
-import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
-import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.LWENERtcCallback;
-import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
 public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
-    private boolean enterVideo = false, enterChat = false;
     private boolean videoMuted = false, audioMuted = false;
 
     //TODO: left room confirmation
@@ -65,31 +55,53 @@ public class RoomActivity extends LWEUI {
         return super.onKeyDown(keyCode, event);
     }
 
+//    @Override
+//    public void onNavigateUpClicked() {
+//        EasyAlertDialogHelper.createOkCancelDiolag(this, "确认退出房间吗?", "您真的要退出房间吗?", "确认", "取消", false, new EasyAlertDialogHelper.OnDialogActionListener() {
+//            @Override
+//            public void doCancelAction() {
+//                //TODO: do nothing
+//            }
+//
+//            @Override
+//            public void doOkAction() {
+//                NERtcEx.getInstance().leaveChannel();
+//                NERtcEx.getInstance().release();
+//                RoomActivity.super.onNavigateUpClicked();
+//            }
+//        });
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
+        LWENERtcCallback.getInstance().setRootView(this);
         Intent intent = getIntent();
-        EnterRoomData enterRoomData = new Gson().fromJson(intent.getStringExtra("enterRoomData"), EnterRoomData.class);
-        String roomid = enterRoomData.getRoomid();
-        EnterChatRoomData enterChatRoomData = new EnterChatRoomData(roomid);
+        EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
         layoutVideo = findViewById(R.id.layoutVideo);
         ImageButton buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
         ImageButton buttonAudioSelf = findViewById(R.id.buttonAudioSelf);
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
+        NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
+        FrameLayout videoPlaceholderSelf = findViewById(R.id.videoPlaceholderSelf);
         //TODO: local video & audio muting
-        //TODO: rework icon, muted icons should be red
         buttonVideoSelf.setOnClickListener(view -> {
             if (videoMuted) {
                 //unmute, change icon
                 NERtcEx.getInstance().muteLocalVideoStream(false);
                 buttonVideoSelf.setBackgroundResource(R.drawable.lwe_icon_video);
+                videoSelf.setVisibility(View.VISIBLE);
+                videoPlaceholderSelf.setVisibility(View.GONE);
+                imageAvatarSelf.setVisibility(View.GONE);
                 ToastHelper.showToast(this, R.string.lwe_text_video_unmute);
-            }
-            else {
+            } else {
                 //mute, change icon
                 NERtcEx.getInstance().muteLocalVideoStream(true);
                 buttonVideoSelf.setBackgroundResource(R.drawable.lwe_icon_video_disabled);
+                videoSelf.setVisibility(View.GONE);
+                videoPlaceholderSelf.setVisibility(View.VISIBLE);
+                imageAvatarSelf.setVisibility(View.VISIBLE);
                 ToastHelper.showToast(this, R.string.lwe_text_video_mute);
             }
             videoMuted = !videoMuted;
@@ -100,8 +112,7 @@ public class RoomActivity extends LWEUI {
                 NERtcEx.getInstance().muteLocalAudioStream(false);
                 buttonAudioSelf.setBackgroundResource(R.drawable.lwe_icon_mic);
                 ToastHelper.showToast(this, R.string.lwe_text_audio_unmute);
-            }
-            else {
+            } else {
                 //mute, change icon
                 NERtcEx.getInstance().muteLocalAudioStream(true);
                 buttonAudioSelf.setBackgroundResource(R.drawable.lwe_icon_mic_muted);
@@ -110,55 +121,17 @@ public class RoomActivity extends LWEUI {
             audioMuted = !audioMuted;
         });
         imageAvatarSelf.loadBuddyAvatar(Preferences.getUserAccount());
-        if (!enterChat)
-            enterChatRoom(enterChatRoomData);
-        if (!enterVideo)
-            enterVideoRoom(enterRoomData);
-    }
-
-    private void enterChatRoom(EnterChatRoomData enterChatRoomData) {
-        NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(this) {
-            @Override
-            public void onSuccess(EnterChatRoomResultData data) {
-                //TODO: maxUsers check
-                int maxUsers = (Integer) data.getRoomInfo().getExtension().get("maxUsers");
-                if (data.getRoomInfo().getOnlineUserCount() > maxUsers) {
-                    NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
-                    //TODO: room full notify
-                    finish();
-                    return;
-                }
-                NimUIKit.enterChatRoomSuccess(data, false);
-                ChatRoomInfo info = data.getRoomInfo();
-                String roomId = data.getRoomId();
-                LWEToolBarOptions options = new LWEToolBarOptions(String.format("%s(%s)", info.getName(), roomId), true);
-                setToolBar(R.id.toolbar, options);
-                initMessageFragment(roomId);
-                enterChat = true;
-            }
-
-            @Override
-            public void onFailed(int code) {
-                //TODO: failed to enter room
-                super.onFailed(code);
-            }
-        });
-    }
-
-    private void enterVideoRoom(EnterRoomData enterRoomData) {
-        try {
-            NERtcEx.getInstance().init(getApplicationContext(), LWEConstants.APP_KEY, new LWENERtcCallback(this), null);
-        } catch (Exception e) {
-            //TODO: fail to init sdk, abort
-            e.printStackTrace();
-        }
-        NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
 
         NERtcEx.getInstance().enableLocalVideo(true);
         NERtcEx.getInstance().enableLocalAudio(true);
-        NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
-        enterVideo = true;
+
+        NimUIKit.enterChatRoomSuccess(data, false);
+        ChatRoomInfo info = data.getRoomInfo();
+        String roomId = data.getRoomId();
+        LWEToolBarOptions options = new LWEToolBarOptions(String.format("%s(%s)", info.getName(), roomId), true);
+        setToolBar(R.id.toolbar, options);
+        initMessageFragment(roomId);
     }
 
     private void initMessageFragment(String roomId) {
