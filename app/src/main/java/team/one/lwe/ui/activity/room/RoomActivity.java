@@ -17,6 +17,8 @@ import com.netease.nim.uikit.business.chatroom.fragment.ChatRoomMessageFragment;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
@@ -30,7 +32,7 @@ public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
-    private boolean videoMuted = false, audioMuted = false;
+    private boolean videoMuted = false, audioMuted = false, creator = false;
 
     @Override
     protected boolean isHideInput(View v, MotionEvent ev) {
@@ -64,10 +66,9 @@ public class RoomActivity extends LWEUI {
         finish();
     }
 
-    //TODO: left room confirmation
     @Override
     public void onNavigateUpClicked() {
-        EasyAlertDialogHelper.createOkCancelDiolag(this, "确认退出房间吗?", "您真的要退出房间吗?", "确认", "取消", false, new EasyAlertDialogHelper.OnDialogActionListener() {
+        EasyAlertDialogHelper.createOkCancelDiolag(this, getString(R.string.lwe_title_room_exit), getString(creator ? R.string.lwe_text_room_exit_creator : R.string.lwe_text_room_exit), getString(R.string.lwe_button_confirm), getString(R.string.lwe_button_cancel), false, new EasyAlertDialogHelper.OnDialogActionListener() {
             @Override
             public void doCancelAction() {
                 //do nothing
@@ -75,11 +76,14 @@ public class RoomActivity extends LWEUI {
 
             @Override
             public void doOkAction() {
+                Intent intent = getIntent();
+                EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
+                NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
                 NERtcEx.getInstance().leaveChannel();
                 NERtcEx.getInstance().release();
                 RoomActivity.super.onNavigateUpClicked();
             }
-        });
+        }).show();
     }
 
     @Override
@@ -89,6 +93,7 @@ public class RoomActivity extends LWEUI {
         LWENERtcCallback.getInstance().setRootView(this);
         Intent intent = getIntent();
         EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
+        creator = intent.getBooleanExtra("creator", false);
         layoutVideo = findViewById(R.id.layoutVideo);
         ImageButton buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
         ImageButton buttonAudioSelf = findViewById(R.id.buttonAudioSelf);

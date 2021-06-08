@@ -90,6 +90,7 @@
     <string name="lwe_title_friend_add">添加好友</string>
     <string name="lwe_title_friend_request">好友申请</string>
     <string name="lwe_title_room_create">创建房间</string>
+    <string name="lwe_title_room_exit">退出房间</string>
 
     <!--    文本-->
     <string name="lwe_text_gender">性别</string>
@@ -155,6 +156,9 @@
     <string name="lwe_text_video_unmute_remote">用户视频已显示</string>
     <string name="lwe_text_audio_mute_remote">用户已静音</string>
     <string name="lwe_text_audio_unmute_remote">静音已取消</string>
+    <string name="lwe_text_room_exit">您真的要退出房间吗?</string>
+    <string name="lwe_text_room_exit_creator">您是房主，退出房间后房间将会自动解散。您真的要退出房间吗? </string>
+
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
     <string name="lwe_radio_female">女</string>

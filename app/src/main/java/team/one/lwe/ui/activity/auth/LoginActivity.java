@@ -44,7 +44,8 @@ public class LoginActivity extends LWEUI {
             if (ActivityCompat.checkSelfPermission(this, perm) == PERMISSION_DENIED)
                 missing.add(perm);
         }
-        ActivityCompat.requestPermissions(this, missing.toArray(new String[]{}), 0);
+        if (missing.size() > 0)
+            ActivityCompat.requestPermissions(this, missing.toArray(new String[]{}), 0);
     }
 
     @Override

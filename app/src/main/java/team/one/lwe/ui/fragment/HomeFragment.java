@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
                 }
                 case 1: {
                     String roomId = testInput.getText().toString();
-                    //TODO: rework this
+                    //TODO: rework join room
                     new NetworkThread(view) {
                         @Override
                         public ASResponse doRequest() {
@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onSuccess(ASResponse asp) {
                             EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
-                            enterRoom(enterRoomData);
+                            enterRoom(enterRoomData, false);
                         }
                     }.start();
                 }
@@ -83,11 +83,11 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == 1) { //create room and success
             EnterRoomData enterRoomData = new Gson().fromJson(data.getStringExtra("enterRoomData"), EnterRoomData.class);
-            enterRoom(enterRoomData);
+            enterRoom(enterRoomData, true);
         }
     }
 
-    private void enterRoom(EnterRoomData enterRoomData) {
+    private void enterRoom(EnterRoomData enterRoomData, boolean creator) {
         String roomid = enterRoomData.getRoomid();
         EnterChatRoomData enterChatRoomData = new EnterChatRoomData(roomid);
         NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(getContext()) {
@@ -110,6 +110,7 @@ public class HomeFragment extends Fragment {
                 NERtcEx.getInstance().joinChannel(enterRoomData.getToken(), enterRoomData.getRoomid(), enterRoomData.getUid());
                 Intent intent = new Intent(getActivity(), RoomActivity.class);
                 intent.putExtra("data", (Serializable) data);
+                intent.putExtra("creator", creator);
                 startActivity(intent);
             }
 
