@@ -44,21 +44,21 @@ public class MainActivity extends LWEUI {
 
         //登录状态监听
         Observer<StatusCode> observer = (Observer<StatusCode>) statusCode -> {
-            if (statusCode == StatusCode.KICKOUT){
+            if (statusCode == StatusCode.KICKOUT) {
                 ToastHelper.showToast(getBaseContext(), "被系统踢了");
                 NIMClient.getService(AuthService.class).logout();
                 LWECache.clear();
                 Preferences.cleanCache();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-            } else if (statusCode == StatusCode.KICK_BY_OTHER_CLIENT){
+            } else if (statusCode == StatusCode.KICK_BY_OTHER_CLIENT) {
                 ToastHelper.showToast(getBaseContext(), "被别人踢了。。。。");
                 NIMClient.getService(AuthService.class).logout();
                 LWECache.clear();
                 Preferences.cleanCache();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         };
