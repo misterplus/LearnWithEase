@@ -1,7 +1,10 @@
 package team.one.lwe;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.netease.lava.nertc.sdk.NERtcEx;
@@ -17,6 +20,8 @@ import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 
 import team.one.lwe.config.Preferences;
@@ -28,6 +33,8 @@ public class LWEApplication extends Application {
 
     private static LWEApplication instance;
 
+    private Context NewContext;
+
     public static LWEApplication getInstance() {
         return instance;
     }
@@ -36,6 +43,52 @@ public class LWEApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+
+            @Override
+            public void onActivityCreated(@NotNull Activity activity, Bundle savedInstanceState) {
+                if (activity.getParent() != null) {
+                    NewContext = activity.getParent();
+                } else
+                    NewContext = activity;
+            }
+
+            @Override
+            public void onActivityStarted(@NotNull Activity activity) {
+                if (activity.getParent() != null) {
+                    NewContext = activity.getParent();
+                } else
+                    NewContext = activity;
+            }
+
+            @Override
+            public void onActivityResumed(@NotNull Activity activity) {
+                if (activity.getParent() != null) {
+                    NewContext = activity.getParent();
+                } else
+                    NewContext = activity;
+            }
+
+            @Override
+            public void onActivityPaused(@NotNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(@NotNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(@NotNull Activity activity, @NotNull Bundle outState) {
+            }
+
+            @Override
+            public void onActivityDestroyed(@NotNull Activity activity) {
+
+            }
+        });
+
         NIMClient.init(this, loginInfo(), options());
         if (NIMUtil.isMainProcess(this)) {
             initUiKit();
@@ -65,28 +118,26 @@ public class LWEApplication extends Application {
             @Override
             public void onEvent(StatusCode statusCode) {
                 if (statusCode == StatusCode.KICKOUT) {
-                    //ToastHelper.showToast(LWEApplication.this, "被踢了........");
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-//                    EasyAlertDialogHelper.createOkCancelDiolag(LWEApplication.this.getBaseContext(), "提示", "您的帐号已在另一台设备登录，是否重新登录？",
-//                            "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
-//                                @Override
-//                                public void doCancelAction() {
-//                                    ToastHelper.showToast(getBaseContext(), "退出登录");
-//                                    NIMClient.getService(AuthService.class).logout();
-//                                    LWECache.clear();
-//                                    Preferences.cleanCache();
-//                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    startActivity(intent);
-//                                }
-//
-//                                @Override
-//                                public void doOkAction() {
-//                                    ToastHelper.showToast(getBaseContext(), "重新登录");
-//                                    NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
-//                                }
-//                            }).show();
+                    ToastHelper.showToast(NewContext, "被踢了........");
+                    EasyAlertDialogHelper.createOkCancelDiolag(NewContext, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
+                            "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
+                                @Override
+                                public void doCancelAction() {
+                                    ToastHelper.showToast(NewContext, "退出登录");
+                                    NIMClient.getService(AuthService.class).logout();
+                                    LWECache.clear();
+                                    Preferences.cleanCache();
+                                    Intent intent = new Intent(NewContext, LoginActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void doOkAction() {
+                                    ToastHelper.showToast(NewContext, "重新登录");
+                                    NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
+                                }
+                            }).show();
                 }
             }
         };
