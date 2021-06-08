@@ -66,7 +66,7 @@ public class MainActivity extends LWEUI {
                                 ToastHelper.showToast(getBaseContext(), "重新登录");
                                 NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
                             }
-                        });
+                        }).show();
             }
         };
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(observer, true);
