@@ -63,7 +63,12 @@ public class RoomActivity extends LWEUI {
 
     public void onDisconnect() {
         ToastHelper.showToast(this, R.string.lwe_error_room_disconnect);
-        finish();
+        Intent intent = getIntent();
+        EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
+        NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
+        NimUIKit.exitedChatRoom(data.getRoomId());
+        NERtcEx.getInstance().release();
+        RoomActivity.super.onNavigateUpClicked();
     }
 
     @Override
@@ -79,6 +84,7 @@ public class RoomActivity extends LWEUI {
                 Intent intent = getIntent();
                 EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
                 NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
+                NimUIKit.exitedChatRoom(data.getRoomId());
                 NERtcEx.getInstance().leaveChannel();
                 NERtcEx.getInstance().release();
                 RoomActivity.super.onNavigateUpClicked();
