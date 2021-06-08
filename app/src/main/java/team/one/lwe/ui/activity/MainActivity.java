@@ -44,33 +44,6 @@ public class MainActivity extends LWEUI {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //登录状态监听
-        Observer<StatusCode> observer = (Observer<StatusCode>) statusCode -> {
-            if (statusCode == StatusCode.KICKOUT) {
-                ToastHelper.showToast(getBaseContext(), "被踢了........");
-                EasyAlertDialogHelper.createOkCancelDiolag(this, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
-                        "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
-                            @Override
-                            public void doCancelAction() {
-                                ToastHelper.showToast(getBaseContext(), "退出登录");
-                                NIMClient.getService(AuthService.class).logout();
-                                LWECache.clear();
-                                Preferences.cleanCache();
-                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-
-                            @Override
-                            public void doOkAction() {
-                                ToastHelper.showToast(getBaseContext(), "重新登录");
-                                NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
-                            }
-                        }).show();
-            }
-        };
-        NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(observer, true);
-
         fragmentList = new ArrayList<>();
         fragmentList.add(new HomeFragment());
         fragmentList.add(new FriendFragment());
