@@ -10,11 +10,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
+import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,21 +47,26 @@ public class MainActivity extends LWEUI {
         //登录状态监听
         Observer<StatusCode> observer = (Observer<StatusCode>) statusCode -> {
             if (statusCode == StatusCode.KICKOUT) {
-                ToastHelper.showToast(getBaseContext(), "被系统踢了");
-                NIMClient.getService(AuthService.class).logout();
-                LWECache.clear();
-                Preferences.cleanCache();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            } else if (statusCode == StatusCode.KICK_BY_OTHER_CLIENT) {
-                ToastHelper.showToast(getBaseContext(), "被别人踢了。。。。");
-                NIMClient.getService(AuthService.class).logout();
-                LWECache.clear();
-                Preferences.cleanCache();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                ToastHelper.showToast(getBaseContext(), "被踢了........");
+                EasyAlertDialogHelper.createOkCancelDiolag(this, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
+                        "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
+                            @Override
+                            public void doCancelAction() {
+                                ToastHelper.showToast(getBaseContext(), "退出登录");
+                                NIMClient.getService(AuthService.class).logout();
+                                LWECache.clear();
+                                Preferences.cleanCache();
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void doOkAction() {
+                                ToastHelper.showToast(getBaseContext(), "重新登录");
+                                NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
+                            }
+                        });
             }
         };
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(observer, true);
