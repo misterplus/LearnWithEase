@@ -23,6 +23,20 @@ public class PostUtils {
         return doPostForm(withAuth, "application/x-www-form-urlencoded;charset=utf-8", url, timeout, name, value, parameters);
     }
 
+    public static ASResponse doPostEncoded(boolean withAuth, @NonNull String url, int timeout) {
+        return doPostForm(withAuth, "application/x-www-form-urlencoded;charset=utf-8", url, timeout);
+    }
+
+    private static ASResponse doPostForm(boolean withAuth, String content, String url, int timeout) {
+        HttpRequest req = HttpRequest.post(API_DOMAIN_NAME + url)
+                .header("Content-Type", content)
+                .timeout(timeout);
+        if (withAuth)
+            withAuth(req);
+        HttpResponse resp = req.execute();
+        return new ASResponse(resp.body());
+    }
+
     public static ASResponse doPostJson(boolean withAuth, @NonNull String url, int timeout, @NonNull String body) {
         return doPostBody(withAuth, "application/json;charset=utf-8", url, timeout, body);
     }

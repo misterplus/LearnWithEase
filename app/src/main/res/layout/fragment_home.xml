@@ -44,13 +44,19 @@
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <EditText
-            android:id="@+id/testInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="id"
-            android:inputType="number">
+<!--        <EditText-->
+<!--            android:id="@+id/testInput"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:autofillHints="id"-->
+<!--            android:inputType="number">-->
 
-        </EditText>
+<!--        </EditText>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 </ScrollView>

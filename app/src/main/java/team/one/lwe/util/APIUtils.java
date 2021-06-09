@@ -48,4 +48,9 @@ public class APIUtils {
                 "/user/getAccid", 5000,
                 "uid", uid);
     }
+
+    public static ASResponse fetchRecs() throws IORuntimeException {
+        return PostUtils.doPostEncoded(true,
+                "/room/fetch", 5000);
+    }
 }

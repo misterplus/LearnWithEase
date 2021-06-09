@@ -36,9 +36,9 @@ public class LWEApplication extends Application {
     }
 
     private void initCacheDir() {
-        File avatar = new File(getApplicationContext().getExternalCacheDir() + "/avatar");
-        if (!avatar.exists())
-            avatar.mkdir();
+        File cover = new File(getApplicationContext().getExternalCacheDir() + "/cover");
+        if (!cover.exists())
+            cover.mkdir();
     }
 
     private void initUiKit() {

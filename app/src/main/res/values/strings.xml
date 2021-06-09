@@ -158,6 +158,7 @@
     <string name="lwe_text_audio_unmute_remote">静音已取消</string>
     <string name="lwe_text_room_exit">您真的要退出房间吗?</string>
     <string name="lwe_text_room_exit_creator">您是房主，退出房间后房间将会自动解散。您真的要退出房间吗? </string>
+    <string name="lwe_text_more">更多</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
