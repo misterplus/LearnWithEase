@@ -54,15 +54,12 @@
 
         </RelativeLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-<!--        <EditText-->
-<!--            android:id="@+id/testInput"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:autofillHints="id"-->
-<!--            android:inputType="number">-->
+        </FrameLayout>
 
-<!--        </EditText>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listRoom"
             android:layout_width="match_parent"
