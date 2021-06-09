@@ -15,6 +15,7 @@
     <string name="lwe_hint_friend_add">请输入你要添加的好友名称</string>
     <string name="lwe_hint_reason">请填写验证信息</string>
     <string name="lwe_hint_room_name">请输入房间名称</string>
+    <string name="lwe_hint_room_search">输入房间ID来搜索房间</string>
 
     <!--    按钮文字-->
     <string name="lwe_button_phone_login">手机号登录</string>
