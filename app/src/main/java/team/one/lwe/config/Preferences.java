@@ -10,12 +10,12 @@ public class Preferences {
     private static final String KEY_USER_TOKEN = "token";
     private static final String KEY_VIDEO_QUALITY = "quality_video";
 
-    public static void setVideoQuality(int quality) {
-        saveInt(KEY_VIDEO_QUALITY, quality);
-    }
-
     public static int getVideoQuality() {
         return getInt(KEY_VIDEO_QUALITY, 0);
+    }
+
+    public static void setVideoQuality(int quality) {
+        saveInt(KEY_VIDEO_QUALITY, quality);
     }
 
     public static void saveUserAccount(String account) {

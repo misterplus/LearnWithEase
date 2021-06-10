@@ -37,7 +37,6 @@ import team.one.lwe.bean.RoomType;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.room.CreateRoomActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
-import team.one.lwe.ui.adapter.RoomTypeAdapter;
 import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.APIUtils;

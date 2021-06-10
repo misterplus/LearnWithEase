@@ -34,9 +34,8 @@ import static android.content.pm.PackageManager.PERMISSION_DENIED;
 
 public class LoginActivity extends LWEUI {
 
-    private EditText editTextUsername, editTextPassword;
-
     private static final String[] REQUIRED_PERMS = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private EditText editTextUsername, editTextPassword;
 
     private void requestMissingPermissions() {
         List<String> missing = new ArrayList<>();

@@ -31,6 +31,7 @@
     <string name="lwe_button_decline">拒绝</string>
     <string name="lwe_button_log_out">退出登录</string>
     <string name="lwe_button_create">创建</string>
+    <string name="lwe_button_join">加入</string>
 
     <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
@@ -180,6 +181,8 @@
     <string name="lwe_placeholder_username">ID</string>
     <string name="lwe_placeholder_signature">签名</string>
     <string name="lwe_placeholder_age">年龄</string>
+    <string name="lwe_placeholder_room_name">房间名称</string>
+    <string name="lwe_placeholder_room_tag">标签</string>
 
     <string-array name="lwe_spinner_max_users">
         <item>2人</item>

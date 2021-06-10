@@ -12,7 +12,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:text="@string/lwe_text_same_school"
+            android:text="@string/lwe_placeholder_room_name"
             android:textSize="16sp" />
 
         <ImageView
@@ -22,7 +22,7 @@
             android:layout_marginStart="10dp"
             android:layout_below="@id/textRoomName"
             android:padding="3dp"
-            android:src="@drawable/nim_arrow_right"
+            android:background="@drawable/nim_default_img"
             android:contentDescription="@string/empty" />
 
         <com.netease.nim.uikit.common.ui.imageview.HeadImageView
@@ -68,6 +68,18 @@
             android:padding="3dp"
             android:src="@drawable/nim_avatar_default"
             android:contentDescription="@string/empty" />
+
+        <LinearLayout
+            android:id="@+id/layoutTags"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/imageCover"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="3dp"
+            android:divider="@drawable/lwe_transparent_divider_thin"
+            android:showDividers="middle"
+            android:layout_height="wrap_content">
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonMore"

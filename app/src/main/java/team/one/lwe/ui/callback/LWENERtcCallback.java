@@ -26,12 +26,11 @@ import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
-import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.activity.room.RoomActivity;
 import team.one.lwe.util.APIUtils;
 
 public class LWENERtcCallback implements NERtcCallbackEx {
-    
+
     private static final LWENERtcCallback instance = new LWENERtcCallback();
     private final Map<Long, Integer> viewIds = new HashMap<>();
     private final Map<Long, Boolean> videoSub = new HashMap<>();
@@ -185,9 +184,9 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     public void onUserAudioStop(long uid) {
         onUserAudioMute(uid, true);
     }
-    
+
     private NERtcRemoteVideoStreamType getVideoQuality() {
-       return NERtcRemoteVideoStreamType.values()[Preferences.getVideoQuality()];
+        return NERtcRemoteVideoStreamType.values()[Preferences.getVideoQuality()];
     }
 
     @Override

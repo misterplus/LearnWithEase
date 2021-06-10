@@ -1,15 +1,13 @@
 package team.one.lwe.ui.adapter;
 
 import android.content.Context;
-import android.net.Uri;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
@@ -27,13 +25,14 @@ import java.io.File;
 import java.util.List;
 
 import team.one.lwe.R;
+import team.one.lwe.bean.StudyRoomInfo;
 import team.one.lwe.ui.callback.RegularCallback;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
-    private final List<String> roomIds;
+    private final List<StudyRoomInfo> rooms;
 
-    public RoomAdapter(List<String> roomIds) {
-        this.roomIds = roomIds;
+    public RoomAdapter(List<StudyRoomInfo> rooms) {
+        this.rooms = rooms;
     }
 
     @Override
@@ -44,8 +43,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NotNull ViewHolder holder, int position) {
-        String roomId = roomIds.get(position);
+        StudyRoomInfo info = rooms.get(position);
+        String roomId = info.getRoomId();
         Context context = holder.imageCover.getContext();
+
+        //fetch room name and cover
         NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(context) {
             @Override
             public void onSuccess(ChatRoomInfo room) {
@@ -58,12 +60,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 NIMClient.getService(NosService.class).download(url, nosThumbParam, cover.getAbsolutePath()).setCallback(new RegularCallback<Void>(context) {
                     @Override
                     public void onSuccess(Void param) {
-                        Uri uri;
-                        if (Build.VERSION.SDK_INT >= 24)
-                            uri = FileProvider.getUriForFile(context, "team.one.lwe.ipc.provider.file", cover);
-                        else
-                            uri = Uri.fromFile(cover);
-                        holder.imageCover.setImageURI(uri);
+                        holder.imageCover.setBackground(Drawable.createFromPath(cover.getAbsolutePath()));
                     }
 
                     @Override
@@ -80,6 +77,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 super.onFailed(code);
             }
         });
+        //fetch user avatars
         NIMClient.getService(ChatRoomService.class).fetchRoomMembers(roomId, MemberQueryType.ONLINE_NORMAL, 0, 4).setCallback(new RegularCallback<List<ChatRoomMember>>(context) {
             @Override
             public void onSuccess(List<ChatRoomMember> list) {
@@ -94,11 +92,22 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 super.onFailed(code);
             }
         });
+
+        int timeStudy = info.getTimeStudy();
+        int timeRest = info.getTimeRest();
+        int contentStudy = info.getContentStudy();
+        int gender = info.getGender();
+        String province = info.getProvince();
+        String city = info.getCity();
+        String area = info.getArea();
+        String school = info.getSchool();
+
+
     }
 
     @Override
     public int getItemCount() {
-        return roomIds.size();
+        return rooms.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
