@@ -34,6 +34,7 @@ public class MineFragment extends Fragment {
         ImageButton buttonEditProfile = view.findViewById(R.id.buttonEditProfile);
         ImageButton buttonPreference = view.findViewById(R.id.buttonPreference);
         ImageButton buttonSetting = view.findViewById(R.id.buttonSetting);
+
         buttonEditProfile.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditProfileActivity.class)));
         buttonPreference.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditPrefActivity.class)));
         buttonSetting.setOnClickListener(view1 -> startActivity(new Intent(getContext(), SettingActivity.class)));
@@ -44,6 +45,7 @@ public class MineFragment extends Fragment {
         imageAvatar.loadBuddyAvatar(account);
         textUsername.setText(account);
         textPersonalSignature.setText(signature);
+        textPersonalSignature.setSelected(true);
         return view;
     }
 }

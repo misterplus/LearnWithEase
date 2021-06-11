@@ -35,7 +35,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:background="@color/white">
 
             <com.netease.nim.uikit.common.ui.imageview.HeadImageView
@@ -60,14 +60,14 @@
                 android:textSize="22sp" />
 
             <TextView
-                android:id="@+id/textInfo"
+                android:id="@+id/textUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="18dp"
                 android:layout_toEndOf="@id/imageAvatar"
-                android:text="@string/lwe_placeholder_info"
+                android:text="@string/lwe_placeholder_username"
                 android:textColor="@color/text_grey"
                 android:textSize="16sp" />
 
@@ -75,30 +75,31 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@color/white">
 
+            <ImageView
+                android:id="@+id/imageUserInfo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/lwe_icon_username" />
+
             <TextView
+                android:id="@+id/textUserInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
-                android:text="@string/lwe_text_signature"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textSignature"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
-                android:background="@color/transparent"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
+                android:layout_toEndOf="@id/imageUserInfo"
+                android:hint="@string/lwe_placeholder_info"
                 android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -106,13 +107,45 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageSignature"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/lwe_icon_preference" />
+
+            <TextView
+                android:id="@+id/textSignature"
+                android:layout_width="282dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/imageSignature"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:hint="@string/lwe_text_signature"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:background="@color/white">
 
             <ImageView
                 android:id="@+id/imageCity"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
@@ -120,6 +153,7 @@
                 android:src="@drawable/lwe_icon_city" />
 
             <TextView
+                android:id="@+id/textCityPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -132,15 +166,14 @@
             <TextView
                 android:id="@+id/textCity"
                 android:layout_width="160dp"
-                android:layout_alignParentEnd="true"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:gravity="end"
-                android:layout_marginEnd="20dp"
+                android:gravity="right"
+                android:layout_marginStart="40dp"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
-                android:scrollHorizontally="true"
+                android:layout_toEndOf="@id/textCityPicker"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -149,14 +182,14 @@
         <RelativeLayout
             android:id="@+id/rowSchool"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@color/white"
             android:visibility="gone">
 
             <ImageView
                 android:id="@+id/imageSchool"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="15dp"
@@ -164,6 +197,7 @@
                 android:src="@drawable/lwe_icon_school" />
 
             <TextView
+                android:id="@+id/textSchoolPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -177,23 +211,17 @@
                 android:id="@+id/textSchool"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="40dp"
                 android:gravity="end"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
-                android:scrollHorizontally="true"
+                android:layout_toEndOf="@id/textSchoolPicker"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/white" />
 
         <RelativeLayout
             android:layout_width="match_parent"

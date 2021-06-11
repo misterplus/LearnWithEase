@@ -119,7 +119,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:background="@color/white">
 
             <TextView
@@ -134,7 +134,7 @@
 
             <EditText
                 android:id="@+id/editTextSignature"
-                android:layout_width="wrap_content"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
@@ -144,9 +144,9 @@
                 android:gravity="end"
                 android:hint="@string/lwe_placeholder_signature"
                 android:imeOptions="actionDone"
-                android:inputType="textNoSuggestions"
+                android:inputType="textMultiLine"
                 android:selectAllOnFocus="true"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

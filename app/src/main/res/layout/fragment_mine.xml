@@ -56,12 +56,14 @@
 
         <TextView
             android:id="@+id/textPersonalSignature"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="18dp"
             android:layout_toEndOf="@id/imageAvatar"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="@string/lwe_placeholder_signature"
             android:textColor="@color/text_grey"
             android:textSize="16sp" />
