@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -25,7 +26,7 @@
                 android:layout_marginEnd="60dp"
                 android:layout_marginBottom="10dp"
                 android:autofillHints="username"
-                android:background="@color/white"
+                android:background="@drawable/nim_message_input_edittext_box"
                 android:hint="@string/lwe_hint_room_search"
                 android:imeOptions="actionSearch"
                 android:inputType="number"
@@ -43,14 +44,14 @@
 
             <ImageButton
                 android:id="@+id/buttonRoomNew"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:layout_centerVertical="true"
                 android:background="@color/transparent"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/nim_message_input_plus" />
+                android:src="@drawable/lwe_icon_room_add" />
 
         </RelativeLayout>
 
@@ -58,25 +59,27 @@
             android:id="@+id/searchedResult"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:background="@color/white"
             android:visibility="gone"
-            android:background="@color/white">
+            tools:visibility="visible">
+
             <ImageView
                 android:id="@+id/imageCover"
                 android:layout_width="120dp"
                 android:layout_height="90dp"
                 android:layout_marginStart="10dp"
-                android:padding="3dp"
                 android:layout_centerVertical="true"
                 android:background="@drawable/nim_default_img"
-                android:contentDescription="@string/empty" />
+                android:contentDescription="@string/empty"
+                android:padding="3dp" />
 
             <TextView
                 android:id="@+id/textRoomName"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/imageCover"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/imageCover"
                 android:text="@string/lwe_placeholder_room_name"
                 android:textSize="24sp" />
 
@@ -90,51 +93,50 @@
                 <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                     android:id="@+id/imageAvatar1"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/nim_avatar_default"
-                    android:contentDescription="@string/empty" />
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty"
+                    android:src="@drawable/nim_avatar_default" />
 
                 <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                     android:id="@+id/imageAvatar2"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="5dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/nim_avatar_default"
-                    android:contentDescription="@string/empty" />
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty"
+                    android:src="@drawable/nim_avatar_default" />
 
                 <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                     android:id="@+id/imageAvatar3"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/nim_avatar_default"
-                    android:contentDescription="@string/empty" />
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty"
+                    android:src="@drawable/nim_avatar_default" />
 
                 <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                     android:id="@+id/imageAvatar4"
-                    android:layout_weight="1"
-                    android:layout_marginTop="5dp"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/nim_avatar_default"
-                    android:contentDescription="@string/empty" />
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/empty"
+                    android:src="@drawable/nim_avatar_default" />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/buttonJoin"
-                android:layout_width="60dp"
-                android:layout_height="35dp"
+                android:id="@+id/buttonClose"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@id/textRoomName"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
-                android:layout_alignTop="@id/textRoomName"
-                android:background="@drawable/lwe_button_round_blue"
+                android:background="@drawable/nim_grey_delete_icon"
                 android:contentDescription="@string/empty"
-                android:text="@string/lwe_button_join"
                 android:textColor="@color/white"
                 android:textSize="22sp" />
 
@@ -147,7 +149,8 @@
             android:divider="@drawable/lwe_background_grey"
             android:orientation="vertical"
             android:showDividers="middle"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <RelativeLayout
                 android:layout_width="match_parent"

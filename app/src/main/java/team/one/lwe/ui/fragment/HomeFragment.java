@@ -2,6 +2,7 @@ package team.one.lwe.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,12 +40,15 @@ import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 import java.io.Serializable;
 import java.util.List;
 
+import team.one.lwe.LWECache;
 import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.bean.StudyRoomInfo;
 import team.one.lwe.network.NetworkThread;
+import team.one.lwe.ui.activity.MainActivity;
+import team.one.lwe.ui.activity.auth.LoginActivity;
 import team.one.lwe.ui.activity.room.CreateRoomActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
 import team.one.lwe.ui.adapter.RoomAdapter;
@@ -66,8 +70,8 @@ public class HomeFragment extends Fragment {
         RecyclerView listRoom = view.findViewById(R.id.listRoom);
         RelativeLayout searchedResult = view.findViewById(R.id.searchedResult);
         ImageView imageCover = searchedResult.findViewById(R.id.imageCover);
+        ImageButton buttonClose = searchedResult.findViewById(R.id.buttonClose);
         TextView textRoomName = searchedResult.findViewById(R.id.textRoomName);
-        Button buttonJoin = searchedResult.findViewById(R.id.buttonJoin);
         LinearLayout noResult = view.findViewById(R.id.noResult);
         HeadImageView[] imageAvatars = new HeadImageView[4];
         imageAvatars[0] = searchedResult.findViewById(R.id.imageAvatar1);
@@ -129,6 +133,10 @@ public class HomeFragment extends Fragment {
                         ToastHelper.showToast(context, R.string.lwe_error_fetch_room_info);
                         noResult.setVisibility(View.VISIBLE);
                         searchedResult.setVisibility(View.GONE);
+                        new Handler(msg -> {
+                            noResult.setVisibility(View.GONE);
+                            return true;
+                        }).sendEmptyMessageDelayed(0, 5000);
                         super.onFailed(code);
                     }
                 });
@@ -137,24 +145,34 @@ public class HomeFragment extends Fragment {
             }
             return false;
         });
-        buttonJoin.setOnClickListener(v -> new NetworkThread(view) {
+        searchedResult.setOnClickListener(new View.OnClickListener() {
             @Override
-            public ASResponse doRequest() {
-                return APIUtils.getRoomToken(roomId);
-            }
+            public void onClick(View v) {
+                //TODO: check room validity
+                new NetworkThread(view) {
+                    @Override
+                    public ASResponse doRequest() {
+                        return APIUtils.getRoomToken(roomId);
+                    }
 
-            @Override
-            public void onSuccess(ASResponse asp) {
-                EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
-                enterRoom(enterRoomData, false);
-            }
+                    @Override
+                    public void onSuccess(ASResponse asp) {
+                        EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
+                        enterRoom(enterRoomData, false);
+                    }
 
-            @Override
-            public void onFailed(int code, String desc) {
-                //TODO: join room failed
-                super.onFailed(code, desc);
+                    @Override
+                    public void onFailed(int code, String desc) {
+                        //TODO: join room failed
+                        super.onFailed(code, desc);
+                    }
+                }.start();
             }
-        }.start());
+        });
+        buttonClose.setOnClickListener(view1 -> {
+            searchedResult.setVisibility(View.GONE);
+            noResult.setVisibility(View.GONE);
+        });
         //menu is probably deprecated here, since matchmaking is not gonna get implemented lol
 //        List<PopupMenuItem> menuItems = new ArrayList<>();
 //        menuItems.add(new PopupMenuItem(0, "创建房间"));

@@ -58,7 +58,6 @@
         <activity android:name=".ui.activity.room.RoomActivity" />
         <activity android:name=".ui.activity.room.CreateRoomActivity" />
         <activity android:name=".ui.activity.setting.UpdatePasswordActivity" />
-        <activity android:name=".ui.activity.room.SearchRoomActivity" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
