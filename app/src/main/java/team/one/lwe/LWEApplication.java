@@ -33,7 +33,7 @@ public class LWEApplication extends Application {
 
     private static LWEApplication instance;
 
-    private Context NewContext;
+    private Context current;
 
     public static LWEApplication getInstance() {
         return instance;
@@ -48,25 +48,25 @@ public class LWEApplication extends Application {
             @Override
             public void onActivityCreated(@NotNull Activity activity, Bundle savedInstanceState) {
                 if (activity.getParent() != null) {
-                    NewContext = activity.getParent();
+                    current = activity.getParent();
                 } else
-                    NewContext = activity;
+                    current = activity;
             }
 
             @Override
             public void onActivityStarted(@NotNull Activity activity) {
                 if (activity.getParent() != null) {
-                    NewContext = activity.getParent();
+                    current = activity.getParent();
                 } else
-                    NewContext = activity;
+                    current = activity;
             }
 
             @Override
             public void onActivityResumed(@NotNull Activity activity) {
                 if (activity.getParent() != null) {
-                    NewContext = activity.getParent();
+                    current = activity.getParent();
                 } else
-                    NewContext = activity;
+                    current = activity;
             }
 
             @Override
@@ -118,23 +118,23 @@ public class LWEApplication extends Application {
             @Override
             public void onEvent(StatusCode statusCode) {
                 if (statusCode == StatusCode.KICKOUT) {
-                    ToastHelper.showToast(NewContext, "被踢了........");
-                    EasyAlertDialogHelper.createOkCancelDiolag(NewContext, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
+                    ToastHelper.showToast(current, "被踢了........");
+                    EasyAlertDialogHelper.createOkCancelDiolag(current, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
                             "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
                                 @Override
                                 public void doCancelAction() {
-                                    ToastHelper.showToast(NewContext, "退出登录");
+                                    ToastHelper.showToast(current, "退出登录");
                                     NIMClient.getService(AuthService.class).logout();
                                     LWECache.clear();
                                     Preferences.cleanCache();
-                                    Intent intent = new Intent(NewContext, LoginActivity.class);
+                                    Intent intent = new Intent(current, LoginActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 }
 
                                 @Override
                                 public void doOkAction() {
-                                    ToastHelper.showToast(NewContext, "重新登录");
+                                    ToastHelper.showToast(current, "重新登录");
                                     NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
                                 }
                             }).show();
