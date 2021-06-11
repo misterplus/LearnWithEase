@@ -62,4 +62,16 @@ public class PostUtils {
         HttpResponse resp = req.execute();
         return new ASResponse(resp.body());
     }
+
+    public static ASResponse doPostBodyForm(boolean withAuth, @NonNull String url, int timeout, @NonNull String body, @NonNull String name, @NonNull Object value, @NonNull Object... parameters) {
+        HttpRequest req = HttpRequest.post(API_DOMAIN_NAME + url)
+                .header("Content-Type", "application/json;charset=utf-8")
+                .body(body)
+                .form(name, value, parameters)
+                .timeout(timeout);
+        if (withAuth)
+            withAuth(req);
+        HttpResponse resp = req.execute();
+        return new ASResponse(resp.body());
+    }
 }

@@ -11,10 +11,12 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
@@ -25,6 +27,7 @@ import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +37,11 @@ import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.bean.RoomType;
+import team.one.lwe.bean.StudyRoomInfo;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.room.CreateRoomActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
+import team.one.lwe.ui.adapter.RoomAdapter;
 import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.APIUtils;
@@ -79,10 +84,10 @@ public class HomeFragment extends Fragment {
         });
         buttonRoomNew.setOnClickListener(v -> menu.show(buttonRoomNew));
 
-        RecyclerView recyclerView = view.findViewById(R.id.listRoom);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        RecyclerView listRoom = view.findViewById(R.id.listRoom);
+        GridLayoutManager grid = new GridLayoutManager(getContext(), 2);
+        grid.setOrientation(LinearLayoutManager.VERTICAL);
+        listRoom.setLayoutManager(grid);
         new NetworkThread(buttonRoomNew) {
             @Override
             public ASResponse doRequest() {
@@ -91,13 +96,9 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                List<RoomType> roomTypes = new ArrayList<>();
-                JSONObject recs = asp.getInfo();
-                for (String key : recs.keySet()) {
-                    roomTypes.add(new RoomType(recs.getJSONArray(key).toList(String.class), key));
-                }
-                RoomTypeAdapter adapter = new RoomTypeAdapter(roomTypes, HomeFragment.this.getActivity());
-                recyclerView.setAdapter(adapter);
+                List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {}.getType());
+                RoomAdapter adapter = new RoomAdapter(recs);
+                listRoom.setAdapter(adapter);
             }
         }.start();
         return view;

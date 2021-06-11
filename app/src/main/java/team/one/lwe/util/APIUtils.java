@@ -1,12 +1,15 @@
 package team.one.lwe.util;
 
 import com.google.gson.Gson;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.uinfo.UserService;
 
 import cn.hutool.core.io.IORuntimeException;
 import lombok.NonNull;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.RoomBasic;
 import team.one.lwe.bean.User;
+import team.one.lwe.config.Preferences;
 
 public class APIUtils {
 
@@ -50,7 +53,9 @@ public class APIUtils {
     }
 
     public static ASResponse fetchRecs() throws IORuntimeException {
-        return PostUtils.doPostEncoded(true,
-                "/room/fetch", 5000);
+        return PostUtils.doPostBodyForm(true,
+                "/room/fetch", 5000,
+                NIMClient.getService(UserService.class).getUserInfo(Preferences.getUserAccount()).getExtension(),
+                "gender", NIMClient.getService(UserService.class).getUserInfo(Preferences.getUserAccount()).getGenderEnum().getValue());
     }
 }
