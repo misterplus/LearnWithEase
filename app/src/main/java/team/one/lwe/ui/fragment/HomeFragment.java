@@ -111,8 +111,8 @@ public class HomeFragment extends Fragment {
 
                             @Override
                             public void onFailed(int code) {
-                                //TODO: on failed fetching avatars
-                                super.onFailed(code);
+                                DialogMaker.dismissProgressDialog();
+                                ToastHelper.showToast(context, R.string.lwe_error_avatar);
                             }
                         });
 
@@ -159,8 +159,7 @@ public class HomeFragment extends Fragment {
 
                     @Override
                     public void onFailed(int code, String desc) {
-                        //TODO: join room failed
-                        super.onFailed(code, desc);
+                        ToastHelper.showToast(getContext(), R.string.lwe_error_join_room);
                     }
                 }.start();
             }

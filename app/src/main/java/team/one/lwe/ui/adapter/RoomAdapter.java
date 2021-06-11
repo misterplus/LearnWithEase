@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
@@ -67,8 +68,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
             @Override
             public void onFailed(int code) {
-                //TODO: on failed fetching room info
-                super.onFailed(code);
+                ToastHelper.showToast(context, R.string.lwe_error_fetch_room_info);
             }
         });
         //fetch user avatars
@@ -82,8 +82,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
             @Override
             public void onFailed(int code) {
-                //TODO: on failed fetching avatars
-                super.onFailed(code);
+                ToastHelper.showToast(context, R.string.lwe_error_avatar);
             }
         });
 
