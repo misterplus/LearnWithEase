@@ -49,6 +49,7 @@
         <activity android:name=".ui.activity.friend.AddFriendActivity" />
         <activity android:name=".ui.activity.friend.AddVerifyActivity" />
         <activity android:name=".ui.activity.friend.FriendRequestActivity" />
+        <activity android:name=".ui.activity.friend.FriendInfoActivity" />
         <activity android:name=".ui.activity.mine.EditPrefActivity" />
         <activity android:name=".ui.activity.mine.EditProfileActivity" />
         <activity android:name=".ui.activity.mine.SettingActivity" />
