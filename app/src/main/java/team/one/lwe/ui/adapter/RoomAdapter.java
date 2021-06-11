@@ -136,6 +136,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
             holder.layoutTags.addView(tag);
         }
 
+        //TODO: check room validity
+        //TODO: join room
     }
 
     @Override

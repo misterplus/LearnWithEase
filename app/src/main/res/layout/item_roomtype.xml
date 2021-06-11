@@ -12,9 +12,9 @@
             android:id="@+id/textType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="30dp"
-            android:layout_centerVertical="true"
             android:text="@string/lwe_text_same_school"
             android:textSize="16sp" />
 
@@ -22,8 +22,8 @@
             android:id="@+id/textMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@id/buttonMore"
             android:text="@string/lwe_text_more"
@@ -36,8 +36,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:padding="3dp"
-            android:background="@drawable/nim_arrow_right" />
+            android:background="@drawable/nim_arrow_right"
+            android:padding="3dp" />
 
     </RelativeLayout>
 

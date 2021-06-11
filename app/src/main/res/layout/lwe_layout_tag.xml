@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/textTag"
-    android:textSize="16sp"
-    android:textColor="@color/text_grey"
-    android:text="@string/lwe_placeholder_room_tag"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/lwe_border_text"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-</TextView>
+    android:text="@string/lwe_placeholder_room_tag"
+    android:textColor="@color/text_grey"
+    android:textSize="16sp"></TextView>
