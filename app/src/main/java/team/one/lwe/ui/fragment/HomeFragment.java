@@ -6,7 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,24 +26,23 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
-import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
+import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
+import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
+import com.netease.nimlib.sdk.chatroom.constant.MemberQueryType;
+import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
+import com.netease.nimlib.sdk.chatroom.model.ChatRoomMember;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
-import cn.hutool.json.JSONObject;
 import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.EnterRoomData;
-import team.one.lwe.bean.RoomType;
 import team.one.lwe.bean.StudyRoomInfo;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.room.CreateRoomActivity;
@@ -45,50 +51,33 @@ import team.one.lwe.ui.adapter.RoomAdapter;
 import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.util.APIUtils;
+import team.one.lwe.util.ImgUtils;
 
 public class HomeFragment extends Fragment {
+
+    private String roomId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ImageButton buttonRoomNew = view.findViewById(R.id.buttonRoomNew);
-        //EditText testInput = view.findViewById(R.id.testInput);
-
-        List<PopupMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new PopupMenuItem(0, "创建房间"));
-        menuItems.add(new PopupMenuItem(1, "加入房间"));
-
-        NIMPopupMenu menu = new NIMPopupMenu(getContext(), menuItems, item -> {
-            switch (item.getTag()) {
-                case 0: {
-                    startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0);
-                    break;
-                }
-                case 1: {
-                    //TODO: rework join room
-                    String roomId = "";
-                    new NetworkThread(view) {
-                        @Override
-                        public ASResponse doRequest() {
-                            return APIUtils.getRoomToken(roomId);
-                        }
-
-                        @Override
-                        public void onSuccess(ASResponse asp) {
-                            EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
-                            enterRoom(enterRoomData, false);
-                        }
-                    }.start();
-                }
-            }
-        });
-        buttonRoomNew.setOnClickListener(v -> menu.show(buttonRoomNew));
-
+        EditText editTextSearchRoom = view.findViewById(R.id.editTextSearchRoom);
         RecyclerView listRoom = view.findViewById(R.id.listRoom);
+        RelativeLayout searchedResult = view.findViewById(R.id.searchedResult);
+        ImageView imageCover = searchedResult.findViewById(R.id.imageCover);
+        TextView textRoomName = searchedResult.findViewById(R.id.textRoomName);
+        Button buttonJoin = searchedResult.findViewById(R.id.buttonJoin);
+        LinearLayout noResult = view.findViewById(R.id.noResult);
+        HeadImageView[] imageAvatars = new HeadImageView[4];
+        imageAvatars[0] = searchedResult.findViewById(R.id.imageAvatar1);
+        imageAvatars[1] = searchedResult.findViewById(R.id.imageAvatar2);
+        imageAvatars[2] = searchedResult.findViewById(R.id.imageAvatar3);
+        imageAvatars[3] = searchedResult.findViewById(R.id.imageAvatar4);
         GridLayoutManager grid = new GridLayoutManager(getContext(), 2);
         grid.setOrientation(LinearLayoutManager.VERTICAL);
         listRoom.setLayoutManager(grid);
-        new NetworkThread(buttonRoomNew) {
+        new NetworkThread(view) {
             @Override
             public ASResponse doRequest() {
                 return APIUtils.fetchRecs();
@@ -96,11 +85,107 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onSuccess(ASResponse asp) {
-                List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {}.getType());
+                List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {
+                }.getType());
                 RoomAdapter adapter = new RoomAdapter(recs);
                 listRoom.setAdapter(adapter);
             }
         }.start();
+
+        editTextSearchRoom.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_search));
+                roomId = editTextSearchRoom.getText().toString();
+                NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(getContext()) {
+
+                    @Override
+                    public void onSuccess(ChatRoomInfo info) {
+                        NIMClient.getService(ChatRoomService.class).fetchRoomMembers(roomId, MemberQueryType.ONLINE_NORMAL, 0, 4).setCallback(new RegularCallback<List<ChatRoomMember>>(context) {
+                            @Override
+                            public void onSuccess(List<ChatRoomMember> list) {
+                                DialogMaker.dismissProgressDialog();
+                                for (int i = 0; i < list.size(); i++) {
+                                    imageAvatars[i].loadBuddyAvatar(list.get(i).getAccount());
+                                }
+                            }
+
+                            @Override
+                            public void onFailed(int code) {
+                                //TODO: on failed fetching avatars
+                                super.onFailed(code);
+                            }
+                        });
+
+
+                        ImgUtils.loadRoomCover(getContext(), imageCover, (String) info.getExtension().get("coverUrl"));
+                        textRoomName.setText(info.getName());
+                        searchedResult.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onFailed(int code) {
+                        //TODO: room not found or network issue
+                        DialogMaker.dismissProgressDialog();
+                        ToastHelper.showToast(context, R.string.lwe_error_fetch_room_info);
+                        noResult.setVisibility(View.VISIBLE);
+                        searchedResult.setVisibility(View.GONE);
+                        super.onFailed(code);
+                    }
+                });
+
+                return true;
+            }
+            return false;
+        });
+        buttonJoin.setOnClickListener(v -> new NetworkThread(view) {
+            @Override
+            public ASResponse doRequest() {
+                return APIUtils.getRoomToken(roomId);
+            }
+
+            @Override
+            public void onSuccess(ASResponse asp) {
+                EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
+                enterRoom(enterRoomData, false);
+            }
+
+            @Override
+            public void onFailed(int code, String desc) {
+                //TODO: join room failed
+                super.onFailed(code, desc);
+            }
+        }.start());
+        //menu is probably deprecated here, since matchmaking is not gonna get implemented lol
+//        List<PopupMenuItem> menuItems = new ArrayList<>();
+//        menuItems.add(new PopupMenuItem(0, "创建房间"));
+//        menuItems.add(new PopupMenuItem(1, "加入房间"));
+//        NIMPopupMenu menu = new NIMPopupMenu(getContext(), menuItems, item -> {
+//            switch (item.getTag()) {
+//                case 0: {
+//                    startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0);
+//                    break;
+//                }
+//                case 1: {
+//                    String roomId = "";
+//                    new NetworkThread(view) {
+//                        @Override
+//                        public ASResponse doRequest() {
+//                            return APIUtils.getRoomToken(roomId);
+//                        }
+//
+//                        @Override
+//                        public void onSuccess(ASResponse asp) {
+//                            EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
+//                            enterRoom(enterRoomData, false);
+//                        }
+//                    }.start();
+//                }
+//            }
+//        });
+
+        //button is only for creating rooms now
+        buttonRoomNew.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0));
+
         return view;
     }
 

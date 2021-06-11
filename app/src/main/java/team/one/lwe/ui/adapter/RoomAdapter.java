@@ -2,7 +2,6 @@ package team.one.lwe.ui.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +18,14 @@ import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.chatroom.constant.MemberQueryType;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomMember;
-import com.netease.nimlib.sdk.nos.NosService;
-import com.netease.nimlib.sdk.nos.model.NosThumbParam;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.Preference;
@@ -39,6 +33,7 @@ import team.one.lwe.bean.StudyRoomInfo;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.ui.callback.RegularCallback;
+import team.one.lwe.util.ImgUtils;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     private final List<StudyRoomInfo> rooms;
@@ -67,22 +62,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
             public void onSuccess(ChatRoomInfo room) {
                 holder.textRoomName.setText(room.getName());
                 String url = (String) room.getExtension().get("coverUrl");
-                NosThumbParam nosThumbParam = new NosThumbParam();
-                nosThumbParam.height = 90;
-                nosThumbParam.width = 120;
-                File cover = new File(context.getExternalCacheDir() + "/cover", String.format("%s.png", url));
-                NIMClient.getService(NosService.class).download(url, nosThumbParam, cover.getAbsolutePath()).setCallback(new RegularCallback<Void>(context) {
-                    @Override
-                    public void onSuccess(Void param) {
-                        holder.imageCover.setBackground(Drawable.createFromPath(cover.getAbsolutePath()));
-                    }
-
-                    @Override
-                    public void onFailed(int code) {
-                        //TODO: on failed downloading room cover
-                        super.onFailed(code);
-                    }
-                });
+                ImgUtils.loadRoomCover(context, holder.imageCover, url);
             }
 
             @Override
@@ -134,8 +114,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 tags.add(city);
             if (area.length() <= 5 && area.equals(userInfo.getArea()))
                 tags.add(area);
-        }
-        else {
+        } else {
             if (province.length() <= 5)
                 tags.add(province);
             if (city.length() <= 5)
