@@ -113,20 +113,8 @@
                     android:id="@+id/radioVideoQualityHigh"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:checked="true"
                     android:text="@string/lwe_radio_high"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <RadioButton
-                    android:id="@+id/radioVideoQualityMiddle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/lwe_radio_mid"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -134,8 +122,6 @@
                     android:id="@+id/radioVideoQualityLow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:text="@string/lwe_radio_low"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
