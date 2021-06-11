@@ -223,7 +223,7 @@ public class RegisterActivity extends LWEUI {
             int age = Integer.parseInt(editTextAge.getText().toString());
             int bak = spinnerEdu.getSelectedItemPosition();
             int grade = spinnerGrade.getSelectedItemPosition();
-            if (!UserUtils.isUsernameValid(username) ){
+            if (!UserUtils.isUsernameValid(username)) {
                 ToastHelper.showToast(this, R.string.lwe_error_login_format_username);
             } else if (!UserUtils.isPasswordValid(password)) {
                 ToastHelper.showToast(this, R.string.lwe_error_login_format_password);

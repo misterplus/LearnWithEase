@@ -38,7 +38,7 @@ public class SettingActivity extends LWEUI {
             LWECache.clear();
             Preferences.cleanCache();
             Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
     }

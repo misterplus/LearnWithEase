@@ -1,6 +1,5 @@
 package team.one.lwe.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,23 +8,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.netease.nim.uikit.common.ToastHelper;
-import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
-import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.Observer;
-import com.netease.nimlib.sdk.StatusCode;
-import com.netease.nimlib.sdk.auth.AuthService;
-import com.netease.nimlib.sdk.auth.AuthServiceObserver;
-import com.netease.nimlib.sdk.auth.LoginInfo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import team.one.lwe.LWECache;
 import team.one.lwe.R;
-import team.one.lwe.config.Preferences;
-import team.one.lwe.ui.activity.auth.LoginActivity;
 import team.one.lwe.ui.fragment.FriendFragment;
 import team.one.lwe.ui.fragment.HomeFragment;
 import team.one.lwe.ui.fragment.MineFragment;

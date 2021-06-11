@@ -47,7 +47,7 @@ public class LoginActivity extends LWEUI {
         buttonLogin.setOnClickListener(view1 -> {
             String username = editTextUsername.getText().toString();
             String password = editTextPassword.getText().toString();
-            if (!UserUtils.isUsernameValid(username) ){
+            if (!UserUtils.isUsernameValid(username)) {
                 ToastHelper.showToast(this, R.string.lwe_error_login_format_username);
             } else if (!UserUtils.isPasswordValid(password)) {
                 ToastHelper.showToast(this, R.string.lwe_error_login_format_password);
