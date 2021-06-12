@@ -295,6 +295,7 @@
                 android:src="@drawable/lwe_icon_city" />
 
             <TextView
+                android:id="@+id/textCityPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -309,12 +310,14 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
                 android:gravity="right"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
                 android:scrollHorizontally="true"
                 android:layout_marginEnd="5dp"
+                android:layout_toEndOf="@id/textCityPicker"
                 android:layout_toStartOf="@id/buttonCity"
                 android:textColor="@color/black"
                 android:textSize="20sp" />

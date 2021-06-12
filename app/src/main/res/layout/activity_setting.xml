@@ -85,11 +85,6 @@
                 android:src="@drawable/nim_arrow_right" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:background="@color/white" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
