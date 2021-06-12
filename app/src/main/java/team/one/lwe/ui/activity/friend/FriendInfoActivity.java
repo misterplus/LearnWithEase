@@ -19,6 +19,7 @@ import team.one.lwe.R;
 import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.util.UserUtils;
 
 public class FriendInfoActivity extends LWEUI {
 
@@ -46,45 +47,7 @@ public class FriendInfoActivity extends LWEUI {
         textName.setText(info.getName());
         textUserName.setText(info.getAccount());
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
-        String[] values;
-        switch (ex.getBak()) {
-            case 0: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_0);
-                break;
-            }
-            case 1: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_1);
-                break;
-            }
-            case 2: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_2);
-                break;
-            }
-            case 3: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_3);
-                break;
-            }
-            case 4: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_4);
-                break;
-            }
-            case 5: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_5);
-                break;
-            }
-            case 6: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_6);
-                break;
-            }
-            case 7: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_7);
-                break;
-            }
-            default: {
-                values = getResources().getStringArray(R.array.lwe_spinner_grade_0);
-            }
-        }
-        textUserInfo.setText(String.format("%s %s岁 | %s %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), getResources().getStringArray(R.array.lwe_spinner_edu)[ex.getBak()], values[ex.getGrade()]));
+        textUserInfo.setText(String.format("%s %s岁 | %s %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), getResources().getStringArray(R.array.lwe_spinner_edu)[ex.getBak()], UserUtils.getGradeValues(getResources(),ex.getBak())[ex.getGrade()]));
         textSignature.setText(info.getSignature());
         textCity.setText(String.format("%s %s %s", ex.getProvince(), ex.getCity(), ex.getArea()));
         if (ex.getBak() > 3) {
