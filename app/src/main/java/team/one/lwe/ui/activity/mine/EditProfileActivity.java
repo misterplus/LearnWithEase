@@ -212,11 +212,6 @@ public class EditProfileActivity extends LWEUI {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String school = (String) spinnerSchool.getSelectedItem();
                 textSchool.setText(school);
-                if (school.length() >= 16) {
-                    textSchool.setTextScaleX((float) (16.0 / school.length()));
-                } else {
-                    textSchool.setTextScaleX((float) 1.0);
-                }
                 textSchool.setSelected(true);
                 if (!NetworkUtil.isNetAvailable(getBaseContext())) {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_nonetwork);
@@ -304,11 +299,6 @@ public class EditProfileActivity extends LWEUI {
                     text = String.format(getString(R.string.lwe_placeholder_cityformat2), province.getName(), district.getName());
                 else
                     text = String.format(getString(R.string.lwe_placeholder_cityformat3), province.getName(), city.getName(), district.getName());
-                if (text.length() >= 16) {
-                    textCity.setTextScaleX((float) (16.0 / text.length()));
-                } else {
-                    textCity.setTextScaleX((float) 1.0);
-                }
                 textCity.setText(text);
                 textCity.setSelected(true);
 

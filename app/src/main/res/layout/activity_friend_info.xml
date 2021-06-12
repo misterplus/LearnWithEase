@@ -97,9 +97,6 @@
                 android:layout_toEndOf="@id/imageUserInfo"
                 android:hint="@string/lwe_placeholder_info"
                 android:singleLine="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:ellipsize="marquee"
-                android:scrollHorizontally="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -107,7 +104,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="56dp"
             android:background="@color/white">
 
             <ImageView
@@ -122,15 +119,16 @@
 
             <TextView
                 android:id="@+id/textSignature"
-                android:layout_width="282dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/imageSignature"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"
                 android:background="@color/transparent"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:singleLine="false"
                 android:hint="@string/lwe_text_signature"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -165,11 +163,12 @@
 
             <TextView
                 android:id="@+id/textCity"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="right"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
@@ -209,10 +208,11 @@
 
             <TextView
                 android:id="@+id/textSchool"
-                android:layout_width="160dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_centerVertical="true"
                 android:gravity="end"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"

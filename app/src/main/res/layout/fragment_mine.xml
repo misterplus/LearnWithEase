@@ -231,4 +231,25 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/buttonChat"
+            android:visibility="visible"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/lwe_button_round_blue"
+            android:contentDescription="@string/empty"
+            android:text="@string/lwe_button_chat"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
 </LinearLayout>
