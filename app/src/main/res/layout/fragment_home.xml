@@ -40,14 +40,13 @@
 
         <ImageButton
             android:id="@+id/buttonRoomNew"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:background="@color/transparent"
-            android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_icon_room_add" />
+            android:background="@drawable/lwe_icon_room_add"
+            android:contentDescription="@string/empty" />
 
     </RelativeLayout>
 
@@ -124,7 +123,7 @@
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonClose"
             android:layout_width="30dp"
             android:layout_height="30dp"

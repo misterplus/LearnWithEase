@@ -109,7 +109,7 @@ public class RegisterActivity extends LWEUI {
         spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] values = UserUtils.getGradeValues(getResources(),i);
+                String[] values = UserUtils.getGradeValues(getResources(), i);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);

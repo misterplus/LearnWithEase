@@ -52,8 +52,8 @@
                 android:id="@+id/textName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_alignTop="@id/imageAvatar"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/imageAvatar"
                 android:text="@string/lwe_placeholder_name"
                 android:textColor="@color/black"
@@ -106,9 +106,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:background="@color/white">
+            android:paddingBottom="5dp">
 
             <ImageView
                 android:id="@+id/imageSignature"
@@ -125,14 +125,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/imageSignature"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_toEndOf="@id/imageSignature"
                 android:background="@color/transparent"
                 android:ellipsize="end"
+                android:hint="@string/lwe_text_signature"
                 android:maxLines="2"
                 android:singleLine="false"
-                android:hint="@string/lwe_text_signature"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -169,13 +169,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:gravity="right"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:singleLine="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:ellipsize="marquee"
                 android:layout_toEndOf="@id/textCityPicker"
+                android:ellipsize="marquee"
+                android:gravity="right"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -213,14 +213,14 @@
                 android:id="@+id/textSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_centerVertical="true"
-                android:gravity="end"
-                android:singleLine="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:ellipsize="marquee"
                 android:layout_toEndOf="@id/textSchoolPicker"
+                android:ellipsize="marquee"
+                android:gravity="end"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -233,7 +233,6 @@
 
             <Button
                 android:id="@+id/buttonChat"
-                android:visibility="visible"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
@@ -243,11 +242,11 @@
                 android:contentDescription="@string/empty"
                 android:text="@string/lwe_button_chat"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/buttonAddFriend"
-                android:visibility="gone"
                 android:layout_width="160dp"
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
@@ -257,7 +256,8 @@
                 android:contentDescription="@string/empty"
                 android:text="@string/lwe_button_add_friend"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                android:textSize="22sp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

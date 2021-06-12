@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,7 +18,6 @@ import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import team.one.lwe.R;
-import team.one.lwe.ui.activity.friend.FriendInfoActivity;
 import team.one.lwe.ui.activity.mine.EditPrefActivity;
 import team.one.lwe.ui.activity.mine.EditProfileActivity;
 import team.one.lwe.ui.activity.mine.SettingActivity;
@@ -36,16 +34,6 @@ public class MineFragment extends Fragment {
         ImageButton buttonEditProfile = view.findViewById(R.id.buttonEditProfile);
         ImageButton buttonPreference = view.findViewById(R.id.buttonPreference);
         ImageButton buttonSetting = view.findViewById(R.id.buttonSetting);
-
-        Button button = view.findViewById(R.id.buttonChat);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), FriendInfoActivity.class);
-                intent.putExtra("accid","zwb001");
-                startActivity(intent);
-            }
-        });
 
         buttonEditProfile.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditProfileActivity.class)));
         buttonPreference.setOnClickListener(view1 -> startActivity(new Intent(getContext(), EditPrefActivity.class)));

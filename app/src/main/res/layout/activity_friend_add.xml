@@ -23,7 +23,7 @@
             android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
             android:hint="@string/lwe_hint_friend_add"
             android:imeOptions="actionSearch"
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:paddingStart="30dp"
             android:singleLine="true" />
 

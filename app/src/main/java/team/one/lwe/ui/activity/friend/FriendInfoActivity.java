@@ -47,7 +47,7 @@ public class FriendInfoActivity extends LWEUI {
         textName.setText(info.getName());
         textUserName.setText(info.getAccount());
         UserInfo ex = new Gson().fromJson(info.getExtension(), UserInfo.class);
-        textUserInfo.setText(String.format("%s %s岁 | %s %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), getResources().getStringArray(R.array.lwe_spinner_edu)[ex.getBak()], UserUtils.getGradeValues(getResources(),ex.getBak())[ex.getGrade()]));
+        textUserInfo.setText(String.format("%s %s岁 | %s %s", getResources().getStringArray(R.array.lwe_gender)[info.getGenderEnum().getValue()], ex.getAge(), getResources().getStringArray(R.array.lwe_spinner_edu)[ex.getBak()], UserUtils.getGradeValues(getResources(), ex.getBak())[ex.getGrade()]));
         textSignature.setText(info.getSignature());
         textCity.setText(String.format("%s %s %s", ex.getProvince(), ex.getCity(), ex.getArea()));
         if (ex.getBak() > 3) {

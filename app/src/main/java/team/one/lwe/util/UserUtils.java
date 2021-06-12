@@ -21,6 +21,8 @@ import team.one.lwe.bean.UserInfo;
 
 public class UserUtils {
 
+    private static final int[] GRADE_ARRAYS = {R.array.lwe_spinner_grade_0, R.array.lwe_spinner_grade_1, R.array.lwe_spinner_grade_2, R.array.lwe_spinner_grade_3, R.array.lwe_spinner_grade_4, R.array.lwe_spinner_grade_5, R.array.lwe_spinner_grade_6, R.array.lwe_spinner_grade_7};
+
     public static boolean isUsernameValid(@NotNull String username) {
         return TextUtils.isLegalUsername(username) && username.length() >= 6 && username.length() <= 16;
     }
@@ -62,12 +64,6 @@ public class UserUtils {
         return NIMClient.getService(UserService.class).updateUserInfo(fields);
     }
 
-    public static InvocationFuture<Void> updateUserAvatar(String url) {
-        Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
-        fields.put(UserInfoFieldEnum.AVATAR, url);
-        return NIMClient.getService(UserService.class).updateUserInfo(fields);
-    }
-
     /*@Deprecated
     public static void setAvatar(RoundedImageView view, String url) {
         File avatar = new File(view.getContext().getExternalCacheDir() + "/avatar", String.format("%s.png", url));
@@ -96,6 +92,12 @@ public class UserUtils {
         }
     }*/
 
+    public static InvocationFuture<Void> updateUserAvatar(String url) {
+        Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+        fields.put(UserInfoFieldEnum.AVATAR, url);
+        return NIMClient.getService(UserService.class).updateUserInfo(fields);
+    }
+
     public static boolean isNameInvalid(String name) {
         return name.isEmpty() || name.length() > 16;
     }
@@ -107,8 +109,6 @@ public class UserUtils {
     public static boolean isAgeInvalid(int age) {
         return age < 1 || age > 120;
     }
-
-    private static final int[] GRADE_ARRAYS = {R.array.lwe_spinner_grade_0, R.array.lwe_spinner_grade_1, R.array.lwe_spinner_grade_2, R.array.lwe_spinner_grade_3, R.array.lwe_spinner_grade_4, R.array.lwe_spinner_grade_5, R.array.lwe_spinner_grade_6, R.array.lwe_spinner_grade_7};
 
     public static String[] getGradeValues(Resources resources, int i) {
         return resources.getStringArray(GRADE_ARRAYS[i]);
