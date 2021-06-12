@@ -92,11 +92,6 @@ public class RegisterActivity extends LWEUI {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String school = (String) spinnerSchool.getSelectedItem();
                 textSchool.setText(school);
-                if (school.length() >= 16) {
-                    textSchool.setTextScaleX((float) (16.0 / school.length()));
-                } else {
-                    textSchool.setTextScaleX((float) 1.0);
-                }
                 textSchool.setSelected(true);
             }
 
@@ -114,44 +109,7 @@ public class RegisterActivity extends LWEUI {
         spinnerEdu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String[] values;
-                switch (i) {
-                    case 0: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_0);
-                        break;
-                    }
-                    case 1: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_1);
-                        break;
-                    }
-                    case 2: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_2);
-                        break;
-                    }
-                    case 3: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_3);
-                        break;
-                    }
-                    case 4: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_4);
-                        break;
-                    }
-                    case 5: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_5);
-                        break;
-                    }
-                    case 6: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_6);
-                        break;
-                    }
-                    case 7: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_7);
-                        break;
-                    }
-                    default: {
-                        values = getResources().getStringArray(R.array.lwe_spinner_grade_0);
-                    }
-                }
+                String[] values = UserUtils.getGradeValues(getResources(),i);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), R.layout.lwe_spinner_item, values);
                 adapter.setDropDownViewResource(R.layout.lwe_spinner_item);
                 spinnerGrade.setAdapter(adapter);
@@ -191,22 +149,14 @@ public class RegisterActivity extends LWEUI {
         cPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
             @Override
             public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
-                //set ids
                 cPickerNames[0] = province.getName();
                 cPickerNames[1] = city.getName();
                 cPickerNames[2] = district.getName();
-                //set views
                 String text;
                 if (province.getName().equals(city.getName()))
                     text = String.format(getString(R.string.lwe_placeholder_cityformat2), province.getName(), district.getName());
                 else
                     text = String.format(getString(R.string.lwe_placeholder_cityformat3), province.getName(), city.getName(), district.getName());
-                //scales horizontally
-                if (text.length() >= 16) {
-                    textCity.setTextScaleX((float) (16.0 / text.length()));
-                } else {
-                    textCity.setTextScaleX((float) 1.0);
-                }
                 textCity.setText(text);
                 textCity.setSelected(true);
             }

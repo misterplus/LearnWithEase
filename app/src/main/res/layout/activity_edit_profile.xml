@@ -123,11 +123,11 @@
             android:background="@color/white">
 
             <TextView
+                android:id="@+id/textSignature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginBottom="11dp"
                 android:text="@string/lwe_text_signature"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -138,17 +138,20 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/textSignature"
                 android:layout_toStartOf="@+id/buttonSignature"
                 android:background="@color/transparent"
                 android:focusable="false"
                 android:gravity="end"
                 android:hint="@string/lwe_placeholder_signature"
                 android:imeOptions="actionDone"
-                android:inputType="textNoSuggestions"
+                android:inputType="textMultiLine"
                 android:selectAllOnFocus="true"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:importantForAutofill="no" />
 
             <ImageButton
                 android:id="@+id/buttonSignature"
@@ -311,16 +314,18 @@
 
             <TextView
                 android:id="@+id/textCity"
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
-                android:layout_toStartOf="@id/buttonCity"
-                android:ellipsize="marquee"
                 android:gravity="right"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
+                android:layout_marginEnd="5dp"
                 android:singleLine="true"
+                android:layout_marginStart="10dp"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
+                android:layout_toEndOf="@id/textCityPicker"
+                android:layout_toStartOf="@id/buttonCity"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -445,12 +450,12 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="40dp"
-                android:ellipsize="marquee"
-                android:gravity="right"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
                 android:text="@string/lwe_placeholder_school"
+                android:gravity="right"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:scrollHorizontally="true"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
