@@ -108,32 +108,9 @@ public class UserUtils {
         return age < 1 || age > 120;
     }
 
+    private static final int[] GRADE_ARRAYS = {R.array.lwe_spinner_grade_0, R.array.lwe_spinner_grade_1, R.array.lwe_spinner_grade_2, R.array.lwe_spinner_grade_3, R.array.lwe_spinner_grade_4, R.array.lwe_spinner_grade_5, R.array.lwe_spinner_grade_6, R.array.lwe_spinner_grade_7};
+
     public static String[] getGradeValues(Resources resources, int i) {
-        switch (i) {
-            case 1: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_1);
-            }
-            case 2: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_2);
-            }
-            case 3: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_3);
-            }
-            case 4: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_4);
-            }
-            case 5: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_5);
-            }
-            case 6: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_6);
-            }
-            case 7: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_7);
-            }
-            default: {
-                return resources.getStringArray(R.array.lwe_spinner_grade_0);
-            }
-        }
+        return resources.getStringArray(GRADE_ARRAYS[i]);
     }
 }

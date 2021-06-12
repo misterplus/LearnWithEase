@@ -30,7 +30,7 @@ public class FriendInfoActivity extends LWEUI {
         LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend_info, true);
         setToolBar(R.id.toolbar, options);
 
-        String accid = (String) getIntent().getStringExtra("accid");
+        String accid = getIntent().getStringExtra("accid");
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(accid);
         HeadImageView imageAvatar = findViewById(R.id.imageAvatar);
         TextView textName = findViewById(R.id.textName);
