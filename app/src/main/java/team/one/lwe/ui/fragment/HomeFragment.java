@@ -96,74 +96,82 @@ public class HomeFragment extends Fragment {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_search));
                 roomId = editTextSearchRoom.getText().toString();
-                NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(getContext()) {
-
+                EnterChatRoomData enterChatRoomData = new EnterChatRoomData(roomId);
+                NIMClient.getService(ChatRoomService.class).enterChatRoom(enterChatRoomData).setCallback(new RegularCallback<EnterChatRoomResultData>(getContext()) {
                     @Override
-                    public void onSuccess(ChatRoomInfo info) {
-                        NIMClient.getService(ChatRoomService.class).fetchRoomMembers(roomId, MemberQueryType.ONLINE_NORMAL, 0, 4).setCallback(new RegularCallback<List<ChatRoomMember>>(context) {
+                    public void onSuccess(EnterChatRoomResultData param) {
+                        NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(getContext()) {
+
                             @Override
-                            public void onSuccess(List<ChatRoomMember> list) {
-                                DialogMaker.dismissProgressDialog();
-                                for (int i = 0; i < list.size(); i++) {
-                                    imageAvatars[i].loadBuddyAvatar(list.get(i).getAccount());
-                                }
+                            public void onSuccess(ChatRoomInfo info) {
+                                NIMClient.getService(ChatRoomService.class).fetchRoomMembers(roomId, MemberQueryType.ONLINE_NORMAL, 0, 4).setCallback(new RegularCallback<List<ChatRoomMember>>(context) {
+                                    @Override
+                                    public void onSuccess(List<ChatRoomMember> list) {
+                                        DialogMaker.dismissProgressDialog();
+                                        for (int i = 0; i < list.size(); i++) {
+                                            imageAvatars[i].loadBuddyAvatar(list.get(i).getAccount());
+                                        }
+                                        NIMClient.getService(ChatRoomService.class).exitChatRoom(roomId);
+                                    }
+
+                                    @Override
+                                    public void onFailed(int code) {
+                                        DialogMaker.dismissProgressDialog();
+                                        ToastHelper.showToast(context, R.string.lwe_error_avatar);
+                                    }
+                                });
+
+                                ImgUtils.loadRoomCover(getContext(), imageCover, (String) info.getExtension().get("coverUrl"));
+                                textRoomName.setText(info.getName());
+                                searchedResult.setVisibility(View.VISIBLE);
                             }
 
                             @Override
                             public void onFailed(int code) {
                                 DialogMaker.dismissProgressDialog();
-                                ToastHelper.showToast(context, R.string.lwe_error_avatar);
+                                ToastHelper.showToast(context, R.string.lwe_error_fetch_room_info);
+                                super.onFailed(code);
                             }
                         });
-
-
-                        ImgUtils.loadRoomCover(getContext(), imageCover, (String) info.getExtension().get("coverUrl"));
-                        textRoomName.setText(info.getName());
-                        searchedResult.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onFailed(int code) {
-                        //TODO: room not found or network issue
-                        DialogMaker.dismissProgressDialog();
-                        ToastHelper.showToast(context, R.string.lwe_error_fetch_room_info);
-                        noResult.setVisibility(View.VISIBLE);
-                        searchedResult.setVisibility(View.GONE);
-                        new Handler(msg -> {
-                            noResult.setVisibility(View.GONE);
-                            return true;
-                        }).sendEmptyMessageDelayed(0, 5000);
+                        if (code == 404) {
+                            noResult.setVisibility(View.VISIBLE);
+                            searchedResult.setVisibility(View.GONE);
+                            new Handler(msg -> {
+                                noResult.setVisibility(View.GONE);
+                                return true;
+                            }).sendEmptyMessageDelayed(0, 5000);
+                            return;
+                        }
                         super.onFailed(code);
                     }
                 });
+
 
                 return true;
             }
             return false;
         });
-        searchedResult.setOnClickListener(new View.OnClickListener() {
+        searchedResult.setOnClickListener(v -> new NetworkThread(view) {
             @Override
-            public void onClick(View v) {
-                //TODO: check room validity
-                new NetworkThread(view) {
-                    @Override
-                    public ASResponse doRequest() {
-                        return APIUtils.getRoomToken(roomId);
-                    }
-
-                    @Override
-                    public void onSuccess(ASResponse asp) {
-                        EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
-                        enterRoom(enterRoomData, false);
-                    }
-
-                    @Override
-                    public void onFailed(int code, String desc) {
-                        ToastHelper.showToast(getContext(), R.string.lwe_error_join_room);
-                    }
-                }.start();
+            public ASResponse doRequest() {
+                return APIUtils.getRoomToken(roomId);
             }
-        });
+
+            @Override
+            public void onSuccess(ASResponse asp) {
+                EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
+                enterRoom(enterRoomData, false);
+            }
+
+            @Override
+            public void onFailed(int code, String desc) {
+                ToastHelper.showToast(getContext(), R.string.lwe_error_join_room);
+            }
+        }.start());
         buttonClose.setOnClickListener(view1 -> {
             searchedResult.setVisibility(View.GONE);
             noResult.setVisibility(View.GONE);
@@ -240,6 +248,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailed(int code) {
+                if (code == 404) {
+                    ToastHelper.showToast(getContext(), R.string.lwe_error_room_invalid);
+                    return;
+                }
                 ToastHelper.showToast(getContext(), R.string.lwe_error_join_room);
             }
         });

@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/black"
             android:layout_toEndOf="@id/imageCover"
             android:text="@string/lwe_placeholder_room_name"
             android:textSize="24sp" />
@@ -92,7 +93,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/nim_avatar_default" />
+                android:src="@drawable/nim_message_input_plus" />
 
             <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                 android:id="@+id/imageAvatar2"
@@ -101,7 +102,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/nim_avatar_default" />
+                android:src="@drawable/nim_message_input_plus" />
 
             <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                 android:id="@+id/imageAvatar3"
@@ -110,7 +111,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/nim_avatar_default" />
+                android:src="@drawable/nim_message_input_plus" />
 
             <com.netease.nim.uikit.common.ui.imageview.HeadImageView
                 android:id="@+id/imageAvatar4"
@@ -119,7 +120,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:contentDescription="@string/empty"
-                android:src="@drawable/nim_avatar_default" />
+                android:src="@drawable/nim_message_input_plus" />
 
         </LinearLayout>
 

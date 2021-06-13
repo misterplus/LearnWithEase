@@ -1,5 +1,7 @@
 package team.one.lwe.ui.callback;
 
+import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,10 +24,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import team.one.lwe.LWECache;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
+import team.one.lwe.ui.activity.MainActivity;
+import team.one.lwe.ui.activity.auth.LoginActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
 import team.one.lwe.util.APIUtils;
 
@@ -36,6 +41,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
     private final Map<Long, Boolean> videoSub = new HashMap<>();
     private final Map<Long, Boolean> audioSub = new HashMap<>();
     private RoomActivity rootView;
+    private long creator;
 
     public static LWENERtcCallback getInstance() {
         return instance;
@@ -52,7 +58,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
         viewIds.remove(uid);
         videoSub.remove(uid);
         audioSub.remove(uid);
-        getLayoutUsers().removeViewInLayout(userView);
+        getLayoutUsers().removeView(userView);
     }
 
     private void addUserToRoom(long uid) {
@@ -171,7 +177,16 @@ public class LWENERtcCallback implements NERtcCallbackEx {
      */
     @Override
     public void onUserLeave(long uid, int reason) {
-        removeUserFromRoom(uid);
+        //TODO: room owner leaves room, we leave as well
+        if (uid != creator)
+            removeUserFromRoom(uid);
+        else {
+            ToastHelper.showToast(rootView, R.string.lwe_error_room_force_leave);
+            new Handler(msg -> {
+                rootView.leaveRoom();
+                return true;
+            }).sendEmptyMessageDelayed(0, 3000);
+        }
     }
 
     @Override
@@ -335,5 +350,9 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     public void setRootView(RoomActivity rootView) {
         this.rootView = rootView;
+    }
+
+    public void setCreator(long creator) {
+        this.creator = creator;
     }
 }

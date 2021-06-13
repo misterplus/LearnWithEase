@@ -100,8 +100,10 @@ public class LoginActivity extends LWEUI {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
             String[] rejected = getRejectedGrants(permissions, grantResults);
-            ToastHelper.showToast(this, R.string.lwe_error_perm);
-            ActivityCompat.requestPermissions(this, rejected, 0);
+            if (rejected.length > 0) {
+                ToastHelper.showToast(this, R.string.lwe_error_perm);
+                ActivityCompat.requestPermissions(this, rejected, 0);
+            }
         }
     }
 

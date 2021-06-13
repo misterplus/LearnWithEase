@@ -6,4 +6,5 @@
     android:background="@drawable/lwe_border_text"
     android:text="@string/lwe_placeholder_room_tag"
     android:textColor="@color/text_grey"
-    android:textSize="16sp"></TextView>
+    android:textSize="14sp"
+    android:layout_centerVertical="true"/>

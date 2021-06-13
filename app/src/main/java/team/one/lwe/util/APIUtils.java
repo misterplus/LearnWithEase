@@ -3,12 +3,14 @@ package team.one.lwe.util;
 import com.google.gson.Gson;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import cn.hutool.core.io.IORuntimeException;
 import lombok.NonNull;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.RoomBasic;
 import team.one.lwe.bean.User;
+import team.one.lwe.bean.UserInfo;
 import team.one.lwe.config.Preferences;
 
 public class APIUtils {
@@ -52,10 +54,18 @@ public class APIUtils {
                 "uid", uid);
     }
 
+    public static ASResponse getUid(@NonNull String accid) throws IORuntimeException {
+        return PostUtils.doPostEncoded(false,
+                "/user/getUid", 5000,
+                "accid", accid);
+    }
     public static ASResponse fetchRecs() throws IORuntimeException {
-        return PostUtils.doPostBodyForm(true,
+        User user = new User();
+        NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(Preferences.getUserAccount());
+        user.setEx(new Gson().fromJson(info.getExtension(), UserInfo.class));
+        user.setGender(info.getGenderEnum().getValue());
+        return PostUtils.doPostJson(true,
                 "/room/fetch", 5000,
-                NIMClient.getService(UserService.class).getUserInfo(Preferences.getUserAccount()).getExtension(),
-                "gender", NIMClient.getService(UserService.class).getUserInfo(Preferences.getUserAccount()).getGenderEnum().getValue());
+                new Gson().toJson(user));
     }
 }

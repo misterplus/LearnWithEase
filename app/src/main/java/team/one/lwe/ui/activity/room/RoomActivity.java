@@ -2,6 +2,7 @@ package team.one.lwe.ui.activity.room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,10 +24,15 @@ import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
 import team.one.lwe.R;
+import team.one.lwe.bean.ASResponse;
 import team.one.lwe.config.Preferences;
+import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.LWENERtcCallback;
+import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.util.APIUtils;
+import team.one.lwe.util.ImgUtils;
 
 public class RoomActivity extends LWEUI {
 
@@ -71,6 +77,16 @@ public class RoomActivity extends LWEUI {
         RoomActivity.super.onNavigateUpClicked();
     }
 
+    public void leaveRoom() {
+        Intent intent = getIntent();
+        EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
+        NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
+        NimUIKit.exitedChatRoom(data.getRoomId());
+        NERtcEx.getInstance().leaveChannel();
+        NERtcEx.getInstance().release();
+        RoomActivity.super.onNavigateUpClicked();
+    }
+
     @Override
     public void onNavigateUpClicked() {
         EasyAlertDialogHelper.createOkCancelDiolag(this, getString(R.string.lwe_title_room_exit), getString(creator ? R.string.lwe_text_room_exit_creator : R.string.lwe_text_room_exit), getString(R.string.lwe_button_confirm), getString(R.string.lwe_button_cancel), false, new EasyAlertDialogHelper.OnDialogActionListener() {
@@ -81,15 +97,36 @@ public class RoomActivity extends LWEUI {
 
             @Override
             public void doOkAction() {
-                Intent intent = getIntent();
-                EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
-                NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
-                NimUIKit.exitedChatRoom(data.getRoomId());
-                NERtcEx.getInstance().leaveChannel();
-                NERtcEx.getInstance().release();
-                RoomActivity.super.onNavigateUpClicked();
+                leaveRoom();
             }
         }).show();
+    }
+
+    private void getCreator(String roomId) {
+        NIMClient.getService(ChatRoomService.class).fetchRoomInfo(roomId).setCallback(new RegularCallback<ChatRoomInfo>(this) {
+            @Override
+            public void onSuccess(ChatRoomInfo info) {
+                new NetworkThread(layoutVideo) {
+                    @Override
+                    public ASResponse doRequest() {
+                        return APIUtils.getUid(info.getCreator());
+                    }
+
+                    @Override
+                    public void onSuccess(ASResponse asp) {
+                        LWENERtcCallback.getInstance().setCreator(asp.getInfo().getLong("uid"));
+                    }
+                }.start();
+            }
+
+            @Override
+            public void onFailed(int code) {
+                new Handler(msg -> {
+                    getCreator(roomId);
+                    return true;
+                }).sendEmptyMessageDelayed(0, 1000);
+            }
+        });
     }
 
     @Override
@@ -99,6 +136,7 @@ public class RoomActivity extends LWEUI {
         LWENERtcCallback.getInstance().setRootView(this);
         Intent intent = getIntent();
         EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
+        getCreator(data.getRoomId());
         creator = intent.getBooleanExtra("creator", false);
         layoutVideo = findViewById(R.id.layoutVideo);
         ImageButton buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
@@ -106,6 +144,7 @@ public class RoomActivity extends LWEUI {
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         FrameLayout videoPlaceholderSelf = findViewById(R.id.videoPlaceholderSelf);
+
         buttonVideoSelf.setOnClickListener(view -> {
             if (videoMuted) {
                 //unmute, change icon
