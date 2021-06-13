@@ -27,6 +27,7 @@
     <string name="lwe_button_friend_add">添加</string>
     <string name="lwe_button_accept">同意</string>
     <string name="lwe_button_decline">拒绝</string>
+    <string name="lwe_button_remove">移除</string>
     <string name="lwe_button_log_out">退出登录</string>
     <string name="lwe_button_chat">发送消息</string>
     <string name="lwe_button_add_friend">添加好友</string>
@@ -57,6 +58,7 @@
     <string name="lwe_error_frequently">您的操作过于频繁，请稍后再试</string>
     <string name="lwe_error_register">该用户名已注册</string>
     <string name="lwe_error_search_no_result">无此用户</string>
+    <string name="lwe_error_black_list_empty">黑名单列表为空</string>
     <string name="lwe_error_reason">验证信息不能为空且不能超过30个字！</string>
     <string name="lwe_error_update">修改信息失败，请重试</string>
     <string name="lwe_error_perm">易学习需要一定的权限才能运行，请同意权限请求</string>
@@ -83,6 +85,7 @@
     <string name="lwe_title_friend_add">添加好友</string>
     <string name="lwe_title_friend_request">好友申请</string>
     <string name="lwe_title_friend_info">好友资料</string>
+    <string name="lwe_title_black_list_manage">黑名单管理</string>
 
     <!--    文本-->
     <string name="lwe_text_gender">性别</string>
@@ -130,6 +133,7 @@
     <string name="lwe_text_friend_add">已添加</string>
     <string name="lwe_text_friend_accept">已同意</string>
     <string name="lwe_text_friend_decline">已拒绝</string>
+    <string name="lwe_text_black_list_removed">已移除</string>
     <string name="lwe_text_reason">验证信息：</string>
     <string name="lwe_text_empty_signature">暂无签名</string>
     <string name="lwe_text_age">年龄</string>

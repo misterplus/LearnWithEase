@@ -281,4 +281,11 @@
     <string name="load_more">加载更多</string>
     <string name="no_more_session">没有更多会话了</string>
 
+    <!-- lwe -->
+    <string name="lwe_error_timeout">连接超时，请稍后再试</string>
+    <string name="lwe_error_unknown">出现未知错误，请稍后再试</string>
+    <string name="lwe_error_confail">服务器异常，请稍后再试</string>
+    <string name="lwe_error_connection">网络连接出错，请稍后重试</string>
+    <string name="lwe_error_frequently">您的操作过于频繁，请稍后再试</string>
+
 </resources>
