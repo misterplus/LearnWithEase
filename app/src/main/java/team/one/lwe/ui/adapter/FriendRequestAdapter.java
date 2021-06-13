@@ -60,7 +60,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                 @Override
                 public void onSuccess(Void param) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-                    holder.textReason.setText(R.string.lwe_text_friend_accept);
+                    holder.textResult.setText(R.string.lwe_text_friend_accept);
                     holder.buttonAccept.setVisibility(View.GONE);
                     holder.buttonDecline.setVisibility(View.GONE);
                 }
@@ -71,7 +71,7 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
                 @Override
                 public void onSuccess(Void param) {
                     NIMClient.getService(SystemMessageService.class).setSystemMessageRead(requestMsg.getMessageId());
-                    holder.textReason.setText(R.string.lwe_text_friend_decline);
+                    holder.textResult.setText(R.string.lwe_text_friend_decline);
                     holder.buttonAccept.setVisibility(View.GONE);
                     holder.buttonDecline.setVisibility(View.GONE);
                 }
