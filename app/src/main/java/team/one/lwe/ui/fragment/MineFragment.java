@@ -29,7 +29,7 @@ public class MineFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_mine, container, false);
-        TextView textUsername = view.findViewById(R.id.textUsername);
+        TextView textUserName = view.findViewById(R.id.textUserName);
         TextView textPersonalSignature = view.findViewById(R.id.textPersonalSignature);
         ImageButton buttonEditProfile = view.findViewById(R.id.buttonEditProfile);
         ImageButton buttonPreference = view.findViewById(R.id.buttonPreference);
@@ -43,7 +43,7 @@ public class MineFragment extends Fragment {
         NimUserInfo user = NIMClient.getService(UserService.class).getUserInfo(account);
         String signature = user.getSignature();
         imageAvatar.loadBuddyAvatar(account);
-        textUsername.setText(account);
+        textUserName.setText(String.format("%s(%s)", user.getName(), account));
         textPersonalSignature.setText(signature);
         textPersonalSignature.setSelected(true);
         return view;

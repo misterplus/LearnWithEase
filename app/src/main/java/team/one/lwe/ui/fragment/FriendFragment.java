@@ -18,12 +18,15 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.netease.nim.uikit.business.contact.ContactsFragment;
 import com.netease.nim.uikit.business.recent.RecentContactsFragment;
 import com.netease.nim.uikit.common.activity.UI;
+import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
+import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.ui.activity.friend.AddFriendActivity;
+import team.one.lwe.ui.activity.friend.BlackListActivity;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
 public class FriendFragment extends Fragment {
@@ -56,7 +59,22 @@ public class FriendFragment extends Fragment {
         });
         new TabLayoutMediator(tabFriend, pagerFriend, (tab, position) -> tab.setText(getResources().getStringArray(R.array.lwe_pager_friend)[position])).attach();
         ImageButton buttonFriendAdd = buttonsFriend.findViewById(R.id.buttonFriendAdd);
-        buttonFriendAdd.setOnClickListener(v -> startActivity(new Intent(getContext(), AddFriendActivity.class)));
+        List<PopupMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new PopupMenuItem(0, "添加好友"));
+        menuItems.add(new PopupMenuItem(1, "黑名单管理"));
+        NIMPopupMenu menu = new NIMPopupMenu(getContext(), menuItems, item -> {
+            switch (item.getTag()) {
+                case 0: {
+                    startActivity(new Intent(getContext(), AddFriendActivity.class));
+                    break;
+                }
+                case 1: {
+                    startActivity(new Intent(getContext(), BlackListActivity.class));
+                }
+            }
+        });
+        buttonFriendAdd.setOnClickListener(v -> menu.show(view.findViewById(R.id.buttonFriendAdd)));
+
         return view;
     }
 }

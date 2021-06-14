@@ -29,6 +29,8 @@
     <string name="lwe_button_friend_add">添加</string>
     <string name="lwe_button_accept">同意</string>
     <string name="lwe_button_decline">拒绝</string>
+    <string name="lwe_button_remove">移除</string>
+    <string name="lwe_button_revert">撤销</string>
     <string name="lwe_button_log_out">退出登录</string>
     <string name="lwe_button_create">创建</string>
     <string name="lwe_button_join">加入</string>
@@ -39,6 +41,7 @@
     <string name="lwe_success_register">注册成功</string>
     <string name="lwe_success_add">已发送好友请求</string>
     <string name="lwe_success_update">修改成功</string>
+    <string name="lwe_success_black_list_add">已添加到黑名单</string>
 
     <!--    错误提示-->
     <string name="lwe_error_login_format">用户名或密码格式有误</string>
@@ -62,6 +65,7 @@
     <string name="lwe_error_register">该用户名已注册</string>
     <string name="lwe_error_search_no_result">无此用户</string>
     <string name="lwe_error_search_no_result_room">找不到该房间</string>
+    <string name="lwe_error_black_list_empty">黑名单列表为空</string>
     <string name="lwe_error_reason">验证信息不能为空且不能超过30个字！</string>
     <string name="lwe_error_update">修改信息失败，请重试</string>
     <string name="lwe_error_perm">易学习需要一定的权限才能运行，请同意权限请求</string>
@@ -78,6 +82,8 @@
     <string name="lwe_error_download_cover">无法下载房间封面，请稍后再试</string>
     <string name="lwe_error_room_invalid">该房间已不存在</string>
     <string name="lwe_error_room_force_leave">房主已离开房间，房间即将解散</string>
+    <string name="lwe_error_black_list_remove_fail">黑名单移除失败，请稍后再试</string>
+    <string name="lwe_error_black_list_add_fail">黑名单添加失败，请稍后再试</string>
 
     <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
@@ -99,6 +105,8 @@
     <string name="lwe_title_friend">好友</string>
     <string name="lwe_title_friend_add">添加好友</string>
     <string name="lwe_title_friend_request">好友申请</string>
+    <string name="lwe_title_friend_info">好友资料</string>
+    <string name="lwe_title_black_list">黑名单</string>
     <string name="lwe_title_friend_info">个人资料</string>
     <string name="lwe_title_room_create">创建房间</string>
     <string name="lwe_title_room_exit">退出房间</string>
@@ -149,6 +157,7 @@
     <string name="lwe_text_friend_add">已添加</string>
     <string name="lwe_text_friend_accept">已同意</string>
     <string name="lwe_text_friend_decline">已拒绝</string>
+    <string name="lwe_text_black_list_removed">已移除</string>
     <string name="lwe_text_reason">验证信息：</string>
     <string name="lwe_text_empty_signature">暂无签名</string>
     <string name="lwe_text_age">年龄</string>
