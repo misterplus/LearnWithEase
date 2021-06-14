@@ -31,14 +31,14 @@
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/textInfo"
+            android:id="@+id/textUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@id/imageAvatar"
-            android:text="@string/lwe_placeholder_info"
+            android:text="@string/lwe_placeholder_username"
             android:textColor="@color/text_grey"
             android:textSize="16sp" />
 
@@ -55,17 +55,19 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/textResult"
+        <Button
+            android:id="@+id/buttonRevert"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/lwe_button_round_grey"
             android:contentDescription="@string/empty"
-            android:text="@string/lwe_text_black_list_removed"
-            android:textColor="@color/text_grey"
-            android:textSize="20sp" />
+            android:text="@string/lwe_button_revert"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <View

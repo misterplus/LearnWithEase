@@ -3,11 +3,6 @@ package com.netease.nim.uikit.business.session.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-
 import com.netease.nim.uikit.common.ToastHelper;
 
 import com.alibaba.fastjson.JSON;
@@ -23,19 +18,14 @@ import com.netease.nim.uikit.business.session.constant.Extras;
 import com.netease.nim.uikit.business.session.fragment.MessageFragment;
 import com.netease.nim.uikit.business.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.common.activity.ToolBarOptions;
-import com.netease.nim.uikit.common.ui.popupmenu.NIMPopupMenu;
-import com.netease.nim.uikit.common.ui.popupmenu.PopupMenuItem;
 import com.netease.nim.uikit.impl.NimUIKitImpl;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
-import com.netease.nimlib.sdk.RequestCallback;
-import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomNotification;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -69,51 +59,6 @@ public class P2PMessageActivity extends BaseMessageActivity {
         requestBuddyInfo();
         displayOnlineState();
         registerObservers(true);
-        RelativeLayout buttonBlackList = findViewById(R.id.buttonBlackList);
-        ImageButton buttonAddBlackList = buttonBlackList.findViewById(R.id.buttonAddBlackList);
-        List<PopupMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new PopupMenuItem(0, "添加到黑名单"));
-        NIMPopupMenu menu = new NIMPopupMenu(getBaseContext(), menuItems, item -> {
-            if (item.getTag() == 0) {
-                NIMClient.getService(FriendService.class).addToBlackList(sessionId).setCallback(new RequestCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void param) {
-                        ToastHelper.showToast(getBaseContext(), R.string.succeed);
-                    }
-
-                    @Override
-                    public void onFailed(int code) {
-                        switch (code) {
-                            case 408: {
-                                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_timeout);
-                                return;
-                            }
-                            case 415: {
-                                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_connection);
-                                return;
-                            }
-                            case 416: {
-                                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_frequently);
-                                return;
-                            }
-                            case 500: {
-                                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_confail);
-                                return;
-                            }
-                            default: {
-                                ToastHelper.showToast(getBaseContext(), R.string.lwe_error_unknown);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onException(Throwable e) {
-                        Log.e(getPackageName(), Log.getStackTraceString(e));
-                    }
-                });
-            }
-        });
-        buttonAddBlackList.setOnClickListener(v -> menu.show(findViewById(R.id.buttonAddBlackList)));
     }
 
     @Override

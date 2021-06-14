@@ -8,6 +8,4 @@
     <item name="widget_video_view_indicator" type="id"/>
     <item name="widget_video_view_full" type="id"/>
     <item name="widget_video_view_mask" type="id"/>
-    <item name="buttonAddBlackList" type="id"/>
-    <item name="buttonBlackList" type="id"/>
 </resources>

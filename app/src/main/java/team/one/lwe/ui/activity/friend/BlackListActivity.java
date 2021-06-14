@@ -17,13 +17,13 @@ import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.adapter.BlackListAdapter;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
-public class ManageBlackListActivity extends LWEUI {
+public class BlackListActivity extends LWEUI {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_black_list_manage);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_black_list_manage, true);
+        setContentView(R.layout.activity_black_list);
+        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_black_list, true);
         setToolBar(R.id.toolbar, options);
 
         LinearLayout noResult = findViewById(R.id.noResult);
@@ -31,9 +31,9 @@ public class ManageBlackListActivity extends LWEUI {
         LinearLayoutManager mRecyclerViewLayoutManager = new LinearLayoutManager(getBaseContext());
         List<String> blackList = NIMClient.getService(FriendService.class).getBlackList();
 
-        if (blackList.size() == 0) {
+        if (blackList.isEmpty())
             noResult.setVisibility(View.VISIBLE);
-        } else {
+        else {
             BlackListAdapter adapter = new BlackListAdapter(blackList);
             listBlackList.setLayoutManager(mRecyclerViewLayoutManager);
             listBlackList.setAdapter(adapter);

@@ -64,7 +64,7 @@ public class FriendInfoActivity extends LWEUI {
         }
         textSignature.setSelected(true);
         textCity.setSelected(true);
-        if (getIntent().getStringExtra("blackList") != null) {
+        if (NIMClient.getService(FriendService.class).isInBlackList(accid)) {
             RelativeLayout buttonsFriendInfo = findViewById(R.id.buttonsFriendInfo);
             buttonsFriendInfo.setVisibility(View.GONE);
         }
@@ -74,7 +74,7 @@ public class FriendInfoActivity extends LWEUI {
         buttonAddFriend.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), AddVerifyActivity.class);
             intent.putExtra("account", accid);
-            startActivityForResult(intent, -1);
+            startActivity(intent);
         });
     }
 }

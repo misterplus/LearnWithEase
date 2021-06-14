@@ -28,6 +28,7 @@
     <string name="lwe_button_accept">同意</string>
     <string name="lwe_button_decline">拒绝</string>
     <string name="lwe_button_remove">移除</string>
+    <string name="lwe_button_revert">撤销</string>
     <string name="lwe_button_log_out">退出登录</string>
     <string name="lwe_button_chat">发送消息</string>
     <string name="lwe_button_add_friend">添加好友</string>
@@ -64,6 +65,8 @@
     <string name="lwe_error_perm">易学习需要一定的权限才能运行，请同意权限请求</string>
     <string name="lwe_error_fetch_info">无法获取用户信息，请稍后再试</string>
     <string name="lwe_error_fetch_friend_request">无法获取好友请求，请稍后再试</string>
+    <string name="lwe_error_black_list_remove_fail">黑名单移除失败，请稍后再试</string>
+    <string name="lwe_error_black_list_add_fail">黑名单添加失败，请稍后再试</string>
 
     <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
@@ -85,7 +88,7 @@
     <string name="lwe_title_friend_add">添加好友</string>
     <string name="lwe_title_friend_request">好友申请</string>
     <string name="lwe_title_friend_info">好友资料</string>
-    <string name="lwe_title_black_list_manage">黑名单管理</string>
+    <string name="lwe_title_black_list">黑名单</string>
 
     <!--    文本-->
     <string name="lwe_text_gender">性别</string>

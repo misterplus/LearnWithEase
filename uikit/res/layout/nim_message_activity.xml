@@ -23,24 +23,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:titleTextAppearance="@style/Toolbar.TitleText"
-                app:subtitleTextAppearance="@style/Toolbar.SubTitleText">
-
-                <RelativeLayout
-                    android:id="@+id/buttonBlackList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageButton
-                        android:id="@+id/buttonAddBlackList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="10dp"
-                        android:background="@color/transparent"
-                        android:contentDescription="@string/empty"
-                        android:src="@drawable/lwe_icon_black_list_add" />
-                </RelativeLayout>
-            </androidx.appcompat.widget.Toolbar>
+                app:subtitleTextAppearance="@style/Toolbar.SubTitleText"/>
         </com.google.android.material.appbar.AppBarLayout>
 
     </LinearLayout>

@@ -89,7 +89,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/empty"
-            android:text="@string/lwe_text_black_list_removed"
+            android:text="@string/empty"
             android:textColor="@color/text_grey"
             android:textSize="20sp" />
     </RelativeLayout>
