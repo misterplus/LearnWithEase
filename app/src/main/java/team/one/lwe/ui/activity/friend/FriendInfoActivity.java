@@ -50,7 +50,7 @@ public class FriendInfoActivity extends LWEUI {
         TextView textSchool = findViewById(R.id.textSchool);
         Button buttonChat = findViewById(R.id.buttonChat);
         Button buttonAddFriend = findViewById(R.id.buttonAddFriend);
-        ImageButton buttonBlackListAdd = findViewById(R.id.buttonBlackListAdd);
+        ImageButton buttonMenu = findViewById(R.id.buttonMenu);
 
         imageAvatar.loadBuddyAvatar(accid);
         textName.setText(info.getName());
@@ -73,20 +73,20 @@ public class FriendInfoActivity extends LWEUI {
         }
         textSignature.setSelected(true);
         textCity.setSelected(true);
+
+        List<PopupMenuItem> menuItems = new ArrayList<>();
         if (NIMClient.getService(FriendService.class).isInBlackList(accid)) {
-            buttonBlackListAdd.setVisibility(View.GONE);
             RelativeLayout buttonsFriendInfo = findViewById(R.id.buttonsFriendInfo);
             buttonsFriendInfo.setVisibility(View.GONE);
         }
-
-        List<PopupMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new PopupMenuItem(0, "添加到黑名单"));
+        else
+            menuItems.add(new PopupMenuItem(0, "添加到黑名单"));
         NIMPopupMenu menu = new NIMPopupMenu(this, menuItems, item -> {
             if (item.getTag() == 0) {
                 NIMClient.getService(FriendService.class).addToBlackList(accid).setCallback(new RegularCallback<Void>(this) {
                     @Override
                     public void onSuccess(Void param) {
-                        ToastHelper.showToast(context, R.string.lwe_success_add_blacklist);
+                        ToastHelper.showToast(context, R.string.lwe_success_black_list_add);
                     }
 
                     @Override
@@ -96,7 +96,7 @@ public class FriendInfoActivity extends LWEUI {
                 });
             }
         });
-        buttonBlackListAdd.setOnClickListener(v -> menu.show(findViewById(R.id.buttonBlackListAdd)));
+        buttonMenu.setOnClickListener(v -> menu.show(findViewById(R.id.buttonMenu)));
 
         buttonChat.setOnClickListener(view -> NimUIKit.startP2PSession(view.getContext(), accid));
 

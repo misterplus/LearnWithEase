@@ -22,19 +22,19 @@
             app:titleTextAppearance="@style/Toolbar.TitleText" >
 
         <RelativeLayout
-            android:id="@+id/buttonsBlackList"
+            android:id="@+id/buttonsMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/buttonBlackListAdd"
+            android:id="@+id/buttonMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:background="@color/transparent"
             android:contentDescription="@string/empty"
-            android:src="@drawable/lwe_icon_black_list_add" />
+            android:src="@drawable/lwe_icon_more" />
         </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
