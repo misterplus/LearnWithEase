@@ -177,7 +177,6 @@ public class LWENERtcCallback implements NERtcCallbackEx {
      */
     @Override
     public void onUserLeave(long uid, int reason) {
-        //TODO: room owner leaves room, we leave as well
         if (uid != creator)
             removeUserFromRoom(uid);
         else {

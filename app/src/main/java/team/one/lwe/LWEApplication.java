@@ -8,8 +8,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.netease.nim.uikit.api.NimUIKit;
+import com.netease.nim.uikit.api.model.chatroom.ChatRoomSessionCustomization;
+import com.netease.nim.uikit.api.model.contact.ContactEventListener;
+import com.netease.nim.uikit.api.model.main.OnlineStateContentProvider;
+import com.netease.nim.uikit.api.model.session.SessionCustomization;
+import com.netease.nim.uikit.api.model.session.SessionEventListener;
+import com.netease.nim.uikit.business.session.actions.BaseAction;
+import com.netease.nim.uikit.business.session.actions.ImageAction;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
+import com.netease.nim.uikit.common.util.C;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.SDKOptions;
@@ -17,15 +25,19 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import team.one.lwe.config.Preferences;
 import team.one.lwe.crash.CrashHandler;
 import team.one.lwe.ui.activity.auth.LoginActivity;
+import team.one.lwe.ui.activity.friend.FriendInfoActivity;
 
 public class LWEApplication extends Application {
 
@@ -105,38 +117,55 @@ public class LWEApplication extends Application {
 
     private void initUiKit() {
         NimUIKit.init(this);
-        //SessionHelper.init();
-        //ContactHelper.init();
-        //NimUIKit.setOnlineStateContentProvider(new DemoOnlineStateContentProvider());
+        NimUIKit.setContactEventListener(new ContactEventListener() {
+            @Override
+            public void onItemClick(Context context, String account) {
+                NimUIKit.startP2PSession(context, account);
+            }
+
+            @Override
+            public void onItemLongClick(Context context, String account) {
+
+            }
+
+            @Override
+            public void onAvatarClick(Context context, String account) {
+                Intent intent = new Intent(context, FriendInfoActivity.class);
+                intent.putExtra("accid", account);
+                context.startActivity(intent);
+            }
+        });
+        ChatRoomSessionCustomization crsc = new ChatRoomSessionCustomization();
+        ArrayList<BaseAction> actions = new ArrayList<>();
+        actions.add(new ImageAction());
+        crsc.actions = actions;
+        NimUIKit.setCommonChatRoomSessionCustomization(crsc);
     }
 
     private void registerObservers() {
         //登录状态监听
-        Observer<StatusCode> observer = new Observer<StatusCode>() {
-            @Override
-            public void onEvent(StatusCode statusCode) {
-                if (statusCode == StatusCode.KICKOUT) {
-                    ToastHelper.showToast(current, "被踢了........");
-                    EasyAlertDialogHelper.createOkCancelDiolag(current, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
-                            "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
-                                @Override
-                                public void doCancelAction() {
-                                    ToastHelper.showToast(current, "退出登录");
-                                    NIMClient.getService(AuthService.class).logout();
-                                    LWECache.clear();
-                                    Preferences.cleanCache();
-                                    Intent intent = new Intent(current, LoginActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                }
+        Observer<StatusCode> observer = (Observer<StatusCode>) statusCode -> {
+            if (statusCode == StatusCode.KICKOUT) {
+                ToastHelper.showToast(current, "被踢了........");
+                EasyAlertDialogHelper.createOkCancelDiolag(current, "提示", "您的帐号已在另一台设备登录，是否重新登录？",
+                        "重新登录", "退出登录", false, new EasyAlertDialogHelper.OnDialogActionListener() {
+                            @Override
+                            public void doCancelAction() {
+                                ToastHelper.showToast(current, "退出登录");
+                                NIMClient.getService(AuthService.class).logout();
+                                LWECache.clear();
+                                Preferences.cleanCache();
+                                Intent intent = new Intent(current, LoginActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
 
-                                @Override
-                                public void doOkAction() {
-                                    ToastHelper.showToast(current, "重新登录");
-                                    NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
-                                }
-                            }).show();
-                }
+                            @Override
+                            public void doOkAction() {
+                                ToastHelper.showToast(current, "重新登录");
+                                NIMClient.getService(AuthService.class).login(new LoginInfo(Preferences.getUserAccount(), Preferences.getUserToken()));
+                            }
+                        }).show();
             }
         };
         NIMClient.getService(AuthServiceObserver.class).observeOnlineStatus(observer, true);

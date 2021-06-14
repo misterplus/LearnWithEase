@@ -99,7 +99,7 @@
     <string name="lwe_title_friend">好友</string>
     <string name="lwe_title_friend_add">添加好友</string>
     <string name="lwe_title_friend_request">好友申请</string>
-    <string name="lwe_title_friend_info">好友资料</string>
+    <string name="lwe_title_friend_info">个人资料</string>
     <string name="lwe_title_room_create">创建房间</string>
     <string name="lwe_title_room_exit">退出房间</string>
 
@@ -170,6 +170,7 @@
     <string name="lwe_text_room_exit">您真的要退出房间吗?</string>
     <string name="lwe_text_room_exit_creator">您是房主，退出房间后房间将会自动解散。您真的要退出房间吗? </string>
     <string name="lwe_text_more">更多</string>
+    <string name="lwe_text_invite">邀 请</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>
