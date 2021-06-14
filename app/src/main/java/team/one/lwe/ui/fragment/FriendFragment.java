@@ -26,7 +26,7 @@ import java.util.List;
 
 import team.one.lwe.R;
 import team.one.lwe.ui.activity.friend.AddFriendActivity;
-import team.one.lwe.ui.activity.friend.ManageBlackListActivity;
+import team.one.lwe.ui.activity.friend.BlackListActivity;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 
 public class FriendFragment extends Fragment {
@@ -69,7 +69,7 @@ public class FriendFragment extends Fragment {
                     break;
                 }
                 case 1: {
-                    startActivity(new Intent(getContext(), ManageBlackListActivity.class));
+                    startActivity(new Intent(getContext(), BlackListActivity.class));
                 }
             }
         });
