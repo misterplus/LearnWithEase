@@ -35,7 +35,7 @@ public class FriendInfoActivity extends LWEUI {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_info);
-        LWEToolBarOptions options = new LWEToolBarOptions(R.string.lwe_title_friend_info, true);
+        LWEToolBarOptions options = new LWEToolBarOptions("", true);
         setToolBar(R.id.toolbar, options);
 
         String accid = getIntent().getStringExtra("accid");

@@ -17,16 +17,19 @@ import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
+import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.msg.constant.AttachStatusEnum;
 import com.netease.nimlib.sdk.msg.constant.MsgStatusEnum;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.bean.EnterRoomData;
 import team.one.lwe.bean.RoomInvite;
+import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.room.RoomActivity;
 import team.one.lwe.ui.callback.LWENERtcCallback;
@@ -40,6 +43,7 @@ public class MsgViewHolderInvite extends MsgViewHolderBase {
     protected ImageView roomCover;
     protected View progressCover;
     protected TextView progressLabel, roomName;
+    private boolean valid = true;
 
     public MsgViewHolderInvite(BaseMultiItemFetchLoadAdapter adapter) {
         super(adapter);
@@ -65,6 +69,14 @@ public class MsgViewHolderInvite extends MsgViewHolderBase {
                     NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
                     ToastHelper.showToast(context, R.string.lwe_error_room_full);
                     return;
+                }
+                if ((Boolean) data.getRoomInfo().getExtension().get("friendsOnly")) {
+                    boolean isFriend = NIMClient.getService(FriendService.class).isMyFriend(data.getRoomInfo().getCreator());
+                    if (!isFriend) {
+                        NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                        ToastHelper.showToast(view.getContext(), R.string.lwe_error_room_not_friend);
+                        return;
+                    }
                 }
                 try {
                     NERtcEx.getInstance().init(context.getApplicationContext(), LWEConstants.APP_KEY, LWENERtcCallback.getInstance(), null);
@@ -93,31 +105,47 @@ public class MsgViewHolderInvite extends MsgViewHolderBase {
     }
 
     @Override
+    public void onItemClick() {
+        if (valid && !message.getFromAccount().equals(Preferences.getUserAccount())) {
+            InviteAttachment attachment = (InviteAttachment) message.getAttachment();
+            RoomInvite invite = attachment.getInvite();
+            String roomId = invite.getRoomId();
+            new NetworkThread(view) {
+                @Override
+                public ASResponse doRequest() {
+                    return APIUtils.getRoomToken(roomId);
+                }
+
+                @Override
+                public void onSuccess(ASResponse asp) {
+                    EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
+                    enterRoom(context, enterRoomData);
+                }
+
+                @Override
+                public void onFailed(int code, String desc) {
+                    ToastHelper.showToast(context, R.string.lwe_error_join_room);
+                }
+            }.start();
+        }
+    }
+
+    @Override
     public void bindContentView() {
+        long timeSent = message.getTime();
+        long timeNow = System.currentTimeMillis();
         InviteAttachment attachment = (InviteAttachment) message.getAttachment();
         RoomInvite invite = attachment.getInvite();
         String name = invite.getName();
-        String roomId = invite.getRoomId();
         String coverUrl = invite.getCoverUrl();
-        roomName.setText(name);
-        view.setOnClickListener(v -> new NetworkThread(view) {
-            @Override
-            public ASResponse doRequest() {
-                return APIUtils.getRoomToken(roomId);
-            }
-
-            @Override
-            public void onSuccess(ASResponse asp) {
-                EnterRoomData enterRoomData = new EnterRoomData(roomId, asp.getToken(), asp.getInfo().getLong("uid"));
-                enterRoom(context, enterRoomData);
-            }
-
-            @Override
-            public void onFailed(int code, String desc) {
-                ToastHelper.showToast(context, R.string.lwe_error_join_room);
-            }
-        }.start());
-
+        // five minutes to invalidate
+        if (timeNow - timeSent > 300000) {
+            valid = false;
+            roomName.setText("【自习室邀请】很可惜，这个邀请已经过期了...");
+        }
+        else {
+            roomName.setText(String.format("【自习室邀请】邀请你加入%s自习室，快来一起学习吧！", name));
+        }
         ImgUtils.loadRoomCover(view.getContext(), roomCover, coverUrl);
         refreshStatus();
     }

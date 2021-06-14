@@ -25,6 +25,7 @@ import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomMember;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
+import com.netease.nimlib.sdk.friend.FriendService;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
@@ -196,6 +197,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                     NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
                     ToastHelper.showToast(context, R.string.lwe_error_room_full);
                     return;
+                }
+                if ((Boolean) data.getRoomInfo().getExtension().get("friendsOnly")) {
+                    boolean isFriend = NIMClient.getService(FriendService.class).isMyFriend(data.getRoomInfo().getCreator());
+                    if (!isFriend) {
+                        NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                        ToastHelper.showToast(context, R.string.lwe_error_room_not_friend);
+                        return;
+                    }
                 }
                 try {
                     NERtcEx.getInstance().init(context.getApplicationContext(), LWEConstants.APP_KEY, LWENERtcCallback.getInstance(), null);

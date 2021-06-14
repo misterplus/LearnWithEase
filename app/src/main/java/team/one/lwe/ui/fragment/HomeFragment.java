@@ -35,6 +35,7 @@ import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomMember;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomData;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
+import com.netease.nimlib.sdk.friend.FriendService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -230,6 +231,14 @@ public class HomeFragment extends Fragment {
                     NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
                     ToastHelper.showToast(getContext(), R.string.lwe_error_room_full);
                     return;
+                }
+                if (!creator && (Boolean) data.getRoomInfo().getExtension().get("friendsOnly")) {
+                    boolean isFriend = NIMClient.getService(FriendService.class).isMyFriend(data.getRoomInfo().getCreator());
+                    if (!isFriend) {
+                        NIMClient.getService(ChatRoomService.class).exitChatRoom(enterChatRoomData.getRoomId());
+                        ToastHelper.showToast(getContext(), R.string.lwe_error_room_not_friend);
+                        return;
+                    }
                 }
                 try {
                     NERtcEx.getInstance().init(getActivity().getApplicationContext(), LWEConstants.APP_KEY, LWENERtcCallback.getInstance(), null);

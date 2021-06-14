@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/message_item_room_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:contentDescription="@string/empty"
-        android:gravity="start"
-        android:padding="0dip" />
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/message_item_room_cover"
@@ -18,10 +10,22 @@
         android:layout_height="90dp"
         android:layout_gravity="center_vertical"
         android:contentDescription="@string/empty"
-        android:gravity="center"
-        android:padding="0dip"
-        android:scaleType="centerCrop" />
+        android:layout_centerVertical="true"
+        android:layout_below="@id/message_item_room_name"
+        android:scaleType="centerCrop"
+        android:background="@drawable/nim_default_img"/>
 
     <include layout="@layout/nim_message_item_thumb_progress_bar_text" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/message_item_room_name"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/empty"
+        android:gravity="top|start"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:text="【自习室邀请】邀请你加入%s自习室，快来一起学习吧！"
+        android:padding="0dip" />
+
+</RelativeLayout>

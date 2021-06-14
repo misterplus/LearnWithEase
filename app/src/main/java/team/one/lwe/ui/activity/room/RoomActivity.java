@@ -1,5 +1,6 @@
 package team.one.lwe.ui.activity.room;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.Nullable;
 
 import com.netease.lava.nertc.sdk.NERtcEx;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
@@ -25,14 +28,22 @@ import com.netease.nimlib.sdk.chatroom.ChatRoomServiceObserver;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomKickOutEvent;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
+import com.netease.nimlib.sdk.msg.MessageBuilder;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
+
+import java.util.ArrayList;
 
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
+import team.one.lwe.bean.RoomInvite;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
 import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
+import team.one.lwe.ui.custom.msg.InviteAttachment;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
 
@@ -40,7 +51,14 @@ public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
-    private boolean videoMuted = false, audioMuted = false, creator = false;
+    private boolean videoMuted = false;
+    private boolean audioMuted = false;
+
+    public boolean isCreator() {
+        return creator;
+    }
+
+    private boolean creator = false;
     private String roomId, name, coverUrl;
     private int maxUsers;
     private Observer<ChatRoomKickOutEvent> kickOutObserver;
@@ -69,6 +87,28 @@ public class RoomActivity extends LWEUI {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+            ArrayList<String> selects = data.getStringArrayListExtra("RESULT_DATA");
+            if (selects == null)
+                return;
+            RoomInvite invite = new RoomInvite();
+            invite.setCoverUrl(coverUrl);
+            invite.setName(name);
+            invite.setRoomId(roomId);
+            InviteAttachment attachment = new InviteAttachment();
+            attachment.setInvite(invite);
+            IMMessage message;
+
+            for (String name : selects) {
+                message = MessageBuilder.createCustomMessage(name, SessionTypeEnum.P2P, attachment.getInvite().getRoomId(), attachment);
+                NIMClient.getService(MsgService.class).sendMessage(message, true);
+            }
+        }
     }
 
     public void onJoinChannelFailed() {

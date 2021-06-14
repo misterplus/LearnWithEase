@@ -8,11 +8,14 @@ import team.one.lwe.ui.custom.CustomAttachmentType;
 
 public class InviteAttachment extends CustomAttachment {
 
+    public void setInvite(RoomInvite invite) {
+        this.invite = invite;
+    }
+
     private RoomInvite invite;
 
-    public InviteAttachment(RoomInvite invite) {
+    public InviteAttachment() {
         super(CustomAttachmentType.Invite);
-        this.invite = invite;
     }
 
     public RoomInvite getInvite() {

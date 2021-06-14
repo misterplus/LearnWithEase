@@ -138,31 +138,34 @@ public class LWENERtcCallback implements NERtcCallbackEx {
                     intent.putExtra("accid", accid);
                     rootView.startActivity(intent);
                 });
-                buttonKick.setOnClickListener(view -> {
-                    EasyAlertDialogHelper.createOkCancelDiolag(rootView, rootView.getString(R.string.lwe_title_room_kick), rootView.getString(R.string.lwe_text_room_kick_desc), rootView.getString(R.string.lwe_button_confirm), rootView.getString(R.string.lwe_button_cancel), false, new EasyAlertDialogHelper.OnDialogActionListener() {
-                        @Override
-                        public void doCancelAction() {
-                            //do nothing
-                        }
+                if (rootView.isCreator())
+                    buttonKick.setOnClickListener(view -> {
+                        EasyAlertDialogHelper.createOkCancelDiolag(rootView, rootView.getString(R.string.lwe_title_room_kick), rootView.getString(R.string.lwe_text_room_kick_desc), rootView.getString(R.string.lwe_button_confirm), rootView.getString(R.string.lwe_button_cancel), false, new EasyAlertDialogHelper.OnDialogActionListener() {
+                            @Override
+                            public void doCancelAction() {
+                                //do nothing
+                            }
 
-                        @Override
-                        public void doOkAction() {
-                            Map<String, Object> reason = new HashMap<>();
-                            reason.put("reason", "kick");
-                            NIMClient.getService(ChatRoomService.class).kickMember(rootView.getRoomId(), accid, reason).setCallback(new RegularCallback<Void>(rootView) {
-                                @Override
-                                public void onSuccess(Void param) {
-                                    ToastHelper.showToast(rootView, R.string.lwe_text_room_kick);
-                                }
+                            @Override
+                            public void doOkAction() {
+                                Map<String, Object> reason = new HashMap<>();
+                                reason.put("reason", "kick");
+                                NIMClient.getService(ChatRoomService.class).kickMember(rootView.getRoomId(), accid, reason).setCallback(new RegularCallback<Void>(rootView) {
+                                    @Override
+                                    public void onSuccess(Void param) {
+                                        ToastHelper.showToast(rootView, R.string.lwe_text_room_kick);
+                                    }
 
-                                @Override
-                                public void onFailed(int code) {
-                                    ToastHelper.showToast(rootView, R.string.lwe_error_room_kick);
-                                }
-                            });
-                        }
-                    }).show();
-                });
+                                    @Override
+                                    public void onFailed(int code) {
+                                        ToastHelper.showToast(rootView, R.string.lwe_error_room_kick);
+                                    }
+                                });
+                            }
+                        }).show();
+                    });
+                else
+                    buttonKick.setVisibility(View.GONE);
             }
 
             @Override
