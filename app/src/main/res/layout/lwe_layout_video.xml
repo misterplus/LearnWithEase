@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutUser"
-    android:layout_width="0dp"
+    android:layout_width="120dp"
     android:layout_height="120dp"
     android:layout_weight="1">
 
@@ -16,6 +16,28 @@
         android:id="@+id/videoUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/buttonInfo"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/lwe_icon_info"
+        android:contentDescription="@string/empty" />
+
+    <ImageButton
+        android:id="@+id/buttonKick"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/lwe_icon_kick"
+        android:contentDescription="@string/empty" />
 
     <ImageButton
         android:id="@+id/buttonVideoUser"

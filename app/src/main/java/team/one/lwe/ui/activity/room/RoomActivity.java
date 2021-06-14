@@ -19,8 +19,11 @@ import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
+import com.netease.nimlib.sdk.chatroom.ChatRoomServiceObserver;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
+import com.netease.nimlib.sdk.chatroom.model.ChatRoomKickOutEvent;
 import com.netease.nimlib.sdk.chatroom.model.EnterChatRoomResultData;
 
 import team.one.lwe.R;
@@ -32,13 +35,19 @@ import team.one.lwe.ui.callback.LWENERtcCallback;
 import team.one.lwe.ui.callback.RegularCallback;
 import team.one.lwe.ui.wedget.LWEToolBarOptions;
 import team.one.lwe.util.APIUtils;
-import team.one.lwe.util.ImgUtils;
 
 public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
     private boolean videoMuted = false, audioMuted = false, creator = false;
+    private String roomId, name, coverUrl;
+    private int maxUsers;
+    private Observer<ChatRoomKickOutEvent> kickOutObserver;
+
+    public String getRoomId() {
+        return roomId;
+    }
 
     @Override
     protected boolean isHideInput(View v, MotionEvent ev) {
@@ -69,21 +78,19 @@ public class RoomActivity extends LWEUI {
 
     public void onDisconnect() {
         ToastHelper.showToast(this, R.string.lwe_error_room_disconnect);
-        Intent intent = getIntent();
-        EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
-        NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
-        NimUIKit.exitedChatRoom(data.getRoomId());
+        NIMClient.getService(ChatRoomService.class).exitChatRoom(roomId);
+        NimUIKit.exitedChatRoom(roomId);
         NERtcEx.getInstance().release();
+        NIMClient.getService(ChatRoomServiceObserver.class).observeKickOutEvent(kickOutObserver, false);
         RoomActivity.super.onNavigateUpClicked();
     }
 
     public void leaveRoom() {
-        Intent intent = getIntent();
-        EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
-        NIMClient.getService(ChatRoomService.class).exitChatRoom(data.getRoomId());
-        NimUIKit.exitedChatRoom(data.getRoomId());
+        NIMClient.getService(ChatRoomService.class).exitChatRoom(roomId);
+        NimUIKit.exitedChatRoom(roomId);
         NERtcEx.getInstance().leaveChannel();
         NERtcEx.getInstance().release();
+        NIMClient.getService(ChatRoomServiceObserver.class).observeKickOutEvent(kickOutObserver, false);
         RoomActivity.super.onNavigateUpClicked();
     }
 
@@ -129,6 +136,10 @@ public class RoomActivity extends LWEUI {
         });
     }
 
+    public int getMaxUsers() {
+        return maxUsers;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +147,12 @@ public class RoomActivity extends LWEUI {
         LWENERtcCallback.getInstance().setRootView(this);
         Intent intent = getIntent();
         EnterChatRoomResultData data = (EnterChatRoomResultData) intent.getSerializableExtra("data");
-        getCreator(data.getRoomId());
+        ChatRoomInfo info = data.getRoomInfo();
+        roomId = data.getRoomId();
+        name = info.getName();
+        coverUrl = (String) info.getExtension().get("coverUrl");
+        maxUsers = (Integer) info.getExtension().get("maxUsers");
+        getCreator(roomId);
         creator = intent.getBooleanExtra("creator", false);
         layoutVideo = findViewById(R.id.layoutVideo);
         ImageButton buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
@@ -185,9 +201,17 @@ public class RoomActivity extends LWEUI {
         NERtcEx.getInstance().enableLocalAudio(true);
         NERtcEx.getInstance().setupLocalVideoCanvas(videoSelf);
 
+        kickOutObserver = (Observer<ChatRoomKickOutEvent>) chatRoomKickOutEvent -> {
+            ToastHelper.showToast(getBaseContext(), R.string.lwe_text_kick);
+            NimUIKit.exitedChatRoom(roomId);
+            NERtcEx.getInstance().leaveChannel();
+            NERtcEx.getInstance().release();
+            NIMClient.getService(ChatRoomServiceObserver.class).observeKickOutEvent(kickOutObserver, false);
+            RoomActivity.super.onNavigateUpClicked();
+        };
+        NIMClient.getService(ChatRoomServiceObserver.class).observeKickOutEvent(kickOutObserver, true);
+
         NimUIKit.enterChatRoomSuccess(data, false);
-        ChatRoomInfo info = data.getRoomInfo();
-        String roomId = data.getRoomId();
         LWEToolBarOptions options = new LWEToolBarOptions(String.format("%s(%s)", info.getName(), roomId), true);
         setToolBar(R.id.toolbar, options);
         initMessageFragment(roomId);
@@ -204,5 +228,13 @@ public class RoomActivity extends LWEUI {
                 initMessageFragment(roomId);
             }, 50);
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
     }
 }

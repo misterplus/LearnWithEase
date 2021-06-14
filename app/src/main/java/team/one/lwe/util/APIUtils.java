@@ -59,6 +59,7 @@ public class APIUtils {
                 "/user/getUid", 5000,
                 "accid", accid);
     }
+
     public static ASResponse fetchRecs() throws IORuntimeException {
         User user = new User();
         NimUserInfo info = NIMClient.getService(UserService.class).getUserInfo(Preferences.getUserAccount());

@@ -14,8 +14,10 @@ import com.netease.lava.nertc.sdk.stats.NERtcAudioVolumeInfo;
 import com.netease.lava.nertc.sdk.video.NERtcRemoteVideoStreamType;
 import com.netease.lava.nertc.sdk.video.NERtcVideoView;
 import com.netease.nim.uikit.common.ToastHelper;
+import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
@@ -24,13 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import team.one.lwe.LWECache;
 import team.one.lwe.R;
 import team.one.lwe.bean.ASResponse;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.network.NetworkThread;
-import team.one.lwe.ui.activity.MainActivity;
-import team.one.lwe.ui.activity.auth.LoginActivity;
+import team.one.lwe.ui.activity.friend.FriendInfoActivity;
 import team.one.lwe.ui.activity.room.RoomActivity;
 import team.one.lwe.util.APIUtils;
 
@@ -45,6 +45,10 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     public static LWENERtcCallback getInstance() {
         return instance;
+    }
+
+    public int getUsers() {
+        return viewIds.size() + 1;
     }
 
     private LinearLayout getLayoutUsers() {
@@ -70,6 +74,8 @@ public class LWENERtcCallback implements NERtcCallbackEx {
         ImageButton buttonAudioUser = userView.findViewById(R.id.buttonAudioUser);
         HeadImageView imageAvatarUser = userView.findViewById(R.id.imageAvatarUser);
         FrameLayout videoPlaceholder = userView.findViewById(R.id.videoPlaceholder);
+        ImageButton buttonKick = userView.findViewById(R.id.buttonKick);
+        ImageButton buttonInfo = userView.findViewById(R.id.buttonInfo);
 
         buttonVideoUser.setOnClickListener(view -> {
             boolean subbed = videoSub.get(uid);
@@ -126,6 +132,36 @@ public class LWENERtcCallback implements NERtcCallbackEx {
                     public void onSuccess(List<NimUserInfo> param) {
                         imageAvatarUser.loadBuddyAvatar(accid);
                     }
+                });
+                buttonInfo.setOnClickListener(view -> {
+                    Intent intent = new Intent(rootView, FriendInfoActivity.class);
+                    intent.putExtra("accid", accid);
+                    rootView.startActivity(intent);
+                });
+                buttonKick.setOnClickListener(view -> {
+                    EasyAlertDialogHelper.createOkCancelDiolag(rootView, rootView.getString(R.string.lwe_title_room_kick), rootView.getString(R.string.lwe_text_room_kick_desc), rootView.getString(R.string.lwe_button_confirm), rootView.getString(R.string.lwe_button_cancel), false, new EasyAlertDialogHelper.OnDialogActionListener() {
+                        @Override
+                        public void doCancelAction() {
+                            //do nothing
+                        }
+
+                        @Override
+                        public void doOkAction() {
+                            Map<String, Object> reason = new HashMap<>();
+                            reason.put("reason", "kick");
+                            NIMClient.getService(ChatRoomService.class).kickMember(rootView.getRoomId(), accid, reason).setCallback(new RegularCallback<Void>(rootView) {
+                                @Override
+                                public void onSuccess(Void param) {
+                                    ToastHelper.showToast(rootView, R.string.lwe_text_room_kick);
+                                }
+
+                                @Override
+                                public void onFailed(int code) {
+                                    ToastHelper.showToast(rootView, R.string.lwe_error_room_kick);
+                                }
+                            });
+                        }
+                    }).show();
                 });
             }
 

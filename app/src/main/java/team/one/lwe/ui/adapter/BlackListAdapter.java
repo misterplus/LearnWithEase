@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
@@ -22,10 +21,8 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import team.one.lwe.R;
-import team.one.lwe.bean.UserInfo;
 import team.one.lwe.ui.activity.friend.FriendInfoActivity;
 import team.one.lwe.ui.callback.RegularCallback;
-import team.one.lwe.util.UserUtils;
 
 @AllArgsConstructor
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListAdapter.ViewHolder> {

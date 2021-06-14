@@ -9,6 +9,16 @@ import team.one.lwe.ui.custom.CustomAttachmentType;
 public class CustomAttachParser implements MsgAttachmentParser {
     private static final String KEY_TYPE = "type";
     private static final String KEY_DATA = "data";
+
+    public static String packData(int type, JSONObject data) {
+        JSONObject object = new JSONObject();
+        object.set(KEY_TYPE, type);
+        if (data != null) {
+            object.set(KEY_DATA, data);
+        }
+        return object.toString();
+    }
+
     @Override
     public MsgAttachment parse(String json) {
         CustomAttachment attachment = null;
@@ -26,13 +36,5 @@ public class CustomAttachParser implements MsgAttachmentParser {
             attachment.fromJson(data);
         }
         return attachment;
-    }
-    public static String packData(int type, JSONObject data) {
-        JSONObject object = new JSONObject();
-        object.set(KEY_TYPE, type);
-        if (data != null) {
-            object.set(KEY_DATA, data);
-        }
-        return object.toString();
     }
 }

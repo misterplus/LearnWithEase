@@ -78,8 +78,7 @@ public class FriendInfoActivity extends LWEUI {
         if (NIMClient.getService(FriendService.class).isInBlackList(accid)) {
             RelativeLayout buttonsFriendInfo = findViewById(R.id.buttonsFriendInfo);
             buttonsFriendInfo.setVisibility(View.GONE);
-        }
-        else
+        } else
             menuItems.add(new PopupMenuItem(0, "添加到黑名单"));
         NIMPopupMenu menu = new NIMPopupMenu(this, menuItems, item -> {
             if (item.getTag() == 0) {

@@ -10,14 +10,10 @@ import android.text.TextUtils;
 import com.netease.nim.uikit.api.NimUIKit;
 import com.netease.nim.uikit.api.model.chatroom.ChatRoomSessionCustomization;
 import com.netease.nim.uikit.api.model.contact.ContactEventListener;
-import com.netease.nim.uikit.api.model.main.OnlineStateContentProvider;
-import com.netease.nim.uikit.api.model.session.SessionCustomization;
-import com.netease.nim.uikit.api.model.session.SessionEventListener;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
 import com.netease.nim.uikit.business.session.actions.ImageAction;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
-import com.netease.nim.uikit.common.util.C;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.SDKOptions;
@@ -25,19 +21,22 @@ import com.netease.nimlib.sdk.StatusCode;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
-import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import team.one.lwe.config.Preferences;
 import team.one.lwe.crash.CrashHandler;
+import team.one.lwe.ui.action.InviteAction;
 import team.one.lwe.ui.activity.auth.LoginActivity;
 import team.one.lwe.ui.activity.friend.FriendInfoActivity;
+import team.one.lwe.ui.custom.holder.MsgViewHolderInvite;
+import team.one.lwe.ui.custom.msg.CustomAttachParser;
+import team.one.lwe.ui.custom.msg.InviteAttachment;
 
 public class LWEApplication extends Application {
 
@@ -103,6 +102,7 @@ public class LWEApplication extends Application {
         if (NIMUtil.isMainProcess(this)) {
             initUiKit();
             registerObservers();
+            registerCustomMsg();
         }
         initCacheDir();
         CrashHandler crashHandler = CrashHandler.getCrashHandler();
@@ -138,8 +138,14 @@ public class LWEApplication extends Application {
         ChatRoomSessionCustomization crsc = new ChatRoomSessionCustomization();
         ArrayList<BaseAction> actions = new ArrayList<>();
         actions.add(new ImageAction());
+        actions.add(new InviteAction());
         crsc.actions = actions;
         NimUIKit.setCommonChatRoomSessionCustomization(crsc);
+    }
+
+    private void registerCustomMsg() {
+        NIMClient.getService(MsgService.class).registerCustomAttachmentParser(new CustomAttachParser());
+        NimUIKit.registerMsgItemViewHolder(InviteAttachment.class, MsgViewHolderInvite.class);
     }
 
     private void registerObservers() {

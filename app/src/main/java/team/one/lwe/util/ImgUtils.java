@@ -29,6 +29,7 @@ public class ImgUtils {
             @Override
             public void onFailed(int code) {
                 ToastHelper.showToast(context, R.string.lwe_error_download_cover);
+                imageCover.setBackgroundResource(R.drawable.nim_default_img);
             }
         });
     }
