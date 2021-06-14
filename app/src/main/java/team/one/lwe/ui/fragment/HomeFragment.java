@@ -56,6 +56,8 @@ import team.one.lwe.util.ImgUtils;
 
 public class HomeFragment extends Fragment {
 
+    //TODO: refresh recs
+
     private String roomId;
 
     @Nullable

@@ -49,6 +49,8 @@ import team.one.lwe.util.APIUtils;
 
 public class RoomActivity extends LWEUI {
 
+    //TODO: on resume
+
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
     private boolean videoMuted = false;
