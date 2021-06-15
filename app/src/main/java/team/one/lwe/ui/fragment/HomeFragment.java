@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,6 +79,8 @@ public class HomeFragment extends Fragment {
         imageAvatars[2] = searchedResult.findViewById(R.id.imageAvatar3);
         imageAvatars[3] = searchedResult.findViewById(R.id.imageAvatar4);
         GridLayoutManager grid = new GridLayoutManager(getContext(), 2);
+        listRoom.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
+        listRoom.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.HORIZONTAL));
         grid.setOrientation(LinearLayoutManager.VERTICAL);
         listRoom.setLayoutManager(grid);
         fetchRecs(view, listRoom, noRecs);
@@ -196,7 +199,9 @@ public class HomeFragment extends Fragment {
         //button is only for creating rooms now
         buttonRoomNew.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0));
         //TODO: refresh recs, need another client
-        layoutRefresh.setOnClickListener(v -> fetchRecs(view, listRoom, noRecs));
+        layoutRefresh.setOnClickListener(v -> {
+            fetchRecs(view, listRoom, noRecs);
+        });
         return view;
     }
 

@@ -220,10 +220,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
             removeUserFromRoom(uid);
         else {
             ToastHelper.showToast(rootView, R.string.lwe_error_room_force_leave);
-            new Handler(msg -> {
-                rootView.leaveRoom();
-                return true;
-            }).sendEmptyMessageDelayed(0, 3000);
+            rootView.leaveRoom();
         }
     }
 
@@ -390,6 +387,9 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     public void setRootView(RoomActivity rootView) {
         this.rootView = rootView;
+        viewIds.clear();
+        videoSub.clear();
+        audioSub.clear();
     }
 
     public void setCreator(long creator) {

@@ -13,6 +13,7 @@ import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.chatroom.ChatRoomService;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomInfo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import team.one.lwe.R;
@@ -27,7 +28,7 @@ import team.one.lwe.util.RoomUtils;
 
 public class RoomSettingActivity extends LWEUI {
 
-    private Map<String, Object> ext;
+    private Map<String, Object> ext = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
