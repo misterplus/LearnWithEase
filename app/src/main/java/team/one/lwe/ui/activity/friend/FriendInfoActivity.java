@@ -64,35 +64,53 @@ public class FriendInfoActivity extends LWEUI {
             textSchool.setText(ex.getSchool());
             textSchool.setSelected(true);
         }
+        List<PopupMenuItem> menuItems = new ArrayList<>();
         if (NIMClient.getService(FriendService.class).isMyFriend(accid)) {
             buttonChat.setVisibility(View.VISIBLE);
             buttonAddFriend.setVisibility(View.GONE);
+            menuItems.add(new PopupMenuItem(1, "删除好友"));
         } else {
             buttonChat.setVisibility(View.GONE);
             buttonAddFriend.setVisibility(View.VISIBLE);
         }
         textSignature.setSelected(true);
         textCity.setSelected(true);
-
-        List<PopupMenuItem> menuItems = new ArrayList<>();
         if (NIMClient.getService(FriendService.class).isInBlackList(accid)) {
             RelativeLayout buttonsFriendInfo = findViewById(R.id.buttonsFriendInfo);
             buttonsFriendInfo.setVisibility(View.GONE);
         } else
             menuItems.add(new PopupMenuItem(0, "添加到黑名单"));
         NIMPopupMenu menu = new NIMPopupMenu(this, menuItems, item -> {
-            if (item.getTag() == 0) {
-                NIMClient.getService(FriendService.class).addToBlackList(accid).setCallback(new RegularCallback<Void>(this) {
-                    @Override
-                    public void onSuccess(Void param) {
-                        ToastHelper.showToast(context, R.string.lwe_success_black_list_add);
-                    }
+            switch(item.getTag()) {
+                case 0: {
+                    NIMClient.getService(FriendService.class).addToBlackList(accid).setCallback(new RegularCallback<Void>(this) {
+                        @Override
+                        public void onSuccess(Void param) {
+                            ToastHelper.showToast(context, R.string.lwe_success_black_list_add);
+                        }
 
-                    @Override
-                    public void onFailed(int code) {
-                        ToastHelper.showToast(context, R.string.lwe_error_black_list_add_fail);
-                    }
-                });
+                        @Override
+                        public void onFailed(int code) {
+                            ToastHelper.showToast(context, R.string.lwe_error_black_list_add_fail);
+                        }
+                    });
+                    break;
+                }
+                case 1: {
+                    NIMClient.getService(FriendService.class).deleteFriend(accid).setCallback(new RegularCallback<Void>(this) {
+                        @Override
+                        public void onSuccess(Void param) {
+                            buttonChat.setVisibility(View.GONE);
+                            buttonAddFriend.setVisibility(View.VISIBLE);
+                            ToastHelper.showToast(context, R.string.lwe_success_friend_delete);
+                        }
+
+                        @Override
+                        public void onFailed(int code) {
+                            ToastHelper.showToast(context, R.string.lwe_error_friend_delete);
+                        }
+                    });
+                }
             }
         });
         buttonMenu.setOnClickListener(v -> menu.show(findViewById(R.id.buttonMenu)));

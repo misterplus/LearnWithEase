@@ -153,7 +153,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
                                 NIMClient.getService(ChatRoomService.class).kickMember(rootView.getRoomId(), accid, reason).setCallback(new RegularCallback<Void>(rootView) {
                                     @Override
                                     public void onSuccess(Void param) {
-                                        ToastHelper.showToast(rootView, R.string.lwe_text_room_kick);
+                                        ToastHelper.showToast(rootView, R.string.lwe_success_room_kick);
                                     }
 
                                     @Override
