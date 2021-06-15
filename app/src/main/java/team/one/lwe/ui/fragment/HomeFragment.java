@@ -79,6 +79,7 @@ public class HomeFragment extends Fragment {
         GridLayoutManager grid = new GridLayoutManager(getContext(), 2);
         grid.setOrientation(LinearLayoutManager.VERTICAL);
         listRoom.setLayoutManager(grid);
+        //TODO: no rec message
         new NetworkThread(view) {
             @Override
             public ASResponse doRequest() {
