@@ -81,7 +81,7 @@ public class FriendInfoActivity extends LWEUI {
         } else
             menuItems.add(new PopupMenuItem(0, "添加到黑名单"));
         NIMPopupMenu menu = new NIMPopupMenu(this, menuItems, item -> {
-            switch(item.getTag()) {
+            switch (item.getTag()) {
                 case 0: {
                     NIMClient.getService(FriendService.class).addToBlackList(accid).setCallback(new RegularCallback<Void>(this) {
                         @Override

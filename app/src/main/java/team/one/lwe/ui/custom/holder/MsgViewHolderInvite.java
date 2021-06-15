@@ -22,7 +22,6 @@ import com.netease.nimlib.sdk.msg.constant.AttachStatusEnum;
 import com.netease.nimlib.sdk.msg.constant.MsgStatusEnum;
 
 import java.io.Serializable;
-import java.time.Instant;
 
 import team.one.lwe.LWEConstants;
 import team.one.lwe.R;
@@ -142,8 +141,7 @@ public class MsgViewHolderInvite extends MsgViewHolderBase {
         if (timeNow - timeSent > 300000) {
             valid = false;
             roomName.setText("【自习室邀请】很可惜，这个邀请已经过期了...");
-        }
-        else {
+        } else {
             roomName.setText(String.format("【自习室邀请】邀请你加入%s自习室，快来一起学习吧！", name));
         }
         ImgUtils.loadRoomCover(view.getContext(), roomCover, coverUrl);

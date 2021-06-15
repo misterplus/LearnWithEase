@@ -12,18 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.netease.nim.uikit.api.NimUIKit;
-import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.imageview.HeadImageView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 
 import team.one.lwe.R;
-import team.one.lwe.ui.activity.LWEUI;
 import team.one.lwe.ui.activity.mine.EditPrefActivity;
 import team.one.lwe.ui.activity.mine.EditProfileActivity;
-import team.one.lwe.ui.activity.mine.SettingActivity;
-import team.one.lwe.ui.wedget.LWEToolBarOptions;
+import team.one.lwe.ui.activity.setting.SettingActivity;
 
 public class MineFragment extends Fragment {
 

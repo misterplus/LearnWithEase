@@ -8,10 +8,6 @@ import team.one.lwe.ui.custom.CustomAttachmentType;
 
 public class InviteAttachment extends CustomAttachment {
 
-    public void setInvite(RoomInvite invite) {
-        this.invite = invite;
-    }
-
     private RoomInvite invite;
 
     public InviteAttachment() {
@@ -20,6 +16,10 @@ public class InviteAttachment extends CustomAttachment {
 
     public RoomInvite getInvite() {
         return invite;
+    }
+
+    public void setInvite(RoomInvite invite) {
+        this.invite = invite;
     }
 
     @Override

@@ -139,7 +139,9 @@ public class LoginActivity extends LWEUI {
             public void onSuccess(LoginInfo info) {
                 Log.i(this.getClass().getSimpleName(), "login success");
                 DialogMaker.dismissProgressDialog();
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 Preferences.saveUserAccount(info.getAccount());
                 Preferences.saveUserToken(info.getToken());
             }
@@ -147,8 +149,10 @@ public class LoginActivity extends LWEUI {
             @Override
             public void onFailed(int code) {
                 DialogMaker.dismissProgressDialog();
-                if (code == 302)
+                if (code == 302) {
                     ToastHelper.showToast(getBaseContext(), R.string.lwe_error_login_info);
+                    return;
+                }
                 super.onFailed(code);
             }
 

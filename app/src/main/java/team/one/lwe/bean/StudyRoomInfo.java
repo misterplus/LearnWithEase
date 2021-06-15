@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StudyRoomInfo {
     private int timeStudy, timeRest, contentStudy, gender;
-    private String roomId, province, city, area, school;
+    private String roomId, province, city, area, school, creator;
 }

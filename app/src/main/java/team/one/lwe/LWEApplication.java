@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import team.one.lwe.config.Preferences;
 import team.one.lwe.crash.CrashHandler;
 import team.one.lwe.ui.action.InviteAction;
+import team.one.lwe.ui.action.SettingAction;
 import team.one.lwe.ui.activity.auth.LoginActivity;
 import team.one.lwe.ui.activity.friend.FriendInfoActivity;
 import team.one.lwe.ui.custom.holder.MsgViewHolderInvite;
@@ -140,22 +141,12 @@ public class LWEApplication extends Application {
         });
         ChatRoomSessionCustomization crsc = new ChatRoomSessionCustomization();
         ArrayList<BaseAction> actions = new ArrayList<>();
-        actions.add(new ImageAction());
         actions.add(new InviteAction());
+        actions.add(new SettingAction());
         crsc.actions = actions;
         NimUIKit.setCommonChatRoomSessionCustomization(crsc);
-        NimUIKit.setMsgForwardFilter(new MsgForwardFilter() {
-            @Override
-            public boolean shouldIgnore(IMMessage message) {
-                return false;
-            }
-        });
-        NimUIKit.setMsgRevokeFilter(new MsgRevokeFilter() {
-            @Override
-            public boolean shouldIgnore(IMMessage message) {
-                return false;
-            }
-        });
+        NimUIKit.setMsgForwardFilter(message -> false);
+        NimUIKit.setMsgRevokeFilter(message -> false);
     }
 
     private void registerCustomMsg() {

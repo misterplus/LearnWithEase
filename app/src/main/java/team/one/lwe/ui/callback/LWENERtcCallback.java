@@ -184,7 +184,7 @@ public class LWENERtcCallback implements NERtcCallbackEx {
      */
     @Override
     public void onJoinChannel(int result, long channelId, long elapsed) {
-        // not success
+        // failed
         if (result != 0 && rootView != null) {
             rootView.onJoinChannelFailed();
         }
@@ -338,12 +338,14 @@ public class LWENERtcCallback implements NERtcCallbackEx {
 
     @Override
     public void onReconnectingStart() {
-
+        ToastHelper.showToast(rootView, R.string.lwe_text_rejoin);
     }
 
     @Override
-    public void onReJoinChannel(int i, long l) {
-
+    public void onReJoinChannel(int result, long channelId) {
+        if (result != 0) {
+            rootView.onJoinChannelFailed();
+        }
     }
 
     @Override

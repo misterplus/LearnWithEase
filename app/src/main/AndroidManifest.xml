@@ -53,7 +53,7 @@
         <activity android:name=".ui.activity.friend.BlackListActivity" />
         <activity android:name=".ui.activity.mine.EditPrefActivity" />
         <activity android:name=".ui.activity.mine.EditProfileActivity" />
-        <activity android:name=".ui.activity.mine.SettingActivity" />
+        <activity android:name=".ui.activity.setting.SettingActivity" />
         <activity android:name=".ui.activity.auth.RegisterActivity" />
         <activity android:name=".ui.activity.setting.SystemSettingActivity" />
         <activity android:name=".ui.activity.setting.UserSettingActivity" />

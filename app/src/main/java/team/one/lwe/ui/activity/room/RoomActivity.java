@@ -51,20 +51,17 @@ public class RoomActivity extends LWEUI {
 
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
-    private boolean videoMuted = false;
-    private boolean audioMuted = false;
-    private boolean videoMutedByPause = false;
-    private boolean audioMutedByPause = false;
+    private boolean videoMuted = false, audioMuted = false, videoMutedByPause = false, audioMutedByPause = false;
+    private boolean leaving = false;
     private ImageButton buttonVideoSelf, buttonAudioSelf;
-
-    public boolean isCreator() {
-        return creator;
-    }
-
     private boolean creator = false;
     private String roomId, name, coverUrl;
     private int maxUsers;
     private Observer<ChatRoomKickOutEvent> kickOutObserver;
+
+    public boolean isCreator() {
+        return creator;
+    }
 
     public String getRoomId() {
         return roomId;
@@ -114,12 +111,21 @@ public class RoomActivity extends LWEUI {
         }
     }
 
+    public void onRejoinChannelFailed() {
+        ToastHelper.showToast(this, R.string.lwe_error_rejoin_room);
+        new Handler(msg -> {
+            onDisconnect();
+            return true;
+        }).sendEmptyMessageDelayed(0, 3000);
+    }
+
     public void onJoinChannelFailed() {
         ToastHelper.showToast(this, R.string.lwe_error_join_room);
         finish();
     }
 
     public void onDisconnect() {
+        leaving = true;
         ToastHelper.showToast(this, R.string.lwe_error_room_disconnect);
         NIMClient.getService(ChatRoomService.class).exitChatRoom(roomId);
         NimUIKit.exitedChatRoom(roomId);
@@ -129,6 +135,7 @@ public class RoomActivity extends LWEUI {
     }
 
     public void leaveRoom() {
+        leaving = true;
         NIMClient.getService(ChatRoomService.class).exitChatRoom(roomId);
         NimUIKit.exitedChatRoom(roomId);
         NERtcEx.getInstance().leaveChannel();
@@ -138,18 +145,20 @@ public class RoomActivity extends LWEUI {
     }
 
 
-    //TODO: test this
+    //TODO: test this from another client
     @Override
     protected void onPause() {
         super.onPause();
         //mute if weren't muted
-        if (!videoMuted) {
-            buttonVideoSelf.callOnClick();
-            videoMutedByPause = true;
-        }
-        if (!audioMuted) {
-            buttonAudioSelf.callOnClick();
-            audioMutedByPause = true;
+        if (!leaving) {
+            if (!videoMuted) {
+                buttonVideoSelf.callOnClick();
+                videoMutedByPause = true;
+            }
+            if (!audioMuted) {
+                buttonAudioSelf.callOnClick();
+                audioMutedByPause = true;
+            }
         }
     }
 
@@ -157,13 +166,15 @@ public class RoomActivity extends LWEUI {
     protected void onResume() {
         super.onResume();
         //unmute if muted by onPause
-        if (videoMutedByPause) {
-            buttonVideoSelf.callOnClick();
-            videoMutedByPause = false;
-        }
-        if (audioMutedByPause) {
-            buttonAudioSelf.callOnClick();
-            audioMutedByPause = false;
+        if (!leaving) {
+            if (videoMutedByPause) {
+                buttonVideoSelf.callOnClick();
+                videoMutedByPause = false;
+            }
+            if (audioMutedByPause) {
+                buttonAudioSelf.callOnClick();
+                audioMutedByPause = false;
+            }
         }
     }
 

@@ -36,6 +36,7 @@
     <string name="lwe_button_join">加入</string>
     <string name="lwe_button_chat">发送消息</string>
     <string name="lwe_button_add_friend">添加好友</string>
+    <string name="lwe_button_setting">房间设置</string>
 
     <!--    成功提示-->
     <string name="lwe_success_register">注册成功</string>
@@ -89,7 +90,8 @@
     <string name="lwe_error_room_kick">踢出用户失败，请稍后再试</string>
     <string name="lwe_error_room_not_friend">你与房主不是好友关系，无法加入房间</string>
     <string name="lwe_error_friend_delete">好友删除失败，请稍后再试</string>
-
+    <string name="lwe_error_rejoin_room">网络环境较差，重连失败，即将退出房间…</string>
+    
     <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
     <string name="lwe_progress_register">注册中…</string>
@@ -184,11 +186,13 @@
     <string name="lwe_text_room_exit">您真的要退出房间吗?</string>
     <string name="lwe_text_room_exit_creator">您是房主，退出房间后房间将会自动解散。您真的要退出房间吗?</string>
     <string name="lwe_text_more">更多</string>
-    <string name="lwe_text_invite">邀 请</string>
+    <string name="lwe_text_invite">邀请好友</string>
     <string name="lwe_text_kick">您已被房主踢出房间</string>
     <string name="lwe_text_room_kick_desc">您真的要踢出这个用户吗?</string>
     <string name="lwe_text_refresh">点击刷新</string>
     <string name="lwe_text_no_recs">现在没有开放的自习室，过会再来哦~</string>
+    <string name="lwe_text_room_setting">房间设置</string>
+    <string name="lwe_text_rejoin">网络环境较差，正在重连…</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>

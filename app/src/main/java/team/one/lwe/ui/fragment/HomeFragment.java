@@ -195,7 +195,7 @@ public class HomeFragment extends Fragment {
 
         //button is only for creating rooms now
         buttonRoomNew.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0));
-        //TODO: refresh recs
+        //TODO: refresh recs, need another client
         layoutRefresh.setOnClickListener(v -> fetchRecs(view, listRoom, noRecs));
         return view;
     }
