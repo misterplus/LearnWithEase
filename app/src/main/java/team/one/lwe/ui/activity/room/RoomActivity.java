@@ -111,14 +111,6 @@ public class RoomActivity extends LWEUI {
         }
     }
 
-    public void onRejoinChannelFailed() {
-        ToastHelper.showToast(this, R.string.lwe_error_rejoin_room);
-        new Handler(msg -> {
-            onDisconnect();
-            return true;
-        }).sendEmptyMessageDelayed(0, 3000);
-    }
-
     public void onJoinChannelFailed() {
         ToastHelper.showToast(this, R.string.lwe_error_join_room);
         finish();

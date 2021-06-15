@@ -69,7 +69,7 @@ public class CreateRoomActivity extends LWEUI {
         adapter2.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerTimeStudy.setAdapter(adapter2);
 
-        String[] restValues = getResources().getStringArray(R.array.lwe_spinner_time_study);
+        String[] restValues = getResources().getStringArray(R.array.lwe_spinner_time_rest);
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, R.layout.lwe_spinner_item, restValues);
         adapter3.setDropDownViewResource(R.layout.lwe_spinner_item);
         spinnerTimeRest.setAdapter(adapter3);
