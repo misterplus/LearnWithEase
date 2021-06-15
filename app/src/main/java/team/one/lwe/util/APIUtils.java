@@ -69,4 +69,25 @@ public class APIUtils {
                 "/room/fetch", 5000,
                 new Gson().toJson(user));
     }
+
+    public static ASResponse updateTimeStudy(@NonNull String roomId, int timeStudy) {
+        return PostUtils.doPostEncoded(true,
+                "/room/updateTimeStudy", 5000,
+                "roomId", roomId,
+                "timeStudy", timeStudy);
+    }
+
+    public static ASResponse updateTimeRest(@NonNull String roomId, int timeRest) {
+        return PostUtils.doPostEncoded(true,
+                "/room/updateTimeRest", 5000,
+                "roomId", roomId,
+                "timeRest", timeRest);
+    }
+
+    public static ASResponse updateContentStudy(@NonNull String roomId, int contentStudy) {
+        return PostUtils.doPostEncoded(true,
+                "/room/updateContentStudy", 5000,
+                "roomId", roomId,
+                "contentStudy", contentStudy);
+    }
 }

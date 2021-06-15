@@ -91,6 +91,8 @@
     <string name="lwe_error_room_not_friend">你与房主不是好友关系，无法加入房间</string>
     <string name="lwe_error_friend_delete">好友删除失败，请稍后再试</string>
     <string name="lwe_error_rejoin_room">网络环境较差，重连失败，即将退出房间…</string>
+    <string name="lwe_error_room_setting">获取房间设置失败，请稍后再试</string>
+    <string name="lwe_error_room_setting_no_perm">你不是房主，不能更改设置哦~</string>
     
     <!--    进度提示-->
     <string name="lwe_progress_login">登录中…</string>
@@ -117,6 +119,7 @@
     <string name="lwe_title_room_create">创建房间</string>
     <string name="lwe_title_room_exit">退出房间</string>
     <string name="lwe_title_room_kick">踢出用户</string>
+    <string name="lwe_title_room_setting">房间设置</string>
 
     <!--    文本-->
     <string name="lwe_text_gender">性别</string>

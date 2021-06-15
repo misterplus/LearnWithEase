@@ -60,6 +60,7 @@
         <activity android:name=".ui.activity.room.RoomActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".ui.activity.room.CreateRoomActivity" />
+        <activity android:name=".ui.activity.room.RoomSettingActivity" />
         <activity android:name=".ui.activity.setting.UpdatePasswordActivity" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
