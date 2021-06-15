@@ -20,10 +20,10 @@ public class ChatRoomNotificationHelper {
         String text;
         switch (attachment.getType()) {
             case ChatRoomMemberIn:
-                text = buildText("欢迎", targets, "进入直播间");
+                text = buildText("欢迎", targets, "进入自习室");
                 break;
             case ChatRoomMemberExit:
-                text = buildText(targets, "离开了直播间");
+                text = buildText(targets, "离开了自习室");
                 break;
             case ChatRoomMemberBlackAdd:
                 text = buildText(targets, "被管理员拉入黑名单");
@@ -50,13 +50,13 @@ public class ChatRoomNotificationHelper {
                 text = buildText(targets, "被取消普通成员");
                 break;
             case ChatRoomClose:
-                text = buildText("直播间被关闭");
+                text = buildText("自习室被关闭");
                 break;
             case ChatRoomInfoUpdated:
-                text = buildText("直播间信息已更新");
+                text = buildText("自习室信息已更新");
                 break;
             case ChatRoomMemberKicked:
-                text = buildText(targets, "被踢出直播间");
+                text = buildText(targets, "被踢出自习室");
                 break;
             case ChatRoomMemberTempMuteAdd:
                 text = buildText(targets, "被临时禁言");
