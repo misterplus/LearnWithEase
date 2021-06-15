@@ -962,7 +962,7 @@ public class MessageListPanelEx {
                 // forward to person
                 longClickItemForwardToPerson(selectedItem, alertDialog);
                 // forward to team
-                longClickItemForwardToTeam(selectedItem, alertDialog);
+                // longClickItemForwardToTeam(selectedItem, alertDialog);
             }
             // 3 collect
             // 4 pin
@@ -971,9 +971,9 @@ public class MessageListPanelEx {
                 longClickRevokeMsg(selectedItem, alertDialog);
             }
             // 6 delete
-            longClickItemDelete(selectedItem, alertDialog, true);
+            // longClickItemDelete(selectedItem, alertDialog, true);
 
-            longClickItemDelete(selectedItem, alertDialog, false);
+            // longClickItemDelete(selectedItem, alertDialog, false);
 
             // 7 multiple selection
             longClickItemMultipleSelection(selectedItem, alertDialog);

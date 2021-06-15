@@ -56,8 +56,6 @@ import team.one.lwe.util.ImgUtils;
 
 public class HomeFragment extends Fragment {
 
-    //TODO: refresh recs
-
     private String roomId;
 
     @Nullable
@@ -72,6 +70,7 @@ public class HomeFragment extends Fragment {
         ImageButton buttonClose = searchedResult.findViewById(R.id.buttonClose);
         TextView textRoomName = searchedResult.findViewById(R.id.textRoomName);
         LinearLayout noResult = view.findViewById(R.id.noResult);
+        RelativeLayout layoutRefresh = view.findViewById(R.id.layoutRefresh);
         HeadImageView[] imageAvatars = new HeadImageView[4];
         imageAvatars[0] = searchedResult.findViewById(R.id.imageAvatar1);
         imageAvatars[1] = searchedResult.findViewById(R.id.imageAvatar2);
@@ -209,7 +208,26 @@ public class HomeFragment extends Fragment {
 
         //button is only for creating rooms now
         buttonRoomNew.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0));
+        //TODO: refresh recs
+        layoutRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NetworkThread(view) {
+                    @Override
+                    public ASResponse doRequest() {
+                        return APIUtils.fetchRecs();
+                    }
 
+                    @Override
+                    public void onSuccess(ASResponse asp) {
+                        List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {
+                        }.getType());
+                        RoomAdapter adapter = new RoomAdapter(recs);
+                        listRoom.setAdapter(adapter);
+                    }
+                }.start();
+            }
+        });
         return view;
     }
 

@@ -49,12 +49,13 @@ import team.one.lwe.util.APIUtils;
 
 public class RoomActivity extends LWEUI {
 
-    //TODO: on resume
-
     private ChatRoomMessageFragment messageFragment;
     private RelativeLayout layoutVideo;
     private boolean videoMuted = false;
     private boolean audioMuted = false;
+    private boolean videoMutedByPause = false;
+    private boolean audioMutedByPause = false;
+    private ImageButton buttonVideoSelf, buttonAudioSelf;
 
     public boolean isCreator() {
         return creator;
@@ -136,6 +137,36 @@ public class RoomActivity extends LWEUI {
         RoomActivity.super.onNavigateUpClicked();
     }
 
+
+    //TODO: test this
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //mute if weren't muted
+        if (!videoMuted) {
+            buttonVideoSelf.callOnClick();
+            videoMutedByPause = true;
+        }
+        if (!audioMuted) {
+            buttonAudioSelf.callOnClick();
+            audioMutedByPause = true;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //unmute if muted by onPause
+        if (videoMutedByPause) {
+            buttonVideoSelf.callOnClick();
+            videoMutedByPause = false;
+        }
+        if (audioMutedByPause) {
+            buttonAudioSelf.callOnClick();
+            audioMutedByPause = false;
+        }
+    }
+
     @Override
     public void onNavigateUpClicked() {
         EasyAlertDialogHelper.createOkCancelDiolag(this, getString(R.string.lwe_title_room_exit), getString(creator ? R.string.lwe_text_room_exit_creator : R.string.lwe_text_room_exit), getString(R.string.lwe_button_confirm), getString(R.string.lwe_button_cancel), false, new EasyAlertDialogHelper.OnDialogActionListener() {
@@ -197,8 +228,8 @@ public class RoomActivity extends LWEUI {
         getCreator(roomId);
         creator = intent.getBooleanExtra("creator", false);
         layoutVideo = findViewById(R.id.layoutVideo);
-        ImageButton buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
-        ImageButton buttonAudioSelf = findViewById(R.id.buttonAudioSelf);
+        buttonVideoSelf = findViewById(R.id.buttonVideoSelf);
+        buttonAudioSelf = findViewById(R.id.buttonAudioSelf);
         HeadImageView imageAvatarSelf = findViewById(R.id.imageAvatarSelf);
         NERtcVideoView videoSelf = findViewById(R.id.videoSelf);
         FrameLayout videoPlaceholderSelf = findViewById(R.id.videoPlaceholderSelf);

@@ -12,6 +12,8 @@ import com.netease.nim.uikit.api.model.chatroom.ChatRoomSessionCustomization;
 import com.netease.nim.uikit.api.model.contact.ContactEventListener;
 import com.netease.nim.uikit.business.session.actions.BaseAction;
 import com.netease.nim.uikit.business.session.actions.ImageAction;
+import com.netease.nim.uikit.business.session.module.MsgForwardFilter;
+import com.netease.nim.uikit.business.session.module.MsgRevokeFilter;
 import com.netease.nim.uikit.common.ToastHelper;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nimlib.sdk.NIMClient;
@@ -22,6 +24,7 @@ import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.AuthServiceObserver;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.util.NIMUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -141,6 +144,18 @@ public class LWEApplication extends Application {
         actions.add(new InviteAction());
         crsc.actions = actions;
         NimUIKit.setCommonChatRoomSessionCustomization(crsc);
+        NimUIKit.setMsgForwardFilter(new MsgForwardFilter() {
+            @Override
+            public boolean shouldIgnore(IMMessage message) {
+                return false;
+            }
+        });
+        NimUIKit.setMsgRevokeFilter(new MsgRevokeFilter() {
+            @Override
+            public boolean shouldIgnore(IMMessage message) {
+                return false;
+            }
+        });
     }
 
     private void registerCustomMsg() {
