@@ -188,6 +188,7 @@
     <string name="lwe_text_kick">您已被房主踢出房间</string>
     <string name="lwe_text_room_kick_desc">您真的要踢出这个用户吗?</string>
     <string name="lwe_text_refresh">点击刷新</string>
+    <string name="lwe_text_no_recs">现在没有开放的自习室，过会再来哦~</string>
 
     <!--    单选文本-->
     <string name="lwe_radio_male">男</string>

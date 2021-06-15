@@ -70,6 +70,7 @@ public class HomeFragment extends Fragment {
         ImageButton buttonClose = searchedResult.findViewById(R.id.buttonClose);
         TextView textRoomName = searchedResult.findViewById(R.id.textRoomName);
         LinearLayout noResult = view.findViewById(R.id.noResult);
+        RelativeLayout noRecs = view.findViewById(R.id.noRecs);
         RelativeLayout layoutRefresh = view.findViewById(R.id.layoutRefresh);
         HeadImageView[] imageAvatars = new HeadImageView[4];
         imageAvatars[0] = searchedResult.findViewById(R.id.imageAvatar1);
@@ -79,22 +80,7 @@ public class HomeFragment extends Fragment {
         GridLayoutManager grid = new GridLayoutManager(getContext(), 2);
         grid.setOrientation(LinearLayoutManager.VERTICAL);
         listRoom.setLayoutManager(grid);
-        //TODO: no rec message
-        new NetworkThread(view) {
-            @Override
-            public ASResponse doRequest() {
-                return APIUtils.fetchRecs();
-            }
-
-            @Override
-            public void onSuccess(ASResponse asp) {
-                List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {
-                }.getType());
-                RoomAdapter adapter = new RoomAdapter(recs);
-                listRoom.setAdapter(adapter);
-            }
-        }.start();
-
+        fetchRecs(view, listRoom, noRecs);
         editTextSearchRoom.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 DialogMaker.showProgressDialog(getContext(), getString(R.string.lwe_progress_search));
@@ -210,25 +196,7 @@ public class HomeFragment extends Fragment {
         //button is only for creating rooms now
         buttonRoomNew.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), CreateRoomActivity.class), 0));
         //TODO: refresh recs
-        layoutRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new NetworkThread(view) {
-                    @Override
-                    public ASResponse doRequest() {
-                        return APIUtils.fetchRecs();
-                    }
-
-                    @Override
-                    public void onSuccess(ASResponse asp) {
-                        List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {
-                        }.getType());
-                        RoomAdapter adapter = new RoomAdapter(recs);
-                        listRoom.setAdapter(adapter);
-                    }
-                }.start();
-            }
-        });
+        layoutRefresh.setOnClickListener(v -> fetchRecs(view, listRoom, noRecs));
         return view;
     }
 
@@ -239,6 +207,27 @@ public class HomeFragment extends Fragment {
             EnterRoomData enterRoomData = new Gson().fromJson(data.getStringExtra("enterRoomData"), EnterRoomData.class);
             enterRoom(enterRoomData, true);
         }
+    }
+
+    private void fetchRecs(View view, RecyclerView listRoom, RelativeLayout noRecs) {
+        new NetworkThread(view) {
+            @Override
+            public ASResponse doRequest() {
+                return APIUtils.fetchRecs();
+            }
+
+            @Override
+            public void onSuccess(ASResponse asp) {
+                List<StudyRoomInfo> recs = new Gson().fromJson(asp.getRecs().toString(), new TypeToken<List<StudyRoomInfo>>() {
+                }.getType());
+                RoomAdapter adapter = new RoomAdapter(recs);
+                listRoom.setAdapter(adapter);
+                if (recs.size() == 0)
+                    noRecs.setVisibility(View.VISIBLE);
+                else
+                    noRecs.setVisibility(View.GONE);
+            }
+        }.start();
     }
 
     private void enterRoom(EnterRoomData enterRoomData, boolean creator) {
